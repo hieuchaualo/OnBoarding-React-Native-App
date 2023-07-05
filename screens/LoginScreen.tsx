@@ -45,7 +45,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             style={{
               fontFamily: Font["poppins-semiBold"],
               fontSize: FontSize.large,
-              maxWidth: "60%",
+              maxWidth: "80%",
               textAlign: "center",
             }}
           >
@@ -61,22 +61,25 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           <AppTextInput placeholder="Password" />
         </View>
 
-        <View>
-          <Text
-            style={{
-              fontFamily: Font["poppins-semiBold"],
-              fontSize: FontSize.small,
-              color: Colors.primary,
-              alignSelf: "flex-end",
-            }}
-          >
-            Forgot your password ?
-          </Text>
-        </View>
+        <TouchableOpacity
+          onPress={() => navigate("ForgotPassword")} >
+            <Text
+                style={{
+                  fontFamily: Font["poppins-semiBold"],
+                  fontSize: FontSize.small,
+                  color: Colors.primary,
+                  alignSelf: "flex-end",
+                }}
+              >
+                Forgot your password ?
+              </Text>
+        
+        </TouchableOpacity>
 
         <TouchableOpacity
+         onPress={() => navigate("Home")}
           style={{
-            padding: Spacing * 2,
+            padding: Spacing * 1.5,
             backgroundColor: Colors.primary,
             marginVertical: Spacing * 3,
             borderRadius: Spacing,
@@ -100,6 +103,15 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             Sign in
           </Text>
         </TouchableOpacity>
+        <Text 
+            style={{
+              fontFamily: Font["poppins-regular"],
+              color: Colors.text,
+              textAlign: "center",
+              fontSize: FontSize.small,
+            }}>
+              Don't have an account ?
+        </Text>
         <TouchableOpacity
           onPress={() => navigate("Register")}
           style={{
@@ -109,12 +121,12 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           <Text
             style={{
               fontFamily: Font["poppins-semiBold"],
-              color: Colors.text,
+              color: Colors.primary,
               textAlign: "center",
               fontSize: FontSize.small,
             }}
           >
-            Create new account
+            Sign up
           </Text>
         </TouchableOpacity>
 
@@ -126,7 +138,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           <Text
             style={{
               fontFamily: Font["poppins-semiBold"],
-              color: Colors.primary,
+              color: Colors.text,
               textAlign: "center",
               fontSize: FontSize.small,
             }}
@@ -151,20 +163,6 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             >
               <Ionicons
                 name="logo-google"
-                color={Colors.text}
-                size={Spacing * 2}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: Spacing,
-                backgroundColor: Colors.gray,
-                borderRadius: Spacing / 2,
-                marginHorizontal: Spacing,
-              }}
-            >
-              <Ionicons
-                name="logo-apple"
                 color={Colors.text}
                 size={Spacing * 2}
               />

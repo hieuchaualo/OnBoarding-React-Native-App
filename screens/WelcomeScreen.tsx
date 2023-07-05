@@ -12,6 +12,7 @@ import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
 import Font from "../constants/Font";
+import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 const { height } = Dimensions.get("window");
@@ -27,7 +28,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             height: height / 2.5,
           }}
           resizeMode="contain"
-          source={require("../assets/images/welcome-img.png")}
+          source={require("../assets/images/login.png")}
         />
         <View
           style={{
@@ -43,7 +44,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               textAlign: "center",
             }}
           >
-            Discover Your Dream Job here
+            Increase Your Reading Skill
           </Text>
 
           <Text
@@ -55,8 +56,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               marginTop: Spacing * 2,
             }}
           >
-            Explore all the existing job roles based or your interest and study
-            major
+            Embark on an English journey of mastery with our immersive reading app!
           </Text>
         </View>
         <View
@@ -68,20 +68,7 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         >
           <TouchableOpacity
             onPress={() => navigate("Login")}
-            style={{
-              backgroundColor: Colors.primary,
-              paddingVertical: Spacing * 1.5,
-              paddingHorizontal: Spacing * 2,
-              width: "48%",
-              borderRadius: Spacing,
-              shadowColor: Colors.primary,
-              shadowOffset: {
-                width: 0,
-                height: Spacing,
-              },
-              shadowOpacity: 0.3,
-              shadowRadius: Spacing,
-            }}
+            style={styles.button}
           >
             <Text
               style={{
@@ -122,4 +109,19 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
 export default WelcomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: Colors.primary,
+    paddingVertical: Spacing * 1.5,
+    paddingHorizontal: Spacing * 2,
+    width: "48%",
+    borderRadius: Spacing,
+    shadowColor: Colors.primary,
+    shadowOffset: {
+      width: 0,
+      height: Spacing,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: Spacing,
+  },
+});
