@@ -16,12 +16,7 @@ import Font from "../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
-import AppTextInput from "../components/AppTextInput";
-import { Header } from '@rneui/themed';
-import { Avatar, Accessory } from 'react-native-elements';
 import styled from 'styled-components'
-import { setStatusBarBackgroundColor } from "expo-status-bar";
-import { color } from "react-native-elements/dist/helpers";
   
   type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
   

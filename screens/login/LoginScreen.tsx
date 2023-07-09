@@ -6,19 +6,50 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import React from "react";
-import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
-import Colors from "../constants/Colors";
-import Font from "../constants/Font";
+import React, { useEffect, useState } from "react";
+import Spacing from "../../constants/Spacing";
+import FontSize from "../../constants/FontSize";
+import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
-import AppTextInput from "../components/AppTextInput";
+import { RootStackParamList } from "../../types";
+import AppTextInput from "../../components/AppTextInput";
+import { loginAccount } from "../../api";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
+
+const regexEmail = /\S+@\S+\.\S+/;
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
 const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+  const [email, setEmail] = useState("");
+  const [isEmailNotValidated, setisEmailNotValidated] = useState(false);
+  const [password, setPassword] = useState("");
+
+  const checkEmailInvalid = () => {
+    setisEmailNotValidated(!regexEmail.test(email));
+    return !regexEmail.test(email);
+  };
+
+  const login = async () => {
+    try {
+      const response: any = await loginAccount({ email, password });
+      if (response.statusCode === 401) return false;
+      await setItemAsync("secure_token", response?.data?.token);
+      const account = JSON.stringify({
+        username: response.data.account.name,
+        email: response.data.account.email,
+        id: response.data.account._id,
+      });
+      await setItemAsync("account", account);
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   return (
     <SafeAreaView>
       <View
@@ -57,27 +88,52 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             marginVertical: Spacing * 3,
           }}
         >
-          <AppTextInput placeholder="Email" />
-          <AppTextInput placeholder="Password" />
+          <AppTextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="Email"
+          />
+          {isEmailNotValidated && (
+            <Text
+              style={{
+                fontFamily: Font["poppins-regular"],
+                fontSize: FontSize.small,
+                color: "#F00",
+                alignSelf: "flex-start",
+              }}
+            >
+              Your Email is invalid. Please enter again.
+            </Text>
+          )}
+          <AppTextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+          />
         </View>
 
-        <TouchableOpacity
-          onPress={() => navigate("ForgotPassword")} >
-            <Text
-                style={{
-                  fontFamily: Font["poppins-semiBold"],
-                  fontSize: FontSize.small,
-                  color: Colors.primary,
-                  alignSelf: "flex-end",
-                }}
-              >
-                Forgot your password ?
-              </Text>
-        
+        <TouchableOpacity onPress={() => navigate("ForgotPassword")}>
+          <Text
+            style={{
+              fontFamily: Font["poppins-semiBold"],
+              fontSize: FontSize.small,
+              color: Colors.primary,
+              alignSelf: "flex-end",
+            }}
+          >
+            Forgot your password ?
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-         onPress={() => navigate("Home")}
+          onPress={async () => {
+            if (checkEmailInvalid()) {
+            } else {
+              const isLoginSuccess = await login();
+              if (isLoginSuccess) navigate("Home");
+            }
+          }}
           style={{
             padding: Spacing * 1.5,
             backgroundColor: Colors.primary,
@@ -100,17 +156,18 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               fontSize: FontSize.large,
             }}
           >
-            Sign in
+            Login
           </Text>
         </TouchableOpacity>
-        <Text 
-            style={{
-              fontFamily: Font["poppins-regular"],
-              color: Colors.text,
-              textAlign: "center",
-              fontSize: FontSize.small,
-            }}>
-              Don't have an account ?
+        <Text
+          style={{
+            fontFamily: Font["poppins-regular"],
+            color: Colors.text,
+            textAlign: "center",
+            fontSize: FontSize.small,
+          }}
+        >
+          Don't have an account ?
         </Text>
         <TouchableOpacity
           onPress={() => navigate("Register")}

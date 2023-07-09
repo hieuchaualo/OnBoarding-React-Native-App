@@ -1,6 +1,7 @@
 import {
   Dimensions,
   ImageBackground,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -8,16 +9,17 @@ import {
   View,
 } from "react-native";
 import React from "react";
-import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
-import Colors from "../constants/Colors";
-import Font from "../constants/Font";
+import Spacing from "../../constants/Spacing";
+import FontSize from "../../constants/FontSize";
+import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
 import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
+
 
 const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   return (
@@ -25,10 +27,10 @@ const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
       <View>
         <ImageBackground
           style={{
-            height: height / 2.5,
+            height: height / 3,
           }}
           resizeMode="contain"
-          source={require("../assets/images/login.png")}
+          source={require("../../assets/images/login.png")}
         />
         <View
           style={{

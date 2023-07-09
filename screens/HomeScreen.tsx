@@ -1,14 +1,14 @@
 import {
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    Image
-  } from "react-native";
-import React from "react";
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
@@ -16,177 +16,194 @@ import Font from "../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
-import AppTextInput from "../components/AppTextInput";
-import { Header } from '@rneui/themed';
-import { Avatar, Accessory } from 'react-native-elements';
-import styled from 'styled-components'
-import { setStatusBarBackgroundColor } from "expo-status-bar";
-import { color } from "react-native-elements/dist/helpers";
+import { getItemAsync } from "expo-secure-store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
-const HomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+const HomeScreen: React.FC<Props> = (props) => {
+  const [data, setData] = useState({ username: "unnamed" });
+  useEffect(() => {
+    (async () => {
+      const account = await getItemAsync("account");
+      setData(JSON.parse(account || ""));
+      console.log(JSON.parse(account || ""));
+    })();
+  }, []);
+  const navigate = props.navigation.navigate;
+
   return (
     <SafeAreaView>
       <ScrollView
         style={{
-          paddingHorizontal: Spacing * 2, 
+          paddingHorizontal: Spacing * 2,
         }}
       >
         {/* Header */}
-      <View
-        style={{
-          paddingTop: Spacing * 2,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
         <View
           style={{
+            paddingTop: Spacing * 2,
             flexDirection: "row",
-            alignItems: "center",
+            justifyContent: "space-between",
           }}
         >
-          <Image
-            source={require("../assets/images/avatar.jpg")}
-            style={{ width: Spacing * 4, height: Spacing * 4, borderRadius:100 }}
-          />
-          <Text
+          <View
             style={{
-              fontFamily: Font["poppins-semiBold"],
-              fontSize: Spacing * 2,
-              color: Colors.text,
-              paddingLeft: Spacing,
-              alignItems: 'center'
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            Hi, Hieuchau
-          </Text>
+            <Image
+              source={require("../assets/images/avatar.jpg")}
+              style={{
+                width: Spacing * 4,
+                height: Spacing * 4,
+                borderRadius: 100,
+              }}
+            />
+            <Text
+              style={{
+                fontFamily: Font["poppins-semiBold"],
+                fontSize: Spacing * 2,
+                color: Colors.text,
+                paddingLeft: Spacing,
+                alignItems: "center",
+              }}
+            >
+              Hi, {data?.username || "unnamed"}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                padding: Spacing / 2,
+              }}
+            >
+              <Ionicons
+                name="notifications-outline"
+                size={Spacing * 3}
+                color={Colors.text}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            paddingVertical: Spacing * 2,
           }}
         >
-          <TouchableOpacity
+          <Text
             style={{
-              padding: Spacing / 2,
+              fontSize: Spacing * 3.5,
+              fontFamily: Font["poppins-bold"],
+              color: Colors.text,
             }}
           >
-            <Ionicons
-              name="notifications-outline"
-              size={Spacing * 3}
-              color={Colors.text}
+            Ready to practive
+            <Text
+              style={{
+                fontSize: Spacing * 4,
+                color: Colors.primary,
+              }}
+            >
+              {" "}
+              English{" "}
+            </Text>
+            today ?
+          </Text>
+        </View>
+
+        {/* Button */}
+        <View style={styles.buttoncontainer}>
+          <TouchableOpacity
+            onPress={() => navigate("Nhap")}
+            style={{
+              padding: Spacing * 2.5,
+              backgroundColor: "#F6C9C6",
+              marginVertical: Spacing * 1,
+              borderRadius: Spacing,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/images/test-2.png")}
+              style={{
+                width: Spacing * 4,
+                height: Spacing * 4,
+                borderRadius: 100,
+              }}
             />
+            <Text style={styles.text}>Mini Test</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigate("Exercises")}
+            style={{
+              padding: Spacing * 2.5,
+              backgroundColor: "#FBE6A5",
+              marginVertical: Spacing * 1,
+              borderRadius: Spacing,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/images/quiz.png")}
+              style={{
+                width: Spacing * 4,
+                height: Spacing * 4,
+                borderRadius: 100,
+              }}
+            />
+            <Text style={styles.text}>Quiz Game</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigate("Home")}
+            style={{
+              padding: Spacing * 2.5,
+              backgroundColor: "#C8F0CC",
+              marginVertical: Spacing * 1,
+              borderRadius: Spacing,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/images/read.png")}
+              style={{
+                width: Spacing * 4,
+                height: Spacing * 4,
+                borderRadius: 100,
+              }}
+            />
+            <Text style={styles.text}>Speed Reading</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigate("Blog")}
+            style={{
+              padding: Spacing * 2.5,
+              backgroundColor: "#D5EFFD",
+              marginVertical: Spacing * 1,
+              borderRadius: Spacing,
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/images/tips.png")}
+              style={{
+                width: Spacing * 4,
+                height: Spacing * 4,
+                borderRadius: 100,
+              }}
+            />
+            <Text style={styles.text}>Reading Tips</Text>
           </TouchableOpacity>
         </View>
-      </View>
-      <View
-        style={{
-          paddingVertical: Spacing * 2,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: Spacing * 3.5,
-            fontFamily: Font["poppins-bold"],
-            color: Colors.text,
-          }}
-        >
-          Ready to practive
-          <Text
-            style={{
-              fontSize: Spacing * 4,
-              color: Colors.primary,
-            }}
-          >
-            {" "}
-            English{" "}
-          </Text>
-          today ?
-        </Text>
-      </View>
-
-      {/* Button */}
-      <View style={styles.buttoncontainer}>
-      <TouchableOpacity
-         onPress={() => navigate("Nhap")}
-          style={{
-            padding: Spacing * 2.5,
-            backgroundColor: '#F6C9C6',
-            marginVertical: Spacing * 1,
-            borderRadius: Spacing,
-            flexDirection: "row",  
-            alignItems: 'center', 
-          }}
-        >
-          <Image
-            source={require("../assets/images/test-2.png")}
-            style={{ width: Spacing * 4, height: Spacing * 4, borderRadius:100 }}
-          />
-          <Text style={styles.text}>
-            Mini Test
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-         onPress={() => navigate("Exercises")}
-          style={{
-            padding: Spacing * 2.5,
-            backgroundColor: '#FBE6A5',
-            marginVertical: Spacing * 1,
-            borderRadius: Spacing,
-            flexDirection: "row", 
-            alignItems: 'center', 
-          }}
-        >
-          <Image
-            source={require("../assets/images/quiz.png")}
-            style={{ width: Spacing * 4, height: Spacing * 4, borderRadius:100 }}
-          />
-          <Text style={styles.text}>
-            Quiz Game
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-         onPress={() => navigate("Home")}
-          style={{
-            padding: Spacing * 2.5,
-            backgroundColor: '#C8F0CC',
-            marginVertical: Spacing * 1,
-            borderRadius: Spacing,
-            flexDirection: "row", 
-            alignItems: 'center', 
-          }}
-        >
-          <Image
-            source={require("../assets/images/read.png")}
-            style={{ width: Spacing * 4, height: Spacing * 4, borderRadius:100 }}
-          />
-          <Text style={styles.text}>
-            Speed Reading
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-         onPress={() => navigate("Blog")}
-          style={{
-            padding: Spacing * 2.5,
-            backgroundColor: '#D5EFFD',
-            marginVertical: Spacing * 1,
-            borderRadius: Spacing,
-            flexDirection: "row", 
-            alignItems: 'center', 
-          }}
-        >
-          <Image
-            source={require("../assets/images/tips.png")}
-            style={{ width: Spacing * 4, height: Spacing * 4, borderRadius:100 }}
-          />
-          <Text style={styles.text}>
-            Reading Tips
-          </Text>
-        </TouchableOpacity>
-      </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -200,9 +217,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
-  button:{
+  button: {
     padding: Spacing * 2.5,
-    backgroundColor: Colors.primary || '#FAE3DC',
+    backgroundColor: Colors.primary || "#FAE3DC",
     marginVertical: Spacing * 1,
     borderRadius: Spacing,
     shadowColor: Colors.primary,
@@ -214,10 +231,10 @@ const styles = StyleSheet.create({
     shadowRadius: Spacing,
   },
 
-  text:{
+  text: {
     fontFamily: Font["poppins-semiBold"],
-    color: '#333333',
+    color: "#333333",
     fontSize: FontSize.large,
     paddingLeft: Spacing * 2,
-  }
+  },
 });
