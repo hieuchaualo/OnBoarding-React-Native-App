@@ -17,8 +17,7 @@ import { RootStackParamList } from "../../types";
 import AppTextInput from "../../components/AppTextInput";
 import { loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
-
-const regexEmail = /\S+@\S+\.\S+/;
+import { regexEmail } from "../../constants/regexPattern";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -26,16 +25,23 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   const [email, setEmail] = useState("");
   const [isEmailNotValidated, setisEmailNotValidated] = useState(false);
   const [password, setPassword] = useState("");
+  const [isPasswordNotValidated, setisPasswordNotValidated] = useState(false);
 
   const checkEmailInvalid = () => {
     setisEmailNotValidated(!regexEmail.test(email));
     return !regexEmail.test(email);
   };
 
+  const checkPasswordlInvalid = () => {
+    setisPasswordNotValidated(!(password.length >= 8));
+    return !(password.length >= 8);
+  };
+
   const login = async () => {
     try {
       const response: any = await loginAccount({ email, password });
-      if (response.statusCode === 401) return false;
+      if (response?.statusCode === 401) return false;
+      console.log(response)
       await setItemAsync("secure_token", response?.data?.token);
       const account = JSON.stringify({
         username: response.data.account.name,
@@ -111,6 +117,18 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             placeholder="Password"
             secureTextEntry
           />
+          {isPasswordNotValidated && (
+              <Text
+                style={{
+                  fontFamily: Font["poppins-regular"],
+                  fontSize: FontSize.small,
+                  color: "#F00",
+                  alignSelf: "flex-start",
+                }}
+              >
+                Your Password is invalid. Please enter again.
+              </Text>
+            )}
         </View>
 
         <TouchableOpacity onPress={() => navigate("ForgotPassword")}>
@@ -128,7 +146,9 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
         <TouchableOpacity
           onPress={async () => {
-            if (checkEmailInvalid()) {
+            const emailInvalid = checkEmailInvalid();
+            const passwordInvalid = checkPasswordlInvalid();
+            if (emailInvalid || passwordInvalid) {
             } else {
               const isLoginSuccess = await login();
               if (isLoginSuccess) navigate("Home");
@@ -247,4 +267,5 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
 export default LoginScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+});

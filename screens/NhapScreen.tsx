@@ -16,6 +16,7 @@ import Font from "../constants/Font";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const SECTIONS = [ 
   {
@@ -65,6 +66,7 @@ const NhapScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           </View>
         </TouchableOpacity>
       </View>
+      
 
       {SECTIONS.map(({ header, items }) => (
         <View style={styles.section} key={header}>
@@ -97,15 +99,6 @@ const NhapScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
                           <View style={styles.rowSpacer} />
 
-                          
-    {/* 
-                          {(type === 'select' || type === 'link') && (
-                            <FeatherIcon
-                              color="#ababab"
-                              name="chevron-right"
-                              size={22}
-                            />
-                          )} */}
                         </View>
 
                       </View> 
@@ -118,6 +111,8 @@ const NhapScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         </View>
       ))}
     </ScrollView>
+
+    
   </SafeAreaView>
 );
 }

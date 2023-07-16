@@ -12,13 +12,15 @@ import LoginScreen from "../screens/login/LoginScreen";
 import RegisterScreen from "../screens/register/RegisterScreen";
 import Welcome from "../screens/welcome/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
-import ExercisesScreen from "../screens/ExercisesScreen";
+import ExercisesScreen from "../screens/exercises/Exercises";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingScreen from "../screens/SettingScreen";
 import { RootStackParamList } from "../types";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import NhapScreen from "../screens/NhapScreen";
 import BlogScreen from "../screens/BlogScreen";
+import MinitestScreen from "../screens/mini-test/Minitest";
+import ResultScreen from "../screens/result/ResultScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -52,14 +54,15 @@ function RootNavigator() {
       <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="Home" component={HomeScreen}/>
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen}/>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       <Stack.Screen name="Exercises" component={ExercisesScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="Nhap" component={NhapScreen} />
       <Stack.Screen name="Blog" component={BlogScreen} />
-
+      <Stack.Screen name="MiniTest" component={MinitestScreen} />
+      <Stack.Screen name="Result" component={ResultScreen} />
     </Stack.Navigator>
   );
 }

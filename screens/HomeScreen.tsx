@@ -120,7 +120,7 @@ const HomeScreen: React.FC<Props> = (props) => {
         {/* Button */}
         <View style={styles.buttoncontainer}>
           <TouchableOpacity
-            onPress={() => navigate("Nhap")}
+            onPress={() => navigate("MiniTest")}
             style={{
               padding: Spacing * 2.5,
               backgroundColor: "#F6C9C6",
