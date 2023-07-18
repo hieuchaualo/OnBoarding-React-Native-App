@@ -24,8 +24,11 @@ export type RootStackParamList = {
   Setting: undefined;
   Nhap: undefined;
   Blog: undefined;
+  QuizGame: undefined;
   DetailBlog: undefined;
   MiniTest: undefined;
+  HowPlay: undefined;
+  Game2: undefined;
   Result: { 
     finalAnswers: string[],
     finalAnswersForm: string[],

@@ -22,6 +22,9 @@ import BlogScreen from "../screens/BlogScreen";
 import MinitestScreen from "../screens/mini-test/Minitest";
 import ResultScreen from "../screens/result/ResultScreen";
 import DetailBlogScreen from "../screens/DetailBlogScreen";
+import QuizGameScreen from "../screens/QuizGameScreen";
+import HowPlayScreen from "../screens/HowPlayScreen";
+import Game2Screen from "../screens/Game2Screen";
 
 const theme = {
   ...DefaultTheme,
@@ -65,6 +68,9 @@ function RootNavigator() {
       <Stack.Screen name="MiniTest" component={MinitestScreen} />
       <Stack.Screen name="Result" component={ResultScreen} />
       <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
+      <Stack.Screen name="QuizGame" component={QuizGameScreen} />
+      <Stack.Screen name="HowPlay" component={HowPlayScreen} />
+      <Stack.Screen name="Game2" component={Game2Screen} />
     </Stack.Navigator>
   );
 }

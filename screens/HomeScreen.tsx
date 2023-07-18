@@ -162,7 +162,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             <Text style={styles.text}>Quiz Game</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigate("Home")}
+            onPress={() => navigate("QuizGame")}
             style={{
               padding: Spacing * 2.5,
               backgroundColor: "#C8F0CC",
