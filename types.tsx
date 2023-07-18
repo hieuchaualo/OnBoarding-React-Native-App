@@ -24,6 +24,7 @@ export type RootStackParamList = {
   Setting: undefined;
   Nhap: undefined;
   Blog: undefined;
+  DetailBlog: undefined;
   MiniTest: undefined;
   Result: { 
     finalAnswers: string[],

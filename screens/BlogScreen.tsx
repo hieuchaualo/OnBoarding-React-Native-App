@@ -60,9 +60,9 @@ const BlogScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           return (
             <TouchableOpacity
               key={index}
-              onPress={() => {
+              onPress={() => navigate("DetailBlog")}
                 // handle onPress
-              }}>
+              >
               <View style={styles.card}>
                 <Image
                   resizeMode="cover"

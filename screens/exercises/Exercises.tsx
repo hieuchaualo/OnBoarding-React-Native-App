@@ -71,9 +71,9 @@ const ExercisesScreen: React.FC<Props> = ({
   }, []);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.header}>
             <View style={styles.headerAction}>
@@ -112,10 +112,10 @@ const ExercisesScreen: React.FC<Props> = ({
               <Text style={styles.description}>{readingTest.content}</Text>
             </View>
 
-            <View style={styles.container}>
+            <View style = {{paddingTop: 32}}>
               {readingTest.quiz.map((quizz, quizzIndex) => (
-                <View>
-                  <Text>{quizz.question}</Text>
+                <View style={styles.card}>
+                  <Text style = {styles.text} >{quizz.question}</Text>
                   {(quizz.options.length === 0
                     ? TRUE_FALSE_NOTGIVEN_OPTIONS
                     : readingTest.quiz[0].options
@@ -132,17 +132,17 @@ const ExercisesScreen: React.FC<Props> = ({
                       >
                         <View
                           style={[
-                            styles.item,
+                            styles.option,
                             answersForm[quizzIndex] === option
-                              ? { borderBottomColor: Colors.primary }
-                              : { borderBottomColor: Colors.gray },
+                              ? { backgroundColor: "#F6C9C6"}
+                              : { backgroundColor: Colors.gray, },
                           ]}
                         >
                           <Text
                             style={[
-                              styles.text,
+                              styles.optionText,
                               answersForm[quizzIndex] === option
-                                ? { borderBottomColor: Colors.primary }
+                                ? { color: Colors.text}
                                 : { borderBottomColor: Colors.gray },
                             ]}
                           >
@@ -233,23 +233,37 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 10,
     backgroundColor: "Colors.gray",
-    borderColor: "#e5e7eb",
     borderBottomWidth: 2,
     position: "relative",
     overflow: "hidden",
     flexDirection: "row",
     paddingHorizontal: 12,
   },
+  option:{
+    padding: 8,
+    marginVertical: Spacing * 0.5,
+    borderRadius: Spacing,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  optionText: {
+    fontFamily: Font[ "poppins-regular" ],
+    letterSpacing: 0.5,
+    lineHeight: 26,
+    fontSize: FontSize.small,
+  },
   text: {
-    fontSize: 13,
-    fontWeight: "600",
-    color: "#6b7280",
+    fontFamily: Font[ "poppins-semiBold"],
+    color: Colors.text,
+    letterSpacing: 0.5,
+    lineHeight: 26,
+    fontSize: FontSize.medium,
+    paddingBottom:8,
   },
 
   info: {
     marginTop: 12,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
     borderRadius: 20,
   },
   infoTitle: {
@@ -260,62 +274,12 @@ const styles = StyleSheet.create({
     color: "#000000",
     marginBottom: 6,
   },
-
-  infoRatingText: {
-    fontSize: 12,
-    fontWeight: "600",
-    color: "#8e8e93",
-    marginLeft: 2,
-  },
-  infoDescription: {
-    fontWeight: "400",
-    fontSize: 13,
-    lineHeight: 18,
-    letterSpacing: -0.078,
-    color: "#8e8e93",
-  },
   description: {
     fontFamily: Font["poppins-regular"],
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 28,
     fontSize: FontSize.medium,
-  },
-  stats: {
-    marginTop: 12,
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    overflow: "hidden",
-  },
-  statsRow: {
-    flexDirection: "row",
-    backgroundColor: "#f5f5f5",
-    borderTopWidth: 1,
-    borderColor: "#fff",
-  },
-  statsItem: {
-    flexGrow: 2,
-    flexShrink: 1,
-    flexBasis: 0,
-    paddingVertical: 12,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-    borderLeftWidth: 1,
-    borderColor: "#fff",
-  },
-  statsItemText: {
-    fontSize: 13,
-    fontWeight: "400",
-    lineHeight: 18,
-    color: "#8e8e93",
-    marginBottom: 4,
-  },
-  statsItemValue: {
-    fontSize: 16,
-    fontWeight: "600",
-    lineHeight: 20,
-    color: "#000",
   },
   overlayContent: {
     flexDirection: "column",
@@ -342,14 +306,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 1,
-    backgroundColor: "#007aff",
-    borderColor: "#007aff",
+    backgroundColor: Colors.primary,
   },
   btnText: {
-    fontSize: 18,
-    lineHeight: 26,
-    fontWeight: "600",
     color: "#fff",
+    fontFamily: Font[ "poppins-semiBold"],
+    fontSize: FontSize.medium,
+  },
+  card: {
+    padding: 8,
+    alignItems: 'stretch',
+    borderRadius: 12,
+    marginBottom: 16,
+    backgroundColor: '#fff',
   },
 });

@@ -21,6 +21,7 @@ import NhapScreen from "../screens/NhapScreen";
 import BlogScreen from "../screens/BlogScreen";
 import MinitestScreen from "../screens/mini-test/Minitest";
 import ResultScreen from "../screens/result/ResultScreen";
+import DetailBlogScreen from "../screens/DetailBlogScreen";
 
 const theme = {
   ...DefaultTheme,
@@ -63,6 +64,7 @@ function RootNavigator() {
       <Stack.Screen name="Blog" component={BlogScreen} />
       <Stack.Screen name="MiniTest" component={MinitestScreen} />
       <Stack.Screen name="Result" component={ResultScreen} />
+      <Stack.Screen name="DetailBlog" component={DetailBlogScreen} />
     </Stack.Navigator>
   );
 }
