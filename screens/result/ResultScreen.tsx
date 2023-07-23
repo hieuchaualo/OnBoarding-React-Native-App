@@ -16,19 +16,20 @@ import Font from "../../constants/Font";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
+import { fromSecondToDateTime } from "../../utils";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Result">;
 
 const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
+  const { finalAnswersForm, finalAnswers, totalTime } = route.params
   const [score, setScore] = useState(0);
 
   useEffect(() => {
-    console.log(route.params.finalAnswers);
     let _score = 0;
-    route.params.finalAnswers.forEach((answer, answersKeyIndex) => {
+    finalAnswers.forEach((answer, answersKeyIndex) => {
       if (
         answer.toLowerCase() ===
-        route.params.finalAnswersForm[answersKeyIndex].toLowerCase()
+        finalAnswersForm[answersKeyIndex].toLowerCase()
       )
         _score++;
     });
@@ -68,7 +69,7 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
               <View style={styles.row}>
                 <View style={styles.tab}>
                   <Text style={styles.title}>Total questions:
-                    <Text style={styles.score}> {route.params.finalAnswers.length}
+                    <Text style={styles.score}> {finalAnswers.length}
                     </Text>
                   </Text>
                 </View>
@@ -86,30 +87,29 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
                 </View>
                 <View style={[styles.tab, { borderColor: '#DB221A' }]}>
                   <Text style={styles.title}>Incorrect:
-                    <Text style={styles.score}> {route.params.finalAnswers.length - score}
+                    <Text style={styles.score}> {finalAnswers.length - score}
                     </Text>
                   </Text>
                 </View>
                 <View style={styles.tab}>
-                  <Text style={styles.title}>Timer: 2m16</Text>
+                  <Text style={styles.title}>Timer: {
+                    fromSecondToDateTime(totalTime)
+                  }</Text>
                 </View>
                 <View style={[styles.tab, { borderColor: '#D67813' }]}>
                   <Text style={styles.title}>
                     Unanswered:
                     <Text style={styles.score}> {" "}
-                      {
-                        route.params.finalAnswersForm.filter((answer) => answer === "")
-                          .length
-                      }
+                      {finalAnswersForm.filter((answer) => answer === "").length}
                     </Text>
                   </Text>
                 </View>
               </View>
               <View style={styles.card}>
                 <Text style={styles.title2} >Answer Table</Text>
-                {route.params.finalAnswers.map((answer, finalAnswersIndex) => (
+                {finalAnswers.map((answer, finalAnswersIndex) => (
                   <Text style={styles.text} key={finalAnswersIndex} >
-                    {answer} | {route.params.finalAnswersForm[finalAnswersIndex]} {answer.toLowerCase() === route.params.finalAnswersForm[finalAnswersIndex].toLowerCase()
+                    {answer} | {finalAnswersForm[finalAnswersIndex]} {answer.toLowerCase() === finalAnswersForm[finalAnswersIndex].toLowerCase()
                       ? <FeatherIcon
                         color='#1EA431'
                         name="check"

@@ -33,6 +33,7 @@ export type RootStackParamList = {
   Result: { 
     finalAnswers: string[],
     finalAnswersForm: string[],
+    totalTime: number,
   };
 };
 

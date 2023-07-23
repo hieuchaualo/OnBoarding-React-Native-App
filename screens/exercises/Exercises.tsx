@@ -25,7 +25,6 @@ import { toImgUrl } from "../../utils";
 import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
 const { height } = Dimensions.get("window");
 
-const TRUE_FALSE_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
 type Props = NativeStackScreenProps<RootStackParamList, "Exercises">;
 
 const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
@@ -33,6 +32,7 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
   const { navigate } = navigation;
 
   const [isTimeout, setIsTimeout] = useState<boolean>(false);
+  const [totalTime, setTotalTime] = useState<number>(0);
 
   const [answersForm, setAnswersForm] = React.useState([""]);
   const [miniTest, setMiniTest] = React.useState<IMiniTest>();
@@ -49,6 +49,11 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
     fetchMiniTestById()
     return () => setMiniTest(undefined)
   }, [miniTestId]);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTotalTime(totalTime + 1), 1000);
+    return () => clearInterval(interval);
+  }, [totalTime])
 
   const handleOnAnswer = (quizIndex: number, option: string) => {
     const newAnswerForm = answersForm.map((answerValue, answersIndex) =>
@@ -144,10 +149,19 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
           <View style={styles.overlayContentTop}>
             <TimeCountdown
               style={styles.text}
-              timeRemainingInSecond={10}
+              timeRemainingInSecond={100}
               handleOnTimeout={handleOnTimeout}
+              isReverse={false}
+            />
+          </View>
+          <View style={styles.overlayContentTop}>
+            {isTimeout && <TimeCountdown
+              style={{ ...styles.text, color: Colors.danger }}
+              timeRemainingInSecond={0}
+              handleOnTimeout={() => { }}
               isReverse={true}
             />
+            }
           </View>
         </View>
 
@@ -158,6 +172,7 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
               {
                 finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
                 finalAnswersForm: answersForm,
+                totalTime,
               }
             )
             else navigate(
@@ -165,6 +180,7 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
               {
                 finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
                 finalAnswersForm: answersForm,
+                totalTime,
               }
             );
           }}
@@ -289,7 +305,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    marginBottom: 2,
   },
   timer: {
     fontSize: 16,

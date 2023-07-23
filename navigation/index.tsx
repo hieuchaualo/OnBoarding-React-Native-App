@@ -60,7 +60,7 @@ function RootNavigator() {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-      <Stack.Screen name="Exercises" component={ExercisesScreen} initialParams={{ miniTestId: '' }}/>
+      <Stack.Screen name="Exercises" component={ExercisesScreen}/>
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="Nhap" component={NhapScreen} />
