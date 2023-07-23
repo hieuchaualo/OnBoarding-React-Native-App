@@ -11,7 +11,7 @@ import Colors from "../constants/Colors";
 import LoginScreen from "../screens/login/LoginScreen";
 import RegisterScreen from "../screens/register/RegisterScreen";
 import Welcome from "../screens/welcome/WelcomeScreen";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/home/HomeScreen";
 import ExercisesScreen from "../screens/exercises/Exercises";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingScreen from "../screens/SettingScreen";

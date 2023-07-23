@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,100 +9,85 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
-const items = [
-  {
-    img: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
-    name: 'Pacific navigation and voyaging',
-    airport: 'DXB',
-    departure: '2022-10-10',
-    arrival: '2023-04-01',
-    price: 966,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=986&q=80',
-    name: 'Italy',
-    airport: 'VCE',
-    departure: '2022-10-10',
-    arrival: '2023-04-01',
-    price: 652,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1623536167776-922ccb1ff749?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=544&q=80',
-    name: 'Bosnia',
-    airport: 'BNX',
-    departure: '2022-10-10',
-    arrival: '2023-04-01',
-    price: 566,
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1554939437-ecc492c67b78?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80',
-    name: 'Spain',
-    airport: 'BCN',
-    departure: '2022-10-10',
-    arrival: '2023-04-01',
-    price: 602,
-  },
-];
+import { IMiniTest, MiniTestTypes } from '../../interfaces';
+import { AxiosResponse } from 'axios';
+import { getMiniTestsList } from '../../api';
+import { toImgUrl } from '../../utils';
 
 
-interface ReadingTests {
-  content: string;
-  title: string;
+const tabs = ['TRUE-FALSE-NOT GIVEN', 'Sentence Completion', 'Multiple Choice'];
+const tabsMappingMiniTestTypes = {
+  'TRUE-FALSE-NOT GIVEN': MiniTestTypes.TrueFalse,
+  'Sentence Completion': MiniTestTypes.FillTheBlank,
+  'Multiple Choice': MiniTestTypes.MultipleChoice,
 }
-
-const tabs = [{ name: 'TRUE-FALSE-NOT GIVEN' }, { name: 'Sentence Completion' }, { name: 'Multiple Choice' }];
 type Props = NativeStackScreenProps<RootStackParamList, "MiniTest">;
-  
-const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
-  const [value, setValue] = React.useState(0);
-  const [readingTestList, setReadingTestList] = React.useState<ReadingTests>({
-    content: "",
-    title: "",
 
-  });
+const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+  const [currentTab, setCurrentTab] = React.useState(tabs[0]);
+  const [miniTestsList, setMiniTestsList] = React.useState<IMiniTest[]>([]);
+
+  const fetchMiniTestsList = async (option: MiniTestTypes) => {
+    try {
+      const response: AxiosResponse<any, any> = await getMiniTestsList(option);
+      if (response?.status === 200) {
+        const responseData = response.data.data.data
+        setMiniTestsList(responseData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    let option = MiniTestTypes.TrueFalse
+    if (currentTab === tabs[1]) option = MiniTestTypes.FillTheBlank
+    if (currentTab === tabs[2]) option = MiniTestTypes.MultipleChoice
+    fetchMiniTestsList(option)
+  }, [currentTab])
+
   return (
-  <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
-    {/* <View style={styles.container}> */}
-    <View style={styles.header}>
-    <ScrollView  horizontal={true}> 
-      <View style={styles.container}>
-        {tabs.map((item, index) => {
-          const isActive = index === value;
-          return (
-            <View style={{ flex: 1 }} key={item.name}>
-              <TouchableWithoutFeedback
-                onPress={() => {
-                  setValue(index);
-                }}>
-                <View
-                  style={[
-                    styles.item,
-                    isActive && { borderBottomColor:Colors.primary,},
-                  ]}>
-                  <Text style={[styles.text, isActive && { color: Colors.primary, }]}>
-                    {item.name}
-                  </Text>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
+      {/* <View style={styles.container}> */}
+      <View style={styles.header}>
+        <ScrollView horizontal={true}>
+          <View style={styles.container}>
+            {tabs.map((tab) => {
+              const isActive = tab === currentTab;
+              return (
+                <View style={{ flex: 1 }} key={tab}>
+                  <TouchableWithoutFeedback
+                    onPress={() => {
+                      setCurrentTab(tab);
+                    }}>
+                    <View
+                      style={[
+                        styles.item,
+                        isActive && { borderBottomColor: Colors.primary, },
+                      ]}>
+                      <Text style={[styles.text, isActive && { color: Colors.primary, }]}>
+                        {tab}
+                      </Text>
+                    </View>
+                  </TouchableWithoutFeedback>
                 </View>
-              </TouchableWithoutFeedback>
-            </View>
-          );
-        })}
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
-    </ScrollView>
-    </View>
-    <View style={styles.placeholder}>
-      <ScrollView style={{padding: 16,}}>
-        {items.map(
-          ({ img, name, airport}, index) => {
+
+      <View style={styles.placeholder}>
+        <ScrollView style={{ padding: 16, }}>
+          {miniTestsList.map((miniTest) => {
             return (
               <TouchableOpacity
-                key={index}
+                key={miniTest?._id}
                 onPress={() => {
                   // handle onPress
                 }}>
@@ -110,13 +95,13 @@ const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
                   <Image
 
                     resizeMode="cover"
-                    source={{ uri: img }}
+                    source={{ uri: toImgUrl(miniTest?.thumbnail) }}
                     style={styles.cardImg}
                   />
 
                   <View style={styles.cardBody}>
                     <Text>
-                      <Text style={styles.cardTitle}>{name}</Text>{' '}
+                      <Text style={styles.cardTitle}>{miniTest?.title}</Text>{' '}
 
                     </Text>
                     <TouchableOpacity
@@ -132,12 +117,12 @@ const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               </TouchableOpacity>
             );
           },
-        )}
-      </ScrollView>
-          </View>
+          )}
+        </ScrollView>
+      </View>
 
-  </SafeAreaView>
-  
+    </SafeAreaView>
+
   );
 }
 

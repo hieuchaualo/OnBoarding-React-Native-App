@@ -18,6 +18,7 @@ import AppTextInput from "../../components/AppTextInput";
 import { loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";
+import { AxiosResponse } from "axios";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -39,17 +40,19 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
   const login = async () => {
     try {
-      const response: any = await loginAccount({ email, password });
-      if (response?.statusCode === 401) return false;
-      console.log(response)
-      await setItemAsync("secure_token", response?.data?.token);
-      const account = JSON.stringify({
-        username: response.data.account.name,
-        email: response.data.account.email,
-        id: response.data.account._id,
-      });
-      await setItemAsync("account", account);
-      return true;
+      const response: AxiosResponse<any, any> = await loginAccount({ email, password });
+      if (response?.status === 201) {
+        const responseData = response.data.data
+        await setItemAsync("secure_token", responseData.token);
+        const account = JSON.stringify({
+          username: responseData.account.name,
+          email: responseData.account.email,
+          id: responseData.account._id,
+        });
+        await setItemAsync("account", account);
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error(error);
       return false;
@@ -118,17 +121,17 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             secureTextEntry
           />
           {isPasswordNotValidated && (
-              <Text
-                style={{
-                  fontFamily: Font["poppins-regular"],
-                  fontSize: FontSize.small,
-                  color: "#F00",
-                  alignSelf: "flex-start",
-                }}
-              >
-                Your Password is invalid. Please enter again.
-              </Text>
-            )}
+            <Text
+              style={{
+                fontFamily: Font["poppins-regular"],
+                fontSize: FontSize.small,
+                color: "#F00",
+                alignSelf: "flex-start",
+              }}
+            >
+              Your Password is invalid. Please enter again.
+            </Text>
+          )}
         </View>
 
         <TouchableOpacity onPress={() => navigate("ForgotPassword")}>

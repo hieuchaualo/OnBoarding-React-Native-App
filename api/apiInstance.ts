@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 import axios from "axios";
 import { getItemAsync, setItemAsync } from 'expo-secure-store';
-import { API_BASE_URI } from "../constants/Urls";
+import { API_BASE_URI } from "../constants";
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URI,
@@ -29,8 +29,8 @@ axiosInstance.interceptors.request.use(async config => {
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response?.data,
-  async (error) => {
+  response => response,
+  async error => {
     if (error?.response?.data?.statusCode === 401) {
       await setItemAsync('secure_token', '');
     }

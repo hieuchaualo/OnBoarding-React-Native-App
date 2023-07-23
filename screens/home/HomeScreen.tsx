@@ -9,18 +9,19 @@ import {
   Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
-import Colors from "../constants/Colors";
-import Font from "../constants/Font";
+import Spacing from "../../constants/Spacing";
+import FontSize from "../../constants/FontSize";
+import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types";
 import { getItemAsync } from "expo-secure-store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const HomeScreen: React.FC<Props> = (props) => {
+  const navigate = props.navigation.navigate;
   const [data, setData] = useState({ username: "unnamed" });
   useEffect(() => {
     (async () => {
@@ -29,7 +30,6 @@ const HomeScreen: React.FC<Props> = (props) => {
       console.log(JSON.parse(account || ""));
     })();
   }, []);
-  const navigate = props.navigation.navigate;
 
   return (
     <SafeAreaView>
@@ -53,7 +53,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <Image
-              source={require("../assets/images/avatar.jpg")}
+              source={require("../../assets/images/avatar.jpg")}
               style={{
                 width: Spacing * 4,
                 height: Spacing * 4,
@@ -131,7 +131,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <Image
-              source={require("../assets/images/test-2.png")}
+              source={require("../../assets/images/test-2.png")}
               style={{
                 width: Spacing * 4,
                 height: Spacing * 4,
@@ -152,7 +152,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <Image
-              source={require("../assets/images/quiz.png")}
+              source={require("../../assets/images/quiz.png")}
               style={{
                 width: Spacing * 4,
                 height: Spacing * 4,
@@ -173,7 +173,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <Image
-              source={require("../assets/images/read.png")}
+              source={require("../../assets/images/read.png")}
               style={{
                 width: Spacing * 4,
                 height: Spacing * 4,
@@ -194,7 +194,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <Image
-              source={require("../assets/images/tips.png")}
+              source={require("../../assets/images/tips.png")}
               style={{
                 width: Spacing * 4,
                 height: Spacing * 4,

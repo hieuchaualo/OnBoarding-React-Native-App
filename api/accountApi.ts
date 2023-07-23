@@ -5,11 +5,11 @@ function getAccount() {
 }
 
 function createAccount(formBody: any) {
-  return axiosInstance.post('/accounts/create', formBody)
+  return axiosInstance.post('/accounts/register', formBody)
 }
 
 function loginAccount(formBody: any) {
-  return axiosInstance.post('/accounts/signin', formBody)
+  return axiosInstance.post('/accounts/login', formBody)
 }
 
 export {
