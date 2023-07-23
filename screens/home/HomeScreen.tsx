@@ -15,7 +15,7 @@ import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../navigation/types";
 import { getItemAsync } from "expo-secure-store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
@@ -23,12 +23,14 @@ type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 const HomeScreen: React.FC<Props> = (props) => {
   const navigate = props.navigation.navigate;
   const [data, setData] = useState({ username: "unnamed" });
+
   useEffect(() => {
-    (async () => {
+    const getAccountFromSucreStore = async () => {
       const account = await getItemAsync("account");
-      setData(JSON.parse(account || ""));
-      console.log(JSON.parse(account || ""));
-    })();
+      setData(JSON.parse(account ?? ""));
+    };
+    getAccountFromSucreStore()
+    return () => setData({ username: "unnamed" })
   }, []);
 
   return (
@@ -141,7 +143,9 @@ const HomeScreen: React.FC<Props> = (props) => {
             <Text style={styles.text}>Mini Test</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigate("Exercises")}
+            onPress={() => {
+              // ha ha handle here
+            }}
             style={{
               padding: Spacing * 2.5,
               backgroundColor: "#FBE6A5",

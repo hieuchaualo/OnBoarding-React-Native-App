@@ -15,7 +15,7 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../navigation/types";
 import AppTextInput from "../components/AppTextInput";
 const { height } = Dimensions.get("window");
 

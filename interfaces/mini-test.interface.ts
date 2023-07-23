@@ -3,11 +3,11 @@ import { IAccount } from './account.interface';
 import { MiniTestTypes } from './mini-test-types.enum';
 
 export interface IMiniTest {
-  _id?: string;
+  _id: string;
   title?: string;
   content?: string;
   typeOfQuiz?: string | MiniTestTypes;
-  quizzes?: [IQuiz] | [string];
+  quizzes?: IQuiz[];
   thumbnail?: string;
   creator?: string | IAccount;
 }

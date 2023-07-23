@@ -15,7 +15,7 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../navigation/types";
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 const SECTIONS = [ 

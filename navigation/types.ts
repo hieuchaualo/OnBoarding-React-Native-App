@@ -4,7 +4,6 @@
  */
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Dispatch, SetStateAction } from "react";
 
 declare global {
   namespace ReactNavigation {
@@ -19,7 +18,9 @@ export type RootStackParamList = {
   Home: undefined;
   ForgotPassword: undefined;
   NewPassword: undefined;
-  Exercises: undefined;
+  Exercises: { 
+    miniTestId: string,
+  };
   Profile: undefined;
   Setting: undefined;
   Nhap: undefined;

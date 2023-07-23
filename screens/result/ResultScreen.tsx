@@ -1,11 +1,9 @@
 import {
   Dimensions,
-  ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  Image,
   StatusBar,
   TouchableOpacity,
   View,
@@ -16,20 +14,18 @@ import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { useForm, Controller } from "react-hook-form";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
-import AppTextInput from "../../components/AppTextInput";
-import Icon from "react-native-vector-icons/Feather";
-const { height } = Dimensions.get("window");
+import { RootStackParamList } from "../../navigation/types";
+
 type Props = NativeStackScreenProps<RootStackParamList, "Result">;
 
 const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
   const [score, setScore] = useState(0);
+
   useEffect(() => {
     console.log(route.params.finalAnswers);
     let _score = 0;
-    route.params.finalAnswers.map((answer, answersKeyIndex) => {
+    route.params.finalAnswers.forEach((answer, answersKeyIndex) => {
       if (
         answer.toLowerCase() ===
         route.params.finalAnswersForm[answersKeyIndex].toLowerCase()
@@ -38,106 +34,107 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
     });
     setScore(_score);
   }, []);
+
   return (
     <View style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
-    <StatusBar barStyle="dark-content" />
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <View style={styles.headerAction}>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <FeatherIcon name="arrow-left" size={24} />
-            </TouchableOpacity>
-          </View>
- 
-          <Text style={styles.headerTitle}>Result</Text>
- 
-          <View style={[styles.headerAction, { alignItems: "flex-end" }]}>
-            <TouchableOpacity
-              onPress={() => {
-                // handle onPress
-              }}
-            >
-              <FeatherIcon name="more-vertical" size={24} />
-            </TouchableOpacity>
-          </View>
-        </View>
-         <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
-      <View>
-        <View style = {styles.row}>
-          <View style={styles.tab}>
-          <Text style = {styles.title}>Total questions: 
-            <Text style = {styles.score}> {route.params.finalAnswers.length}
-            </Text>
-          </Text>
-          </View>
-          <View style={[styles.tab, {borderColor: '#1EA431'} ]}>
-          <Text style = {styles.title}>Correct: 
-            <Text style={styles.score}>  {score}
-            </Text>
-          </Text>
-          </View>          
-          <View style={styles.tab}>
-          <Text style = {styles.title}>Marks: 
-            <Text style = {styles.score}> {score}
-            </Text>
-          </Text>
-          </View> 
-          <View style={[styles.tab, {borderColor: '#DB221A'} ]}>
-          <Text style = {styles.title}>Incorrect: 
-            <Text style = {styles.score}> {route.params.finalAnswers.length - score}
-            </Text>
-          </Text>
-          </View> 
-          <View style={styles.tab}>
-          <Text style = {styles.title}>Timer: 2m16</Text>
-          </View> 
-          <View style={[styles.tab, {borderColor: '#D67813'} ]}>
-          <Text style = {styles.title}>
-            Unanwsered:
-            <Text style = {styles.score}> {" "}
-              {
-                route.params.finalAnswersForm.filter((answer) => answer === "")
-                  .length
-              }
-            </Text>
-          </Text>
-          </View>          
-      </View>
-      <View style = {styles.card}>
-      <Text style = {styles.title2} >Answer Table</Text>
-      {route.params.finalAnswers.map((answer, finalAnswersIndex) => (
-          <Text style = {styles.text}>
-            {answer}  | {route.params.finalAnswersForm[finalAnswersIndex]}  {answer.toLowerCase() === route.params.finalAnswersForm[finalAnswersIndex].toLowerCase()
-              ? <FeatherIcon
-              color='#1EA431'
-              name="check"
-              size={22}
-            />
-              : <FeatherIcon
-              color='#DB221A'
-              name="x"
-              size={22}
-            />
-              }
-          </Text>
-        ))} 
-        
-      </View>
+      <StatusBar barStyle="dark-content" />
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <View style={styles.headerAction}>
+              <TouchableOpacity
+                onPress={() => {
+                  // handle onPress
+                }}
+              >
+                <FeatherIcon name="arrow-left" size={24} />
+              </TouchableOpacity>
+            </View>
 
-      </View>
-        
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-  </View>
- );
- };
-   
+            <Text style={styles.headerTitle}>Result</Text>
+
+            <View style={[styles.headerAction, { alignItems: "flex-end" }]}>
+              <TouchableOpacity
+                onPress={() => {
+                  // handle onPress
+                }}
+              >
+                <FeatherIcon name="more-vertical" size={24} />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
+            <View>
+              <View style={styles.row}>
+                <View style={styles.tab}>
+                  <Text style={styles.title}>Total questions:
+                    <Text style={styles.score}> {route.params.finalAnswers.length}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={[styles.tab, { borderColor: '#1EA431' }]}>
+                  <Text style={styles.title}>Correct:
+                    <Text style={styles.score}>  {score}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={styles.tab}>
+                  <Text style={styles.title}>Marks:
+                    <Text style={styles.score}> {score}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={[styles.tab, { borderColor: '#DB221A' }]}>
+                  <Text style={styles.title}>Incorrect:
+                    <Text style={styles.score}> {route.params.finalAnswers.length - score}
+                    </Text>
+                  </Text>
+                </View>
+                <View style={styles.tab}>
+                  <Text style={styles.title}>Timer: 2m16</Text>
+                </View>
+                <View style={[styles.tab, { borderColor: '#D67813' }]}>
+                  <Text style={styles.title}>
+                    Unanswered:
+                    <Text style={styles.score}> {" "}
+                      {
+                        route.params.finalAnswersForm.filter((answer) => answer === "")
+                          .length
+                      }
+                    </Text>
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.card}>
+                <Text style={styles.title2} >Answer Table</Text>
+                {route.params.finalAnswers.map((answer, finalAnswersIndex) => (
+                  <Text style={styles.text} key={finalAnswersIndex} >
+                    {answer} | {route.params.finalAnswersForm[finalAnswersIndex]} {answer.toLowerCase() === route.params.finalAnswersForm[finalAnswersIndex].toLowerCase()
+                      ? <FeatherIcon
+                        color='#1EA431'
+                        name="check"
+                        size={22}
+                      />
+                      : <FeatherIcon
+                        color='#DB221A'
+                        name="x"
+                        size={22}
+                      />
+                    }
+                  </Text>
+                ))}
+
+              </View>
+
+            </View>
+
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    </View>
+  );
+};
+
 
 export default ResultScreen;
 const styles = StyleSheet.create({
@@ -170,9 +167,9 @@ const styles = StyleSheet.create({
     // paddingHorizontal: Spacing * 2,
     paddingTop: Spacing * 2,
   },
-  title:{
+  title: {
     textAlign: 'left',
-    fontFamily: Font[ "poppins-regular" ],
+    fontFamily: Font["poppins-regular"],
     color: Colors.text,
     letterSpacing: 0.5,
     fontSize: FontSize.medium,
@@ -182,12 +179,12 @@ const styles = StyleSheet.create({
     borderLeftStyle: 'solid',
   },
 
-  score:{
+  score: {
     color: Colors.primary,
     fontSize: FontSize.large,
-    fontFamily: Font[ "poppins-bold" ]
+    fontFamily: Font["poppins-bold"]
   },
-  tab:{
+  tab: {
     alignSelf: 'flex-start',
     marginHorizontal: '1%',
     marginBottom: 6,
@@ -205,19 +202,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title2: {
-    fontFamily: Font[ "poppins-semiBold"],
+    fontFamily: Font["poppins-semiBold"],
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,
     fontSize: FontSize.medium,
-    paddingBottom:8,
+    paddingBottom: 8,
   },
   text: {
-    fontFamily: Font[ "poppins-regular"],
+    fontFamily: Font["poppins-regular"],
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,
     fontSize: FontSize.medium,
-    paddingBottom:8,
+    paddingBottom: 8,
   },
 });

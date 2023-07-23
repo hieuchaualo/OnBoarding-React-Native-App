@@ -16,7 +16,7 @@ import {
   import Font from "../constants/Font";
   import { Ionicons } from "@expo/vector-icons";
   import { NativeStackScreenProps } from "@react-navigation/native-stack";
-  import { RootStackParamList } from "../types";
+  import { RootStackParamList } from "../navigation/types";
   import { getItemAsync } from "expo-secure-store";
   const {width, height} = Dimensions.get('window');
   

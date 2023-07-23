@@ -19,7 +19,7 @@ import Colors from "../constants/Colors";
 import Font from "../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../navigation/types";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { getItemAsync } from "expo-secure-store";
 import { getReadingTest, getReadingTests } from "../api/readingTestApi";

@@ -8,39 +8,44 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
+  ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../navigation/types";
 import { IMiniTest, MiniTestTypes } from '../../interfaces';
 import { AxiosResponse } from 'axios';
 import { getMiniTestsList } from '../../api';
 import { toImgUrl } from '../../utils';
+import { LoadingView } from '../../components';
+const { height } = Dimensions.get("window");
 
 
 const tabs = ['TRUE-FALSE-NOT GIVEN', 'Sentence Completion', 'Multiple Choice'];
-const tabsMappingMiniTestTypes = {
-  'TRUE-FALSE-NOT GIVEN': MiniTestTypes.TrueFalse,
-  'Sentence Completion': MiniTestTypes.FillTheBlank,
-  'Multiple Choice': MiniTestTypes.MultipleChoice,
-}
+
 type Props = NativeStackScreenProps<RootStackParamList, "MiniTest">;
 
-const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+const MinitestScreen: React.FC<Props> = ({ navigation }) => {
+  const { navigate } = navigation;
   const [currentTab, setCurrentTab] = React.useState(tabs[0]);
+  const [isShowLoading, setIsShowLoading] = React.useState(false);
   const [miniTestsList, setMiniTestsList] = React.useState<IMiniTest[]>([]);
 
   const fetchMiniTestsList = async (option: MiniTestTypes) => {
+    setIsShowLoading(true)
     try {
       const response: AxiosResponse<any, any> = await getMiniTestsList(option);
       if (response?.status === 200) {
         const responseData = response.data.data.data
         setMiniTestsList(responseData);
-      }
+        setIsShowLoading(false)
+      } else setIsShowLoading(false)
     } catch (error) {
       console.error(error);
+      setIsShowLoading(false)
     }
   }
 
@@ -48,7 +53,10 @@ const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
     let option = MiniTestTypes.TrueFalse
     if (currentTab === tabs[1]) option = MiniTestTypes.FillTheBlank
     if (currentTab === tabs[2]) option = MiniTestTypes.MultipleChoice
+
     fetchMiniTestsList(option)
+
+    return setMiniTestsList([])
   }, [currentTab])
 
   return (
@@ -83,41 +91,44 @@ const MinitestScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
       </View>
 
       <View style={styles.placeholder}>
-        <ScrollView style={{ padding: 16, }}>
-          {miniTestsList.map((miniTest) => {
-            return (
-              <TouchableOpacity
-                key={miniTest?._id}
-                onPress={() => {
-                  // handle onPress
-                }}>
-                <View style={styles.card}>
-                  <Image
+        <ScrollView style={{ paddingHorizontal: 16, paddingBottom: 16 }} >
+          {isShowLoading
+            ? <View style={{ marginTop: height / 2.5 }}>
+              <LoadingView />
+            </View>
+            : miniTestsList.map((miniTest) => {
+              return (
+                <TouchableOpacity
+                  key={miniTest._id}
+                  onPress={() => {
+                    navigate('Exercises', { miniTestId: miniTest._id })
+                    // handle onPress
+                  }}>
+                  <View style={styles.card}>
+                    <Image
+                      resizeMode="cover"
+                      source={{ uri: toImgUrl(miniTest.thumbnail) }}
+                      style={styles.cardImg}
+                    />
 
-                    resizeMode="cover"
-                    source={{ uri: toImgUrl(miniTest?.thumbnail) }}
-                    style={styles.cardImg}
-                  />
-
-                  <View style={styles.cardBody}>
-                    <Text>
-                      <Text style={styles.cardTitle}>{miniTest?.title}</Text>{' '}
-
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        // handle onPress
-                      }}>
-                      <View style={styles.btn}>
-                        <Text style={styles.btnText}>Book now</Text>
-                      </View>
-                    </TouchableOpacity>
+                    <View style={styles.cardBody}>
+                      <Text>
+                        <Text style={styles.cardTitle}>{miniTest.title}</Text>{' '}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          // handle onPress
+                        }}>
+                        <View style={styles.btn}>
+                          <Text style={styles.btnText}>Take test</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            );
-          },
-          )}
+                </TouchableOpacity>
+              );
+            },
+            )}
         </ScrollView>
       </View>
 
@@ -155,7 +166,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   text: {
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: '600',
     color: '#6b7280',
   },
@@ -204,7 +215,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
   },
   btnText: {
-    fontSize: 13,
+    fontSize: 14,
     lineHeight: 18,
     fontWeight: '600',
     color: '#fff',

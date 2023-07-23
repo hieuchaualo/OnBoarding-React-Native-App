@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
-  Image,
-  Alert,
   TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -17,58 +15,57 @@ import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
-import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../navigation/types";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { getItemAsync } from "expo-secure-store";
-import { getReadingTest, getReadingTests } from "../../api/readingTestApi";
-import { set } from "react-hook-form";
+import { getMiniTestById } from "../../api";
+import { IMiniTest, MiniTestTypes } from "../../interfaces";
+import { LoadingView } from "../../components";
+import { toImgUrl } from "../../utils";
+import { AnswerByOptions, AnswerByTextInput } from "./components";
 const { height } = Dimensions.get("window");
 
-interface IQuiz {
-  question: string;
-  options: string[];
-  answers: string[];
-}
-interface ReadingTests {
-  content: string;
-  title: string;
-  quiz: [IQuiz];
-}
-
-const TRUE_FALSE_NOTGIVEN_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
+const TRUE_FALSE_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
 type Props = NativeStackScreenProps<RootStackParamList, "Exercises">;
 
-const ExercisesScreen: React.FC<Props> = ({
-  navigation: { navigate },
-}) => {
+const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
+  const { miniTestId } = route.params;
+  const { navigate } = navigation;
   const [isTimerStart, setIsTimerStart] = useState(true);
   const [timerDuration, setTimerDuration] = useState(600000);
   const [resetTimer, setResetTimer] = useState(false);
-  const [value, setValue] = React.useState("");
+
   const [answersForm, setAnswersForm] = React.useState([""]);
-  const [readingTest, setReadingTest] = React.useState<ReadingTests>({
-    content: "",
-    title: "",
-    quiz: [
-      {
-        question: "",
-        options: [],
-        answers: [],
-      },
-    ],
-  });
+  const [miniTest, setMiniTest] = React.useState<IMiniTest>();
+
   useEffect(() => {
-    (async () => {
-      const listReadingTest = await getReadingTests();
-      const _listReadingTest = listReadingTest.data.data;
-      const _readingTest = await getReadingTest(_listReadingTest[0]._id);
-      setReadingTest(_readingTest.data);
-      setAnswersForm(Array(_readingTest.data.quiz.length).fill(""));
-    })();
-    answersForm.map((answer) => console.log(answer));
-  }, []);
+    const fetchMiniTestById = async () => {
+      const response = await getMiniTestById(miniTestId);
+      if (response.status === 200) {
+        const miniTestData: IMiniTest = response.data.data
+        setMiniTest(miniTestData);
+        console.log(miniTestData)
+        setAnswersForm(Array(miniTestData.quizzes?.length).fill(""));
+      }
+    }
+    fetchMiniTestById()
+    return () => setMiniTest(undefined)
+  }, [miniTestId]);
+
+  const handleOnAnswer = (quizIndex: number, option: string) => {
+    const newAnswerForm = answersForm.map((answerValue, answersIndex) =>
+      answersIndex === quizIndex ? option : answerValue
+    );
+    setAnswersForm(newAnswerForm);
+  }
+
+  if (!miniTest) return (
+    <SafeAreaView style={{ backgroundColor: '#f3f5f9', height }} >
+      <View style={{ marginTop: height / 2.2 }}>
+        <LoadingView />
+      </View>
+    </SafeAreaView>
+  )
 
   return (
     <View style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
@@ -105,53 +102,34 @@ const ExercisesScreen: React.FC<Props> = ({
                 height: height / 4,
               }}
               resizeMode="contain"
-              source={require("../../assets/images/ha.jpg")}
+              source={{ uri: toImgUrl(miniTest.thumbnail) }}
             />
             <View style={styles.info}>
-              <Text style={styles.infoTitle}>{readingTest.title}</Text>
-              <Text style={styles.description}>{readingTest.content}</Text>
+              <Text style={styles.infoTitle}>{miniTest.title}</Text>
+              <Text style={styles.description}>{miniTest.content}</Text>
             </View>
 
-            <View style = {{paddingTop: 32}}>
-              {readingTest.quiz.map((quizz, quizzIndex) => (
-                <View style={styles.card}>
-                  <Text style = {styles.text} >{quizz.question}</Text>
-                  {(quizz.options.length === 0
-                    ? TRUE_FALSE_NOTGIVEN_OPTIONS
-                    : readingTest.quiz[0].options
-                  ).map((option, optionIndex) => (
-                    <View key={optionIndex}>
-                      <TouchableWithoutFeedback
-                        onPress={() => {
-                          const newAnswerForm = answersForm.map(
-                            (answerValue, answersIndex) =>
-                              answersIndex === quizzIndex ? option : answerValue
-                          );
-                          setAnswersForm(newAnswerForm);
-                        }}
-                      >
-                        <View
-                          style={[
-                            styles.option,
-                            answersForm[quizzIndex] === option
-                              ? { backgroundColor: "#F6C9C6"}
-                              : { backgroundColor: Colors.gray, },
-                          ]}
-                        >
-                          <Text
-                            style={[
-                              styles.optionText,
-                              answersForm[quizzIndex] === option
-                                ? { color: Colors.text}
-                                : { borderBottomColor: Colors.gray },
-                            ]}
-                          >
-                            {option}
-                          </Text>
-                        </View>
-                      </TouchableWithoutFeedback>
-                    </View>
-                  ))}
+            <View style={{ paddingTop: 32, marginBottom: 100 }}>
+              {miniTest.quizzes?.map((quiz, quizIndex) => (
+                <View style={styles.card} key={quiz._id}>
+                  <Text style={styles.text} >
+                    {quizIndex + 1}. {quiz.question}
+                  </Text>
+                  {miniTest.typeOfQuiz === MiniTestTypes.FillTheBlank
+                    ? <AnswerByTextInput
+                      quizIndex={quizIndex}
+                      answer={answersForm[quizIndex]}
+                      handleOnAnswer={handleOnAnswer}
+                    />
+                    : <AnswerByOptions
+                      quizIndex={quizIndex}
+                      options={quiz.options}
+                      answersForm={answersForm}
+                      handleOnAnswer={handleOnAnswer}
+                      optionStyle={styles.option}
+                      optionTextStyle={styles.optionText}
+                    />
+                  }
                 </View>
               ))}
             </View>
@@ -167,7 +145,7 @@ const ExercisesScreen: React.FC<Props> = ({
         <TouchableOpacity
           onPress={() => {
             navigate("Result", {
-              finalAnswers: readingTest.quiz.map(quizz => quizz.answers[0]),
+              finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
               finalAnswersForm: answersForm,
             });
           }}
@@ -239,7 +217,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: 12,
   },
-  option:{
+  option: {
     padding: 8,
     marginVertical: Spacing * 0.5,
     borderRadius: Spacing,
@@ -247,18 +225,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   optionText: {
-    fontFamily: Font[ "poppins-regular" ],
+    paddingHorizontal: 10,
+    fontFamily: Font["poppins-regular"],
     letterSpacing: 0.5,
     lineHeight: 26,
     fontSize: FontSize.small,
   },
   text: {
-    fontFamily: Font[ "poppins-semiBold"],
+    fontFamily: Font["poppins-semiBold"],
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,
     fontSize: FontSize.medium,
-    paddingBottom:8,
+    paddingBottom: 8,
   },
 
   info: {
@@ -310,7 +289,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "#fff",
-    fontFamily: Font[ "poppins-semiBold"],
+    fontFamily: Font["poppins-semiBold"],
     fontSize: FontSize.medium,
   },
   card: {

@@ -15,7 +15,7 @@ import HomeScreen from "../screens/home/HomeScreen";
 import ExercisesScreen from "../screens/exercises/Exercises";
 import ProfileScreen from "../screens/ProfileScreen";
 import SettingScreen from "../screens/SettingScreen";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "./types";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import NhapScreen from "../screens/NhapScreen";
 import BlogScreen from "../screens/BlogScreen";
@@ -60,7 +60,7 @@ function RootNavigator() {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-      <Stack.Screen name="Exercises" component={ExercisesScreen} />
+      <Stack.Screen name="Exercises" component={ExercisesScreen} initialParams={{ miniTestId: '' }}/>
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Setting" component={SettingScreen} />
       <Stack.Screen name="Nhap" component={NhapScreen} />

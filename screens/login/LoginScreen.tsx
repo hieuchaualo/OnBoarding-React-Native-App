@@ -13,7 +13,7 @@ import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../navigation/types";
 import AppTextInput from "../../components/AppTextInput";
 import { loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
@@ -151,8 +151,8 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           onPress={async () => {
             const emailInvalid = checkEmailInvalid();
             const passwordInvalid = checkPasswordlInvalid();
-            if (emailInvalid || passwordInvalid) {
-            } else {
+            if (emailInvalid || passwordInvalid) { }
+            else {
               const isLoginSuccess = await login();
               if (isLoginSuccess) navigate("Home");
             }

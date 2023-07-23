@@ -15,7 +15,7 @@ import Colors from "../../constants/Colors";
 import Font from "../../constants/Font";
 import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "../../navigation/types";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
