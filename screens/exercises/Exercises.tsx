@@ -22,7 +22,7 @@ import { getMiniTestById } from "../../api";
 import { IMiniTest, MiniTestTypes } from "../../interfaces";
 import { LoadingView } from "../../components";
 import { toImgUrl } from "../../utils";
-import { AnswerByOptions, AnswerByTextInput } from "./components";
+import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
 const { height } = Dimensions.get("window");
 
 const TRUE_FALSE_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
@@ -31,9 +31,8 @@ type Props = NativeStackScreenProps<RootStackParamList, "Exercises">;
 const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
   const { miniTestId } = route.params;
   const { navigate } = navigation;
-  const [isTimerStart, setIsTimerStart] = useState(true);
-  const [timerDuration, setTimerDuration] = useState(600000);
-  const [resetTimer, setResetTimer] = useState(false);
+
+  const [isTimeout, setIsTimeout] = useState<boolean>(false);
 
   const [answersForm, setAnswersForm] = React.useState([""]);
   const [miniTest, setMiniTest] = React.useState<IMiniTest>();
@@ -44,7 +43,6 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
       if (response.status === 200) {
         const miniTestData: IMiniTest = response.data.data
         setMiniTest(miniTestData);
-        console.log(miniTestData)
         setAnswersForm(Array(miniTestData.quizzes?.length).fill(""));
       }
     }
@@ -57,6 +55,10 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
       answersIndex === quizIndex ? option : answerValue
     );
     setAnswersForm(newAnswerForm);
+  }
+
+  const handleOnTimeout = () => {
+    setIsTimeout(true)
   }
 
   if (!miniTest) return (
@@ -139,19 +141,38 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
 
       <View style={styles.overlay}>
         <View style={styles.overlayContent}>
-          <View style={styles.overlayContentTop}></View>
+          <View style={styles.overlayContentTop}>
+            <TimeCountdown
+              style={styles.text}
+              timeRemainingInSecond={10}
+              handleOnTimeout={handleOnTimeout}
+              isReverse={true}
+            />
+          </View>
         </View>
 
         <TouchableOpacity
           onPress={() => {
-            navigate("Result", {
-              finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
-              finalAnswersForm: answersForm,
-            });
+            if (isTimeout) navigate(
+              "Result",
+              {
+                finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
+                finalAnswersForm: answersForm,
+              }
+            )
+            else navigate(
+              "Result",
+              {
+                finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
+                finalAnswersForm: answersForm,
+              }
+            );
           }}
         >
           <View style={styles.btn}>
-            <Text style={styles.btnText}>Submit</Text>
+            <Text style={styles.btnText}>
+              {isTimeout ? "Timeout!" : "Submit"}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
