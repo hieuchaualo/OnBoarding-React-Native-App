@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Image,
+  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Spacing from "../../constants/Spacing";
@@ -17,6 +18,9 @@ import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
 import { getItemAsync } from "expo-secure-store";
+import { NavigationContainer } from '@react-navigation/native';
+import FeatherIcon from "react-native-vector-icons/Feather";
+
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
@@ -34,6 +38,7 @@ const HomeScreen: React.FC<Props> = (props) => {
   }, []);
 
   return (
+    <View style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
     <SafeAreaView>
       <ScrollView
         style={{
@@ -209,8 +214,53 @@ const HomeScreen: React.FC<Props> = (props) => {
             <Text style={styles.text}>Reading Tips</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </ScrollView>   
     </SafeAreaView>
+    <View style={styles.overlay}>
+        <View style={styles.footer}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              // handle onPress
+            }}style={{ flex: 1, paddingHorizontal: 8 ,  alignItems: 'center'}}>
+            <View style ={{alignItems: 'center'}}>
+            <FeatherIcon name="home" size={24} color={'#E86F5D'}/>
+              <Text style={{marginTop: 4, color: "#E86F5D", fontFamily: Font["poppins-regular"],fontSize: FontSize.small}} >Home</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              navigate("TestHistory");
+            }} style={{ flex: 1, paddingHorizontal: 8 ,  alignItems: 'center'}}>
+            <View style ={{alignItems: 'center'}} >
+            <FeatherIcon name="file-text" size={24} color = {'#8A8A8E' }/>
+              <Text style={styles.tab} >Test History</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              // handle onPress
+            }} style={{ flex: 1, paddingHorizontal: 8}}>
+            <View style ={{alignItems: 'center'}}>
+            <FeatherIcon name="bell" size={24} color = {'#8A8A8E' } />
+              <Text style={styles.tab}>Notification</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              navigate("Nhap")
+            }}
+            style={{ flex: 1, paddingHorizontal: 8 }}>
+            <View style ={{alignItems: 'center'}} >
+            <FeatherIcon name="user" size={24} color = {'#8A8A8E' } />
+              <Text style={styles.tab} >Profile</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+    </View>
+
+    
+    
   );
 };
 
@@ -242,4 +292,45 @@ const styles = StyleSheet.create({
     fontSize: FontSize.large,
     paddingLeft: Spacing * 2,
   },
+  overlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingTop: 12,
+    paddingHorizontal: 16,
+    paddingBottom: 48,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+
+  footer: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexBasis: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  tab:{
+    marginTop: 4,
+    color: "#8A8A8E",
+    fontFamily: Font["poppins-regular"],
+    fontSize: FontSize.small,
+
+  }
+
+
+
 });
