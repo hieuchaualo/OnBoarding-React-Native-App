@@ -30,6 +30,7 @@ export type RootStackParamList = {
   MiniTest: undefined;
   HowPlay: undefined;
   Game2: undefined;
+  TestHistory: undefined;
   Result: { 
     finalAnswers: string[],
     finalAnswersForm: string[],

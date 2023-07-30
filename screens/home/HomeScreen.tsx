@@ -81,6 +81,7 @@ const HomeScreen: React.FC<Props> = (props) => {
             }}
           >
             <TouchableOpacity
+              onPress={() => navigate("TestHistory")}
               style={{
                 padding: Spacing / 2,
               }}

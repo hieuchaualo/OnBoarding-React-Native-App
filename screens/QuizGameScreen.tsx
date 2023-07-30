@@ -80,24 +80,46 @@ return (
             RUNNING WORDS
           </Text>
 
+          <View style={styles.card}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              source={require("../assets/images/star-3.png")}
+              style={{
+                width: Spacing * 3,
+                height: Spacing * 3,
+                
+              }}
+            />
+            <Text
+              style={{
+                fontFamily: Font["poppins-semiBold"],
+                fontSize: Spacing * 2,
+                color: Colors.text,
+                paddingLeft: Spacing,
+                alignItems: "center",
+              }}
+            >
+              New Best
+            </Text>
+          </View>
+            <Text style={styles.description}>
+            Max Speed: 500
+            </Text>
+            <Text style={styles.description}>
+            Average Speed: 500
+            </Text>
+            
+            </View>
+
           <TouchableOpacity
           onPress={async () => {
-          
           }}
-          style={{
-            padding: Spacing * 1.5,
-            backgroundColor: Colors.primary,
-            marginTop: Spacing * 6,
-            marginHorizontal: Spacing * 3,
-            borderRadius: Spacing,
-            shadowColor: Colors.primary,
-            shadowOffset: {
-              width: 0,
-              height: Spacing,
-            },
-            shadowOpacity: 0.3,
-            shadowRadius: Spacing,
-          }}
+          style={styles.btn}
         >
           <Text
             style={{
@@ -260,24 +282,28 @@ timer: {
 },
 
 btn: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: Colors.primary,
+  padding: Spacing * 1.5,
+  backgroundColor: Colors.primary,
+  marginTop: Spacing * 6,
+  marginHorizontal: Spacing * 3,
+  borderRadius: Spacing,
+  shadowColor: Colors.primary,
+  shadowOffset: {
+    width: 0,
+    height: Spacing,
+  },
+  shadowOpacity: 0.3,
+  shadowRadius: Spacing,
 },
 btnText: {
     color: "#fff",
     fontFamily: Font[ "poppins-semiBold"],
     fontSize: FontSize.medium,
 },
-card: {
-    padding: 8,
-    alignItems: 'stretch',
-    borderRadius: 12,
-    marginBottom: 16,
-    backgroundColor: '#fff',
+card:{
+  marginTop: 12,
+  backgroundColor: "#FBE6A5",
+  borderRadius: 16,
+  padding:16,
 },
 });

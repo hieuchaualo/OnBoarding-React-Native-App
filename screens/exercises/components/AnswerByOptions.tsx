@@ -36,7 +36,7 @@ const AnswerByOptions = (props: AnswerByOptionsProps) => {
               style={[
                 optionStyle,
                 answersForm[quizIndex] === option
-                  ? { backgroundColor: Colors.blue }
+                  ? { backgroundColor: Colors.primary }
                   : { backgroundColor: Colors.gray, },
               ]}
             >

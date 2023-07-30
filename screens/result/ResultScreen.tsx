@@ -6,6 +6,7 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
+  Image,
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
@@ -126,6 +127,18 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
 
               </View>
 
+            </View>
+
+            <View style=  {{alignItems: "center"}}>
+            <Image
+              source={require("../../assets/images/healthy.png")}
+              style={{
+                width: Spacing * 8,
+                height: Spacing * 8,
+                marginBottom: 16
+              }}
+            />
+            <Text style={[styles.title2, {color: "#0FB866"}]} >Yay!  Keep up the good work!</Text>
             </View>
 
           </ScrollView>
