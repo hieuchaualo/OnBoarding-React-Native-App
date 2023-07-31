@@ -1,3 +1,4 @@
+import { IMiniTestHistory } from "./mini-test-history.interface";
 import { Role } from "./role.enum";
 
 
@@ -10,4 +11,5 @@ export interface IAccount {
   createdAt?: string;
   updatedAt?: string;
   password?: string;
+  miniTestHistory?: IMiniTestHistory[];
 }

@@ -25,7 +25,7 @@ import DetailBlogScreen from "../screens/DetailBlogScreen";
 import QuizGameScreen from "../screens/QuizGameScreen";
 import HowPlayScreen from "../screens/HowPlayScreen";
 import Game2Screen from "../screens/Game2Screen";
-import TestHistoryScreen from "../screens/TestHistory";
+import TestHistoryScreen from "../screens/TestHistory/TestHistory";
 
 const theme = {
   ...DefaultTheme,

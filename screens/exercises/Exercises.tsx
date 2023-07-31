@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Text,
   ImageBackground,
-  TouchableWithoutFeedback,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Spacing from "../../constants/Spacing";
@@ -149,7 +148,7 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
           <View style={styles.overlayContentTop}>
             <TimeCountdown
               style={styles.text}
-              timeRemainingInSecond={100}
+              timeRemainingInSecond={miniTest.timeLimit}
               handleOnTimeout={handleOnTimeout}
               isReverse={false}
             />
@@ -167,20 +166,18 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
 
         <TouchableOpacity
           onPress={() => {
-            if (isTimeout) navigate(
+            if (isTimeout) {
+              // do nothing
+            }
+
+            navigate(
               "Result",
               {
                 finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
                 finalAnswersForm: answersForm,
                 totalTime,
-              }
-            )
-            else navigate(
-              "Result",
-              {
-                finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
-                finalAnswersForm: answersForm,
-                totalTime,
+                miniTestId: miniTest._id,
+                timeLimit: miniTest.timeLimit ?? 0,
               }
             );
           }}

@@ -18,22 +18,40 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/types";
 import { fromSecondToDateTime } from "../../utils";
+import { IMiniTestHistory } from "../../interfaces";
+import { updateMiniTestHistory } from "../../api";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Result">;
 
 const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
-  const { finalAnswersForm, finalAnswers, totalTime } = route.params
+  const { finalAnswersForm, finalAnswers, totalTime, miniTestId, timeLimit } = route.params
   const [score, setScore] = useState(0);
 
   useEffect(() => {
     let _score = 0;
     finalAnswers.forEach((answer, answersKeyIndex) => {
       if (
-        answer.toLowerCase() ===
-        finalAnswersForm[answersKeyIndex].toLowerCase()
+        answer.toLowerCase() === finalAnswersForm[answersKeyIndex].toLowerCase()
       )
         _score++;
     });
+
+    const pushMiniTestHistory = async () => {
+      try {
+        const formBody: IMiniTestHistory = {
+          timeLimit,
+          miniTest: miniTestId,
+          timeTaken: totalTime,
+          totalCorrectAnswers: _score,
+          totalQuestions: finalAnswers.length,
+        }
+        const response = await updateMiniTestHistory(formBody)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    pushMiniTestHistory()
     setScore(_score);
   }, []);
 
@@ -129,16 +147,16 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
 
             </View>
 
-            <View style=  {{alignItems: "center"}}>
-            <Image
-              source={require("../../assets/images/healthy.png")}
-              style={{
-                width: Spacing * 8,
-                height: Spacing * 8,
-                marginBottom: 16
-              }}
-            />
-            <Text style={[styles.title2, {color: "#0FB866"}]} >Yay!  Keep up the good work!</Text>
+            <View style={{ alignItems: "center" }}>
+              <Image
+                source={require("../../assets/images/healthy.png")}
+                style={{
+                  width: Spacing * 8,
+                  height: Spacing * 8,
+                  marginBottom: 16
+                }}
+              />
+              <Text style={[styles.title2, { color: "#0FB866" }]} >Yay!  Keep up the good work!</Text>
             </View>
 
           </ScrollView>

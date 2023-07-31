@@ -7,6 +7,8 @@ const lightOrange = "#F2F2F2";
 const danger = '#dc3545'
 const gray = "#ECECEC";
 
+
+
 export default {
   darkText: dark,
   text: black,

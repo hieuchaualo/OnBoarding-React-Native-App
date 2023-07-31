@@ -8,6 +8,7 @@ export interface IMiniTest {
   content?: string;
   typeOfQuiz?: string | MiniTestTypes;
   quizzes?: IQuiz[];
+  timeLimit?: number;
   thumbnail?: string;
   creator?: string | IAccount;
 }

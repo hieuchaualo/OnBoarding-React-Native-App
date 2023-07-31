@@ -54,7 +54,6 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         email,
         password,
       });
-      console.log(response);
       if (response?.message?.includes('E11000')) {
         setisEmailExists(true);
         return false;
@@ -190,7 +189,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               const passwordInvalid = checkPasswordlInvalid();
               const rePasswordInvalid = checkRePasswordlInvalid();
               if (emailInvalid || passwordInvalid || rePasswordInvalid) {
-                console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
+                // console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
               } else register();
             }}
             style={{

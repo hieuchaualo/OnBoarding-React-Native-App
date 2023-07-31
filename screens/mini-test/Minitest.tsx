@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Image,
-  ActivityIndicator,
   Dimensions,
 } from 'react-native';
 import FontSize from "../../constants/FontSize";
@@ -19,8 +18,9 @@ import { RootStackParamList } from "../../navigation/types";
 import { IMiniTest, MiniTestTypes } from '../../interfaces';
 import { AxiosResponse } from 'axios';
 import { getMiniTestsList } from '../../api';
-import { toImgUrl } from '../../utils';
+import { fromSecondToDateTime, toImgUrl } from '../../utils';
 import { LoadingView } from '../../components';
+import { ThemeColors } from '../../constants';
 const { height } = Dimensions.get("window");
 
 
@@ -112,9 +112,14 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
                     />
 
                     <View style={styles.cardBody}>
-                      <Text>
-                        <Text style={styles.cardTitle}>{miniTest.title}</Text>{' '}
-                      </Text>
+                      <Text style={styles.cardTitle}>{miniTest.title}</Text>
+
+                      {miniTest.timeLimit &&
+                        <Text style={{ ...styles.cardTitle, color: ThemeColors.secondary }}>
+                          Target: {fromSecondToDateTime(miniTest.timeLimit)}
+                        </Text>
+                      }
+
                       <TouchableOpacity
                         onPress={() => {
                           // handle onPress
@@ -180,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
     borderRadius: 12,
-    marginBottom: 16,
+    marginVertical: 8,
     backgroundColor: '#fff',
   },
   cardImg: {
@@ -196,8 +201,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
   },
   cardTitle: {
     fontFamily: Font["poppins-semiBold"],
