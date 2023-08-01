@@ -1,109 +1,75 @@
 import {
-  Dimensions,
-  ImageBackground,
-  Image,
-  SafeAreaView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
-  TouchableHighlight,
+  Image,
+  ScrollView
 } from "react-native";
 import { FunctionComponent } from "react";
-import Spacing from "../../constants/Spacing";
-import FontSize from "../../constants/FontSize";
-import Colors from "../../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation";
-import { ThemeColors, ThemeFonts, ThemeStyles } from "../../constants";
-const { height } = Dimensions.get("window");
+import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
+import { Button, Column, Row } from "../../components";
+
+const welcomeHeadingImage = require("../../assets/images/login.png")
 
 type WelcomeScreenProps = NativeStackScreenProps<RootStackParamList, "Welcome">;
 
 const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { navigate } }) => {
   return (
-    <View>
-      <ImageBackground
+    <ScrollView style={{ padding: ThemeDimensions.positive2 }}>
+      <Image
         style={{
-          height: height / 3,
+          height: ThemeDimensions.windowHeight40,
+          width: ThemeDimensions.percentage100,
         }}
         resizeMode="contain"
-        source={require("../../assets/images/login.png")}
+        source={welcomeHeadingImage}
       />
-      <View
-        style={{
-          paddingHorizontal: Spacing * 4,
-          paddingTop: Spacing * 4,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: FontSize.xxLarge,
-            color: Colors.primary,
-            fontFamily: ThemeFonts.bold,
-            textAlign: "center",
-          }}
-        >
+
+      <View style={{ padding: ThemeDimensions.positive3 }}>
+        <Text style={{ ...ThemeStyles.h1, padding: ThemeDimensions.positive2 }}>
           Increase Your Reading Skill
         </Text>
-
         <Text
           style={{
-            fontSize: FontSize.small,
-            color: Colors.text,
+            ...ThemeStyles.h5,
             fontFamily: ThemeFonts.regular,
-            textAlign: "center",
-            marginTop: Spacing * 2,
+            color: ThemeColors.dark
           }}
         >
           Embark on an English journey of mastery with our immersive reading app!
         </Text>
       </View>
-      <View
-        style={{
-          paddingHorizontal: Spacing * 2,
-          paddingTop: Spacing * 6,
-          flexDirection: "row",
-        }}
-      >
-        <TouchableHighlight
-          onPress={() => navigate("Login")}
-          style={ThemeStyles.buttonPrimary}
-          underlayColor={ThemeColors.primaryLight}
-        >
-          <Text style={ThemeStyles.buttonPrimaryText}>
-            Login
-          </Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          onPress={() => navigate("Register")}
-          style={ThemeStyles.buttonPrimary}
-          underlayColor={ThemeColors.primaryLight}
-        >
-          <Text style={ThemeStyles.buttonPrimaryText}>
-          Register
-          </Text>
-        </TouchableHighlight>
-      </View>
-    </View>
+
+      <Row style={{ padding: ThemeDimensions.positive2 }}>
+        <Column>
+          <Button
+            title="Login"
+            style={{
+              width: ThemeDimensions.percentage75,
+              height: ThemeDimensions.positive10,
+            }}
+            onPress={() => navigate("Login")}
+          />
+        </Column>
+
+        <Column>
+          <Button
+            title="Register"
+            titleStyle={{ color: ThemeColors.dark, }}
+            background={ThemeColors.white}
+            backgroundHover={ThemeColors.light}
+            onPress={() => navigate("Login")}
+            style={{
+              width: ThemeDimensions.percentage75,
+              height: ThemeDimensions.positive10,
+              shadowColor: ThemeColors.white,
+            }}
+          />
+        </Column>
+      </Row>
+    </ScrollView>
   );
 };
 
 export { WelcomeScreen };
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: Colors.primary,
-    paddingVertical: Spacing * 1.5,
-    paddingHorizontal: Spacing * 2,
-    width: "48%",
-    borderRadius: Spacing,
-    shadowColor: Colors.primary,
-    shadowOffset: {
-      width: 0,
-      height: Spacing,
-    },
-    shadowOpacity: 0.3,
-    shadowRadius: Spacing,
-  },
-});
