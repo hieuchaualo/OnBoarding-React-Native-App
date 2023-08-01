@@ -38,11 +38,11 @@ export const ThemeDimensions = {
     windowWidth25: width / 4,
 
     fontSize: {
-        sm: 10,
+        sm: 12,
         md: 14,
         lg: 16,
         xl: 20,
         xxl: 24,
-        xxxl: 28,
+        xxxl: 30,
     }
 };
