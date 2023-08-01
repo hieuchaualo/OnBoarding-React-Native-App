@@ -10,15 +10,15 @@ import React, { useEffect, useState } from "react";
 import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import AppTextInput from "../../components/AppTextInput";
 import { loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";
 import { AxiosResponse } from "axios";
+import { ThemeFonts } from "../../constants";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Login">;
 
@@ -75,7 +75,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             style={{
               fontSize: FontSize.xLarge,
               color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               marginVertical: Spacing * 3,
             }}
           >
@@ -83,7 +83,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           </Text>
           <Text
             style={{
-              fontFamily: Font["poppins-semiBold"],
+              fontFamily: ThemeFonts.semiBold,
               fontSize: FontSize.large,
               maxWidth: "80%",
               textAlign: "center",
@@ -105,7 +105,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           {isEmailNotValidated && (
             <Text
               style={{
-                fontFamily: Font["poppins-regular"],
+                fontFamily: ThemeFonts.regular,
                 fontSize: FontSize.small,
                 color: "#F00",
                 alignSelf: "flex-start",
@@ -123,7 +123,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           {isPasswordNotValidated && (
             <Text
               style={{
-                fontFamily: Font["poppins-regular"],
+                fontFamily: ThemeFonts.regular,
                 fontSize: FontSize.small,
                 color: "#F00",
                 alignSelf: "flex-start",
@@ -137,7 +137,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         <TouchableOpacity onPress={() => navigate("ForgotPassword")}>
           <Text
             style={{
-              fontFamily: Font["poppins-semiBold"],
+              fontFamily: ThemeFonts.semiBold,
               fontSize: FontSize.small,
               color: Colors.primary,
               alignSelf: "flex-end",
@@ -173,7 +173,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         >
           <Text
             style={{
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               color: Colors.onPrimary,
               textAlign: "center",
               fontSize: FontSize.large,
@@ -184,7 +184,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         </TouchableOpacity>
         <Text
           style={{
-            fontFamily: Font["poppins-regular"],
+            fontFamily: ThemeFonts.regular,
             color: Colors.text,
             textAlign: "center",
             fontSize: FontSize.small,
@@ -200,7 +200,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         >
           <Text
             style={{
-              fontFamily: Font["poppins-semiBold"],
+              fontFamily: ThemeFonts.semiBold,
               color: Colors.primary,
               textAlign: "center",
               fontSize: FontSize.small,
@@ -217,7 +217,7 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         >
           <Text
             style={{
-              fontFamily: Font["poppins-semiBold"],
+              fontFamily: ThemeFonts.semiBold,
               color: Colors.text,
               textAlign: "center",
               fontSize: FontSize.small,
@@ -268,7 +268,4 @@ const LoginScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   );
 };
 
-export default LoginScreen;
-
-const styles = StyleSheet.create({
-});
+export { LoginScreen };

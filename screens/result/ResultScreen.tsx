@@ -11,15 +11,15 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Spacing from "../../constants/Spacing";
-import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import { fromSecondToDateTime } from "../../utils";
 import { IMiniTestHistory } from "../../interfaces";
 import { updateMiniTestHistory } from "../../api";
+import { ThemeFonts } from "../../constants";
+import FontSize from "../../constants/FontSize";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Result">;
 
@@ -167,7 +167,8 @@ const ResultScreen: React.FC<Props> = ({ route, navigation }) => {
 };
 
 
-export default ResultScreen;
+export { ResultScreen };
+
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 0,
@@ -200,7 +201,7 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'left',
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.regular,
     color: Colors.text,
     letterSpacing: 0.5,
     fontSize: FontSize.medium,
@@ -213,7 +214,7 @@ const styles = StyleSheet.create({
   score: {
     color: Colors.primary,
     fontSize: FontSize.large,
-    fontFamily: Font["poppins-bold"]
+    fontFamily: ThemeFonts.bold
   },
   tab: {
     alignSelf: 'flex-start',
@@ -233,7 +234,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title2: {
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   text: {
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.regular,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,

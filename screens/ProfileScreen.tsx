@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Image
@@ -12,11 +11,10 @@ import React from "react";
 import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
-import Font from "../constants/Font";
+import { ThemeFonts } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
-import styled from 'styled-components'
+import { RootStackParamList } from "../navigation";
   
   type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
   
@@ -48,7 +46,7 @@ import styled from 'styled-components'
           />
           <Text
             style={{
-              fontFamily: Font["poppins-semiBold"],
+              fontFamily: ThemeFonts.semiBold,
               fontSize: Spacing * 2,
               color: Colors.text,
               paddingLeft: Spacing,
@@ -85,7 +83,7 @@ import styled from 'styled-components'
         <Text
           style={{
             fontSize: Spacing * 3.5,
-            fontFamily: Font["poppins-bold"],
+            fontFamily: ThemeFonts.bold,
             color: Colors.text,
           }}
         >
@@ -210,7 +208,7 @@ const styles = StyleSheet.create({
   },
 
   text:{
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     color: '#333333',
     fontSize: FontSize.large,
     paddingLeft: Spacing * 2,

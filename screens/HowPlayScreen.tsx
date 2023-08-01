@@ -8,22 +8,15 @@ import {
     TouchableOpacity,
     Text,
     ImageBackground,
-    Image,
-    Alert,
-    TouchableWithoutFeedback,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
-import Font from "../constants/Font";
-import { Ionicons } from "@expo/vector-icons";
+import { ThemeFonts } from "../constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { getItemAsync } from "expo-secure-store";
-import { getReadingTest, getReadingTests } from "../api/readingTestApi";
-import { set } from "react-hook-form";
+import { RootStackParamList } from "../navigation";
 const { height } = Dimensions.get("window");
 
 
@@ -72,7 +65,7 @@ return (
             style={{
               fontSize: FontSize.xLarge,
               color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               textAlign: "center",
             }}
           >
@@ -82,7 +75,7 @@ return (
             This exercise accustoms to the maximum concentration in a limited period of time. 
             It is necessary to remember and reproduce the last word shown on the screen.
             </Text>
-            <Text style={[styles.description, {fontFamily: Font["poppins-semiBold"]} ]}>
+            <Text style={[styles.description, {fontFamily: ThemeFonts.semiBold} ]}>
             Recommendations
             </Text>
             <Text style={styles.description}>
@@ -117,7 +110,7 @@ return (
         >
           <Text
             style={{
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               color: Colors.onPrimary,
               textAlign: "center",
               fontSize: FontSize.large,
@@ -186,7 +179,7 @@ card:{
     padding:16,
 },
 description: {
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.regular,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 24,

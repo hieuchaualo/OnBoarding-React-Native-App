@@ -7,23 +7,15 @@ import {
     StatusBar,
     TouchableOpacity,
     Text,
-    ImageBackground,
-    Image,
-    Alert,
-    TouchableWithoutFeedback,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
-import Font from "../constants/Font";
-import { Ionicons } from "@expo/vector-icons";
+import { ThemeFonts } from "../constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { getItemAsync } from "expo-secure-store";
-import { getReadingTest, getReadingTests } from "../api/readingTestApi";
-import { set } from "react-hook-form";
+import { RootStackParamList } from "../navigation";
 const { height } = Dimensions.get("window");
 
 
@@ -65,7 +57,7 @@ return (
             style={{
               fontSize: FontSize.xLarge,
               color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               textAlign: "center",
             }}
           >
@@ -187,7 +179,7 @@ row: {
     borderLeftStyle: 'solid',
   },
 text:{
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.regular,
     color: Colors.onPrimary,
     fontSize: FontSize.large,
     textAlign: "center",

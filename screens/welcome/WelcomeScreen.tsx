@@ -7,109 +7,89 @@ import {
   Text,
   TouchableOpacity,
   View,
+  TouchableHighlight,
 } from "react-native";
-import React from "react";
+import { FunctionComponent } from "react";
 import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
-import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
+import { ThemeColors, ThemeFonts, ThemeStyles } from "../../constants";
 const { height } = Dimensions.get("window");
 
-type Props = NativeStackScreenProps<RootStackParamList, "Welcome">;
+type WelcomeScreenProps = NativeStackScreenProps<RootStackParamList, "Welcome">;
 
-
-const WelcomeScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { navigate } }) => {
   return (
-    <SafeAreaView>
-      <View>
-        <ImageBackground
+    <View>
+      <ImageBackground
+        style={{
+          height: height / 3,
+        }}
+        resizeMode="contain"
+        source={require("../../assets/images/login.png")}
+      />
+      <View
+        style={{
+          paddingHorizontal: Spacing * 4,
+          paddingTop: Spacing * 4,
+        }}
+      >
+        <Text
           style={{
-            height: height / 3,
-          }}
-          resizeMode="contain"
-          source={require("../../assets/images/login.png")}
-        />
-        <View
-          style={{
-            paddingHorizontal: Spacing * 4,
-            paddingTop: Spacing * 4,
+            fontSize: FontSize.xxLarge,
+            color: Colors.primary,
+            fontFamily: ThemeFonts.bold,
+            textAlign: "center",
           }}
         >
-          <Text
-            style={{
-              fontSize: FontSize.xxLarge,
-              color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
-              textAlign: "center",
-            }}
-          >
-            Increase Your Reading Skill
-          </Text>
+          Increase Your Reading Skill
+        </Text>
 
-          <Text
-            style={{
-              fontSize: FontSize.small,
-              color: Colors.text,
-              fontFamily: Font["poppins-regular"],
-              textAlign: "center",
-              marginTop: Spacing * 2,
-            }}
-          >
-            Embark on an English journey of mastery with our immersive reading app!
-          </Text>
-        </View>
-        <View
+        <Text
           style={{
-            paddingHorizontal: Spacing * 2,
-            paddingTop: Spacing * 6,
-            flexDirection: "row",
+            fontSize: FontSize.small,
+            color: Colors.text,
+            fontFamily: ThemeFonts.regular,
+            textAlign: "center",
+            marginTop: Spacing * 2,
           }}
         >
-          <TouchableOpacity
-            onPress={() => navigate("Login")}
-            style={styles.button}
-          >
-            <Text
-              style={{
-                fontFamily: Font["poppins-bold"],
-                color: Colors.onPrimary,
-                fontSize: FontSize.large,
-                textAlign: "center",
-              }}
-            >
-              Login
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => navigate("Register")}
-            style={{
-              paddingVertical: Spacing * 1.5,
-              paddingHorizontal: Spacing * 2,
-              width: "48%",
-              borderRadius: Spacing,
-            }}
-          >
-            <Text
-              style={{
-                fontFamily: Font["poppins-bold"],
-                color: Colors.text,
-                fontSize: FontSize.large,
-                textAlign: "center",
-              }}
-            >
-              Register
-            </Text>
-          </TouchableOpacity>
-        </View>
+          Embark on an English journey of mastery with our immersive reading app!
+        </Text>
       </View>
-    </SafeAreaView>
+      <View
+        style={{
+          paddingHorizontal: Spacing * 2,
+          paddingTop: Spacing * 6,
+          flexDirection: "row",
+        }}
+      >
+        <TouchableHighlight
+          onPress={() => navigate("Login")}
+          style={ThemeStyles.buttonPrimary}
+          underlayColor={ThemeColors.primaryLight}
+        >
+          <Text style={ThemeStyles.buttonPrimaryText}>
+            Login
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => navigate("Register")}
+          style={ThemeStyles.buttonPrimary}
+          underlayColor={ThemeColors.primaryLight}
+        >
+          <Text style={ThemeStyles.buttonPrimaryText}>
+          Register
+          </Text>
+        </TouchableHighlight>
+      </View>
+    </View>
   );
 };
 
-export default WelcomeScreen;
+export { WelcomeScreen };
 
 const styles = StyleSheet.create({
   button: {

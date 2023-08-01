@@ -1,2 +1,5 @@
 export * from './Urls'
+export * from './theme-fonts'
 export * from './theme-colors'
+export * from './theme-dimensions'
+export * from './theme-styles'

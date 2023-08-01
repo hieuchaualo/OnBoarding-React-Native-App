@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -7,16 +7,12 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Switch,
 } from 'react-native';
 import Spacing from "../constants/Spacing";
-import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
-import Font from "../constants/Font";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
-import RBSheet from 'react-native-raw-bottom-sheet';
+import { RootStackParamList } from '../navigation';
 
 const SECTIONS = [ 
   {

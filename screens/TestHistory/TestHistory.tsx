@@ -9,15 +9,15 @@ import {
   StatusBar,
   Dimensions,
 } from 'react-native';
-import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { IMiniTestHistory } from '../../interfaces';
 import { getMiniTestHistory } from '../../api';
 import { fromSecondToDateTime } from '../../utils';
+import FontSize from '../../constants/FontSize';
+import { ThemeFonts } from '../../constants';
 const { height } = Dimensions.get("window");
 
 
@@ -139,7 +139,7 @@ const TestHistoryScreen: React.FC<Props> = ({ navigation }) => {
   );
 }
 
-export default TestHistoryScreen;
+export { TestHistoryScreen };
 
 
 const styles = StyleSheet.create({
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
   },
   cardTitle: {
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     fontSize: FontSize.small,
     marginRight: 4,
   },
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
   },
   cardRowItemText: {
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.regular,
     fontSize: FontSize.small,
     color: '#939393',
   },

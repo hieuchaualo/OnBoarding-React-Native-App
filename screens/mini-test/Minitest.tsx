@@ -12,15 +12,14 @@ import {
 } from 'react-native';
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import { IMiniTest, MiniTestTypes } from '../../interfaces';
 import { AxiosResponse } from 'axios';
 import { getMiniTestsList } from '../../api';
 import { fromSecondToDateTime, toImgUrl } from '../../utils';
 import { LoadingView } from '../../components';
-import { ThemeColors } from '../../constants';
+import { ThemeColors, ThemeFonts } from '../../constants';
 const { height } = Dimensions.get("window");
 
 
@@ -142,7 +141,7 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
   );
 }
 
-export default MinitestScreen;
+export { MinitestScreen };
 
 
 const styles = StyleSheet.create({
@@ -205,7 +204,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   cardTitle: {
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     fontSize: FontSize.medium,
     maxWidth: "80%",
     marginRight: 8,

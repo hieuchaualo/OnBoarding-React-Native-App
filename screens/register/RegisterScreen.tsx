@@ -11,14 +11,14 @@ import React, { useState } from "react";
 import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import AppTextInput from "../../components/AppTextInput";
 import { regexEmail } from "../../constants/regexPattern";
 import { createAccount } from "../../api";
 import { setItemAsync } from "expo-secure-store";
+import { ThemeFonts } from "../../constants";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
@@ -89,7 +89,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               style={{
                 fontSize: FontSize.xLarge,
                 color: Colors.primary,
-                fontFamily: Font["poppins-bold"],
+                fontFamily: ThemeFonts.bold,
                 marginVertical: Spacing * 3,
               }}
             >
@@ -97,7 +97,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             </Text>
             <Text
               style={{
-                fontFamily: Font["poppins-regular"],
+                fontFamily: ThemeFonts.regular,
                 fontSize: FontSize.small,
                 maxWidth: "80%",
                 textAlign: "center",
@@ -124,7 +124,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             {isEmailNotValidated && (
               <Text
                 style={{
-                  fontFamily: Font["poppins-regular"],
+                  fontFamily: ThemeFonts.regular,
                   fontSize: FontSize.small,
                   color: "#F00",
                   alignSelf: "flex-start",
@@ -136,7 +136,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             {isEmailExists && (
               <Text
                 style={{
-                  fontFamily: Font["poppins-regular"],
+                  fontFamily: ThemeFonts.regular,
                   fontSize: FontSize.small,
                   color: "#F00",
                   alignSelf: "flex-start",
@@ -154,7 +154,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             {isPasswordNotValidated && (
               <Text
                 style={{
-                  fontFamily: Font["poppins-regular"],
+                  fontFamily: ThemeFonts.regular,
                   fontSize: FontSize.small,
                   color: "#F00",
                   alignSelf: "flex-start",
@@ -172,7 +172,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             {isRePasswordValid && (
               <Text
                 style={{
-                  fontFamily: Font["poppins-regular"],
+                  fontFamily: ThemeFonts.regular,
                   fontSize: FontSize.small,
                   color: "#F00",
                   alignSelf: "flex-start",
@@ -208,7 +208,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           >
             <Text
               style={{
-                fontFamily: Font["poppins-bold"],
+                fontFamily: ThemeFonts.bold,
                 color: Colors.onPrimary,
                 textAlign: "center",
                 fontSize: FontSize.large,
@@ -218,15 +218,15 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             </Text>
           </TouchableOpacity>
           <View
-          style={{
-            paddingHorizontal: Spacing * 2,
-            paddingTop: Spacing * 6,
-            flexDirection: "row",
-          }}
-        >
-          <Text
+            style={{
+              paddingHorizontal: Spacing * 2,
+              paddingTop: Spacing * 6,
+              flexDirection: "row",
+            }}
+          >
+            <Text
               style={{
-                fontFamily: Font["poppins-semiBold"],
+                fontFamily: ThemeFonts.semiBold,
                 color: Colors.text,
                 textAlign: "center",
                 fontSize: FontSize.small,
@@ -236,7 +236,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             </Text>
             <Text
               style={{
-                fontFamily: Font["poppins-semiBold"],
+                fontFamily: ThemeFonts.semiBold,
                 color: Colors.text,
                 textAlign: "center",
                 fontSize: FontSize.small,
@@ -245,7 +245,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               Login
             </Text>
 
-        </View>
+          </View>
           <TouchableOpacity
             onPress={() => navigate("Login")}
             style={{
@@ -255,7 +255,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
 
             <Text
               style={{
-                fontFamily: Font["poppins-semiBold"],
+                fontFamily: ThemeFonts.semiBold,
                 color: Colors.text,
                 textAlign: "center",
                 fontSize: FontSize.small,
@@ -265,7 +265,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             </Text>
             <Text
               style={{
-                fontFamily: Font["poppins-semiBold"],
+                fontFamily: ThemeFonts.semiBold,
                 color: Colors.text,
                 textAlign: "center",
                 fontSize: FontSize.small,
@@ -282,7 +282,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           >
             <Text
               style={{
-                fontFamily: Font["poppins-semiBold"],
+                fontFamily: ThemeFonts.semiBold,
                 color: Colors.primary,
                 textAlign: "center",
                 fontSize: FontSize.small,
@@ -334,4 +334,4 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   );
 };
 
-export default RegisterScreen;
+export { RegisterScreen };

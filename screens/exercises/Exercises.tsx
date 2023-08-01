@@ -13,15 +13,15 @@ import React, { useEffect, useState } from "react";
 import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
-import Font from "../../constants/Font";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/types";
+import { RootStackParamList } from "../../navigation";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { getMiniTestById } from "../../api";
 import { IMiniTest, MiniTestTypes } from "../../interfaces";
 import { LoadingView } from "../../components";
 import { toImgUrl } from "../../utils";
 import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
+import { ThemeFonts } from "../../constants";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "Exercises">;
@@ -193,7 +193,7 @@ const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
   );
 };
 
-export default ExercisesScreen;
+export { ExercisesScreen };
 
 const styles = StyleSheet.create({
   container: {
@@ -260,13 +260,13 @@ const styles = StyleSheet.create({
   },
   optionText: {
     paddingHorizontal: 10,
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.bold,
     letterSpacing: 0.5,
     lineHeight: 26,
     fontSize: FontSize.small,
   },
   text: {
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 26,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   description: {
-    fontFamily: Font["poppins-regular"],
+    fontFamily: ThemeFonts.bold,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 28,
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
   },
   btnText: {
     color: "#fff",
-    fontFamily: Font["poppins-semiBold"],
+    fontFamily: ThemeFonts.semiBold,
     fontSize: FontSize.medium,
   },
   card: {

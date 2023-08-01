@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
+import { RootStackParamList } from '../navigation';
 type Props = NativeStackScreenProps<RootStackParamList, "Blog">;
 const items = [
     {

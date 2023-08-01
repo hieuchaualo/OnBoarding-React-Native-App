@@ -2,7 +2,6 @@ import {
     Dimensions,
     ImageBackground,
     SafeAreaView,
-    ScrollView,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -12,11 +11,10 @@ import React from "react";
 import Spacing from "../constants/Spacing";
 import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
-import Font from "../constants/Font";
-import {useForm, Controller} from 'react-hook-form';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/types";
 import AppTextInput from "../components/AppTextInput";
+import { RootStackParamList } from "../navigation";
+import { ThemeFonts } from "../constants";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "ForgotPassword">;
@@ -43,7 +41,7 @@ return (
             style={{
               fontSize: FontSize.xxLarge,
               color: Colors.primary,
-              fontFamily: Font["poppins-bold"],
+              fontFamily: ThemeFonts.bold,
               textAlign: "center",
             }}
           >
@@ -54,7 +52,7 @@ return (
             style={{
               fontSize: FontSize.small,
               color: Colors.text,
-              fontFamily: Font["poppins-regular"],
+              fontFamily: ThemeFonts.regular,
               textAlign: "center",
               marginTop: Spacing * 2,
             }}
@@ -73,7 +71,7 @@ return (
           >
             <Text
               style={{
-                fontFamily: Font["poppins-bold"],
+                fontFamily: ThemeFonts.bold,
                 color: Colors.onPrimary,
                 textAlign: "center",
                 fontSize: FontSize.large,
