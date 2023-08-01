@@ -4,15 +4,74 @@ import { ThemeDimensions } from "./theme-dimensions";
 import { ThemeFonts } from "./theme-fonts";
 
 export const ThemeStyles = StyleSheet.create({
-  buttonPrimary: {
+  buttonPrimaryLg: {
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: ThemeColors.primary,
-    padding: ThemeDimensions.positive[1],
-    borderRadius: ThemeDimensions.positive[1],
+    borderRadius: ThemeDimensions.positive2,
+
+    shadowColor: ThemeColors.primaryDark,
+    //android specific
+    elevation: ThemeDimensions.positive1,
+    //ios specific
+    shadowOffset: { width: 4, height: 4 },
+    shadowRadius: ThemeDimensions.positive1,
+    shadowOpacity: 0.5,
   },
-  buttonPrimaryText: {
+  buttonPrimaryLgText: {
+    color: ThemeColors.light,
+    fontSize: ThemeDimensions.fontSize.lg,
+    fontFamily: ThemeFonts.bold,
+  },
+
+  buttonLightLg: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: ThemeColors.white,
+    borderRadius: ThemeDimensions.positive2,
+
+    shadowColor: ThemeColors.light,
+    //android specific
+    elevation: ThemeDimensions.positive1,
+    //ios specific
+    shadowOffset: { width: 4, height: 4 },
+    shadowRadius: ThemeDimensions.positive1,
+    shadowOpacity: 0.5,
+  },
+  buttonLightLgText: {
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.lg,
+    fontFamily: ThemeFonts.bold,
+  },
+
+  h1: {
     textAlign: "center",
+    color: ThemeColors.primary,
+    fontSize: ThemeDimensions.fontSize.xxxl,
+    fontFamily: ThemeFonts.bold,
+  },
+  h2: {
+    textAlign: "center",
+    color: ThemeColors.primary,
+    fontSize: ThemeDimensions.fontSize.xxl,
+    fontFamily: ThemeFonts.bold,
+  },
+  h3: {
+    textAlign: "center",
+    color: ThemeColors.primary,
     fontSize: ThemeDimensions.fontSize.xl,
     fontFamily: ThemeFonts.bold,
-    color: ThemeColors.light,
-  }
+  },
+  h4: {
+    textAlign: "center",
+    color: ThemeColors.primary,
+    fontSize: ThemeDimensions.fontSize.lg,
+    fontFamily: ThemeFonts.bold,
+  },
+  h5: {
+    textAlign: "center",
+    color: ThemeColors.primary,
+    fontSize: ThemeDimensions.fontSize.md,
+    fontFamily: ThemeFonts.bold,
+  },
 });
