@@ -35,11 +35,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
           const response: AxiosResponse<any, any> = await getAccount();
           if (response?.status === 200) {
             const responseData = response.data.data
-            const account = JSON.stringify({
-              username: responseData.name,
-              email: responseData.email,
-              id: responseData._id,
-            });
+            const account = JSON.stringify(responseData);
             await setItemAsync("account", account);
             navigate("Home")
           }
@@ -67,11 +63,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       if (response?.status === 201) {
         const responseData = response.data.data
         await setItemAsync("secure_token", responseData.token);
-        const account = JSON.stringify({
-          username: responseData.account.name,
-          email: responseData.account.email,
-          id: responseData.account._id,
-        });
+        const account = JSON.stringify(responseData.account);
         await setItemAsync("account", account);
         return true;
       }

@@ -8,7 +8,10 @@ export const ThemeDimensions = {
     positive3: 18,
     positive4: 24,
     positive5: 30,
+    positive6: 36,
+    positive7: 42,
     positive8: 48,
+    positive9: 56,
     positive10: 60,
     positive20: 120,
 

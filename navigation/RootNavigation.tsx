@@ -8,7 +8,7 @@ import {
   MinitestScreen,
   RegisterScreen,
   ResultScreen,
-  TestHistoryScreen,
+  TestHistory,
   WelcomeScreen,
 } from "../screens";
 
@@ -22,6 +22,27 @@ import QuizGameScreen from "../screens/QuizGameScreen";
 import HowPlayScreen from "../screens/HowPlayScreen";
 import Game2Screen from "../screens/Game2Screen";
 import { ThemeColors } from "../constants";
+
+enum RootStackName {
+  Welcome = "Welcome",
+  Login = "Login",
+  Register = "Register",
+  Home = "Home",
+  ForgotPassword = "ForgotPassword",
+  NewPassword = "NewPassword",
+  Exercises = "Exercises",
+  Profile = "Profile",
+  Setting = "Setting",
+  Nhap = "Nhap",
+  Blog = "Blog",
+  QuizGame = "QuizGame",
+  DetailBlog = "DetailBlog",
+  MiniTest = "MiniTest",
+  HowPlay = "HowPlay",
+  Game2 = "Game2",
+  TestHistory = "TestHistory",
+  Result = "Result",
+}
 
 type RootStackParamList = {
   Welcome: undefined;
@@ -52,6 +73,7 @@ type RootStackParamList = {
   };
 };
 
+
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
@@ -74,23 +96,31 @@ function RootNavigator() {
         }
       }}>
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
-          <RootStack.Screen name="Welcome" component={WelcomeScreen} />
-          <RootStack.Screen name="Login" component={LoginScreen} />
-          <RootStack.Screen name="Register" component={RegisterScreen} />
-          <RootStack.Screen name="Home" component={HomeScreen} options={{ gestureEnabled: false }} />
-          <RootStack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-          <RootStack.Screen name="Exercises" component={ExercisesScreen} options={{ gestureEnabled: false }} />
-          <RootStack.Screen name="Profile" component={ProfileScreen} />
-          <RootStack.Screen name="Setting" component={SettingScreen} />
-          <RootStack.Screen name="Nhap" component={NhapScreen} />
-          <RootStack.Screen name="Blog" component={BlogScreen} />
-          <RootStack.Screen name="MiniTest" component={MinitestScreen} />
-          <RootStack.Screen name="Result" component={ResultScreen} />
-          <RootStack.Screen name="DetailBlog" component={DetailBlogScreen} />
-          <RootStack.Screen name="QuizGame" component={QuizGameScreen} />
-          <RootStack.Screen name="HowPlay" component={HowPlayScreen} />
-          <RootStack.Screen name="Game2" component={Game2Screen} options={{ gestureEnabled: false }} />
-          <RootStack.Screen name="TestHistory" component={TestHistoryScreen} />
+          <RootStack.Screen name={RootStackName.Welcome} component={WelcomeScreen} />
+          <RootStack.Screen name={RootStackName.Login} component={LoginScreen} />
+          <RootStack.Screen name={RootStackName.Register} component={RegisterScreen} />
+          <RootStack.Screen name={RootStackName.Home} component={HomeScreen} options={{ gestureEnabled: false }} />
+          <RootStack.Screen name={RootStackName.ForgotPassword} component={ForgotPasswordScreen} />
+          <RootStack.Screen name={RootStackName.Exercises} component={ExercisesScreen} options={{ gestureEnabled: false }} />
+          <RootStack.Screen name={RootStackName.Setting} component={SettingScreen} />
+          <RootStack.Screen name={RootStackName.Nhap} component={NhapScreen} />
+          <RootStack.Screen name={RootStackName.Blog} component={BlogScreen} />
+          <RootStack.Screen name={RootStackName.MiniTest} component={MinitestScreen} />
+          <RootStack.Screen name={RootStackName.Result} component={ResultScreen} />
+          <RootStack.Screen name={RootStackName.DetailBlog} component={DetailBlogScreen} />
+          <RootStack.Screen name={RootStackName.QuizGame} component={QuizGameScreen} />
+          <RootStack.Screen name={RootStackName.HowPlay} component={HowPlayScreen} />
+          <RootStack.Screen name={RootStackName.Game2} component={Game2Screen} options={{ gestureEnabled: false }} />
+          <RootStack.Screen
+            name={RootStackName.TestHistory}
+            component={TestHistory}
+            options={{ animation: 'none' }}
+          />
+          <RootStack.Screen
+            name={RootStackName.Profile}
+            component={ProfileScreen}
+            options={{ animation: 'none' }}
+          />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaView >
@@ -98,6 +128,7 @@ function RootNavigator() {
 }
 
 export {
+  RootStackName,
   RootNavigator,
   RootStackParamList,
 }
