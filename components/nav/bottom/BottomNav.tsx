@@ -1,9 +1,10 @@
 import { FunctionComponent } from "react"
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { Text } from "react-native"
-import { ThemeColors, ThemeDimensions, ThemeFonts } from "../../../constants"
-import { Button, Row } from "../../../components"
-import { RootStackName, RootStackParamList } from "../../../navigation";
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts } from "../../../constants"
+import { Button } from "../../button"
+import { Row } from "../../row"
+import { RootStackParamList } from "../../../types";
 
 type BottomNavProps = {
     activeKey: keyof RootStackParamList;

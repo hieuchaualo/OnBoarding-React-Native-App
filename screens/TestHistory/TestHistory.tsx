@@ -5,13 +5,13 @@ import {
   ScrollView,
 } from 'react-native';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackName, RootStackParamList } from "../../navigation";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { IMiniTestHistory } from '../../interfaces';
 import { getMiniTestHistory } from '../../api';
 import { fromSecondToDateTime } from '../../utils';
-import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
 import { BottomNav, Column, LoadingView, Row } from '../../components';
+import { RootStackParamList } from '../../types';
 
 function getIconByScore(score: number, timing: number) {
   if (score > 1.0) return (

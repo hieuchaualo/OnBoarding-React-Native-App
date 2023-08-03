@@ -14,7 +14,6 @@ import Spacing from "../../constants/Spacing";
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { getMiniTestById } from "../../api";
 import { IMiniTest, MiniTestTypes } from "../../interfaces";
@@ -22,11 +21,12 @@ import { LoadingView } from "../../components";
 import { toImgUrl } from "../../utils";
 import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
 import { ThemeFonts } from "../../constants";
+import { RootStackParamList } from "../../types";
 const { height } = Dimensions.get("window");
 
-type Props = NativeStackScreenProps<RootStackParamList, "Exercises">;
+type ExercisesProps = NativeStackScreenProps<RootStackParamList, "Exercises">;
 
-const ExercisesScreen: React.FC<Props> = ({ route, navigation }) => {
+const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
   const { miniTestId } = route.params;
   const { navigate } = navigation;
 

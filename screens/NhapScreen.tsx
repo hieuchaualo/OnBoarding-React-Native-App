@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   StyleSheet,
-  SafeAreaView,
   ScrollView,
   View,
   Text,
@@ -12,105 +11,148 @@ import Spacing from "../constants/Spacing";
 import Colors from "../constants/Colors";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from '../navigation';
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../constants';
+import { IAccount } from '../interfaces';
+import { deleteItemAsync, getItemAsync } from 'expo-secure-store';
+import { BottomNav, Button } from '../components';
+import { RootStackParamList } from '../types';
+import { AxiosResponse } from 'axios';
+import { getAccount } from '../api';
 
-const SECTIONS = [ 
-  {
-    header: 'Content',
-    items: [
-      { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
-      { id: 'help-circle', icon: 'help-circle', label: 'Helps', type: 'link' },
-      { id: 'log-out', icon: 'log-out', label: 'Logout', type: 'link' },
-    ],
-  },
+const items = [
+  { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
+  { id: 'help-circle', icon: 'help-circle', label: 'Helps', type: 'link' },
+  { id: 'log-out', icon: 'log-out', label: 'Logout', type: 'link' },
 ];
 
 
 type Props = NativeStackScreenProps<RootStackParamList, "Nhap">;
 
-const NhapScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
+const NhapScreen: FC<Props> = ({ navigation }) => {
+  const { navigate } = navigation;
+  const [account, setAccount] = useState<IAccount>();
+
+  useEffect(() => {
+    const fetchAccount = async () => {
+      try {
+        const token = await getItemAsync("secure_token")
+        if (token) {
+          const response: AxiosResponse<any, any> = await getAccount();
+          if (response?.status === 200) {
+            const responseData = response.data.data
+            setAccount(responseData)
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchAccount()
+  }, [])
+
+  const logout = () => {
+    deleteItemAsync('secure_token')
+      .then(() => deleteItemAsync('account'))
+      .then(() => navigate(RootStackName.Welcome))
+  }
+
   return (
-
-    <SafeAreaView style={{ backgroundColor: '#ffffff' }}>
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Profile</Text>
-
-        <Text style={styles.subtitle}>
-          Lorem ipsum dolor sit amet consectetur.
-        </Text>
-      </View>
-
-      <View style={styles.profile}>
-        <Image
-          source={require("../assets/images/avatar.jpg")}
-          style={styles.profileAvatar}
-        />
-
-        <Text style={styles.profileName}>John Doe</Text>
-
-        <Text style={styles.profileEmail}>john.doe@mail.com</Text>
-
-        <TouchableOpacity
-          onPress={() => {
-            // handle onPress
-          }}>
-          <View style={styles.profileAction}>
-            <Text style={styles.profileActionText}>Edit Profile</Text>
-
-            <FeatherIcon color="#fff" name="edit" size={16} />
-          </View>
-        </TouchableOpacity>
-      </View>
-      
-
-      {SECTIONS.map(({ header, items }) => (
-        <View style={styles.section} key={header}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionHeaderText}>{header}</Text>
-          </View>
-          <View style={styles.sectionBody}>
-            {items.map(({ id, label, icon, type}, index) => {
-              return (
-                <View
-                  key={id}
-                  style={[
-                    styles.rowWrapper,
-                    index === 0 && { borderTopWidth: 0 },
-                  ]}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      // handle onPress
-                    }}>
-                     <View style={styles.buttoncontainer}>
-                        <View style={styles.row}>
-                          <FeatherIcon
-                            color="#616161"
-                            name={icon}
-                            style={styles.rowIcon}
-                            size={22}
-                          />
-
-                          <Text style={styles.rowLabel}>{label}</Text>
-
-                          <View style={styles.rowSpacer} />
-
-                        </View>
-
-                      </View> 
-                    
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
-          </View>
+    <View style={{ backgroundColor: ThemeColors.light, flex: 1 }}>
+      <ScrollView>
+        <View style={{ padding: ThemeDimensions.positive2, paddingBottom: 0, }}>
+          <Text style={ThemeStyles.h2}>
+            Profile
+          </Text>
         </View>
-      ))}
-    </ScrollView>
 
-    
-  </SafeAreaView>
-);
+        <View style={styles.profile}>
+          <Image
+            source={require("../assets/images/avatar.jpg")}
+            style={styles.profileAvatar}
+          />
+
+          <Text style={styles.profileName}>
+            {account?.name}
+          </Text>
+
+          <Text style={styles.profileEmail}>
+            {account?.email}
+          </Text>
+
+          <TouchableOpacity
+            onPress={() => {
+              // handle onPress
+            }}>
+            <View style={styles.profileAction}>
+              <Text style={styles.profileActionText}>Edit Profile</Text>
+
+              <FeatherIcon color="#fff" name="edit" size={16} />
+            </View>
+          </TouchableOpacity>
+        </View>
+
+
+        <View style={{
+          padding: ThemeDimensions.positive3,
+        }}>
+          {items.map(({ id, label, icon, type }, index) => <Button
+            key={id}
+            onPress={() => {
+              // handle onPress
+            }}
+            style={{
+              flexDirection: 'row',
+              padding: ThemeDimensions.positive2,
+              marginVertical: ThemeDimensions.positive1,
+              shadowColor: ThemeColors.dark
+            }}
+            background={ThemeColors.grey}
+            backgroundHover={ThemeColors.primaryLight}
+          >
+            <FeatherIcon
+              color={ThemeColors.dark}
+              name={icon}
+              size={ThemeDimensions.fontSize.xl}
+            />
+            <Text style={{
+              fontSize: ThemeDimensions.fontSize.lg,
+              fontFamily: ThemeFonts.semiBold,
+              paddingStart: ThemeDimensions.positive2
+            }}>
+              {label}
+            </Text>
+          </Button>)}
+
+          <Button
+            onPress={logout}
+            style={{
+              flexDirection: 'row',
+              padding: ThemeDimensions.positive2,
+              marginVertical: ThemeDimensions.positive1,
+              shadowColor: ThemeColors.dark
+            }}
+            background={ThemeColors.grey}
+            backgroundHover={ThemeColors.primaryLight}
+          >
+            <FeatherIcon
+              color={ThemeColors.dark}
+              name='log-out'
+              size={ThemeDimensions.fontSize.xl}
+            />
+            <Text style={{
+              fontSize: ThemeDimensions.fontSize.lg,
+              fontFamily: ThemeFonts.semiBold,
+              paddingStart: ThemeDimensions.positive2
+            }}>
+              Logout real
+            </Text>
+          </Button>
+        </View>
+      </ScrollView >
+
+      <BottomNav navigate={navigate} activeKey={RootStackName.Nhap} />
+    </View >
+  );
 }
 
 export default NhapScreen;
@@ -136,7 +178,7 @@ const styles = StyleSheet.create({
   sectionBody: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#fff',  
+    borderColor: '#fff',
     display: "flex",
     justifyContent: "space-between",
   },

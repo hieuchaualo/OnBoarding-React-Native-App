@@ -10,7 +10,6 @@ import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import AppTextInput from "../../components/AppTextInput";
 import { getAccount, loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
@@ -18,10 +17,12 @@ import { regexEmail } from "../../constants/regexPattern";
 import { AxiosResponse } from "axios";
 import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { Button } from "../../components";
+import { RootStackParamList } from "../../types";
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
 
-const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
+const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
+  const { navigate } = navigation;
   const [email, setEmail] = useState("");
   const [isEmailNotValidated, setIsEmailNotValidated] = useState(false);
   const [password, setPassword] = useState("");
@@ -34,9 +35,6 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
         if (token) {
           const response: AxiosResponse<any, any> = await getAccount();
           if (response?.status === 200) {
-            const responseData = response.data.data
-            const account = JSON.stringify(responseData);
-            await setItemAsync("account", account);
             navigate("Home")
           }
         }
@@ -63,8 +61,6 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       if (response?.status === 201) {
         const responseData = response.data.data
         await setItemAsync("secure_token", responseData.token);
-        const account = JSON.stringify(responseData.account);
-        await setItemAsync("account", account);
         return true;
       }
       return false;
@@ -135,8 +131,8 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation: { navigate } }) => {
       )}
 
       <TouchableOpacity
-      onPress={() => navigate("ForgotPassword")}
-      style={{ marginTop: ThemeDimensions.positive2}}
+        onPress={() => navigate("ForgotPassword")}
+        style={{ marginTop: ThemeDimensions.positive2 }}
       >
         <Text
           style={{

@@ -13,13 +13,13 @@ import {
 import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import { IMiniTest, MiniTestTypes } from '../../interfaces';
 import { AxiosResponse } from 'axios';
 import { getMiniTestsList } from '../../api';
 import { fromSecondToDateTime, toImgUrl } from '../../utils';
 import { LoadingView } from '../../components';
 import { ThemeColors, ThemeFonts } from '../../constants';
+import { RootStackParamList } from '../../types';
 const { height } = Dimensions.get("window");
 
 

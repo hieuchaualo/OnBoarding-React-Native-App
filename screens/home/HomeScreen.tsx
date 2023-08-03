@@ -8,27 +8,50 @@ import {
 import { FC, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackName, RootStackParamList } from "../../navigation";
 import { getItemAsync } from "expo-secure-store";
-import { ThemeColors, ThemeDimensions, ThemeFonts } from "../../constants";
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts } from "../../constants";
 import { IAccount } from "../../interfaces";
 import { toImgUrl } from "../../utils";
 import { Button, Row, BottomNav } from "../../components";
+import { RootStackParamList } from "../../types";
+import { AxiosResponse } from "axios";
+import { getAccount } from "../../api";
 
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
 
-const HomeScreen: FC<HomeScreenProps> = (props) => {
-  const navigate = props.navigation.navigate;
+const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
+  const navigate = navigation.navigate;
   const [account, setAccount] = useState<IAccount>();
 
   useEffect(() => {
-    const getAccountFromSucreStore = async () => {
-      const account = await getItemAsync("account");
-      setAccount(JSON.parse(account ?? ""));
-    };
-    getAccountFromSucreStore()
-    return () => setAccount(undefined)
+    const fetchAccount = async () => {
+      try {
+        const token = await getItemAsync("secure_token")
+        if (token) {
+          const response: AxiosResponse<any, any> = await getAccount();
+          if (response?.status === 200) {
+            const responseData = response.data.data
+            setAccount(responseData)
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchAccount()
+  }, [])
+
+  // prevent going back
+  useEffect(() => {
+    const backDisable = navigation.addListener('beforeRemove', event => {
+      if (event.data.action.type === "NAVIGATE") {
+        navigation.dispatch(event.data.action)
+        navigation.removeListener('beforeRemove', backDisable)
+      }
+      event.preventDefault()
+    })
+    return () => navigation.removeListener('beforeRemove', backDisable);
   }, []);
 
   return (
@@ -186,7 +209,7 @@ const HomeScreen: FC<HomeScreenProps> = (props) => {
       </ScrollView>
 
       <View>
-        <BottomNav navigate={navigate} activeKey={RootStackName.Home}/>
+        <BottomNav navigate={navigate} activeKey={RootStackName.Home} />
       </View>
     </View>
   );

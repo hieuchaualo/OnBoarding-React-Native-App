@@ -14,7 +14,7 @@ import Colors from "../constants/Colors";
 import { ThemeFonts } from "../constants";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation";
+import { RootStackParamList } from "../types";
   
   type Props = NativeStackScreenProps<RootStackParamList, "Profile">;
   

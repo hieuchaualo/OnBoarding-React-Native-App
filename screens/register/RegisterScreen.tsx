@@ -1,9 +1,7 @@
 import {
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -13,37 +11,36 @@ import FontSize from "../../constants/FontSize";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import AppTextInput from "../../components/AppTextInput";
 import { regexEmail } from "../../constants/regexPattern";
 import { createAccount } from "../../api";
-import { setItemAsync } from "expo-secure-store";
 import { ThemeFonts } from "../../constants";
+import { RootStackParamList } from "../../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Register">;
 
 const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
-  const [isEmailNotValidated, setisEmailNotValidated] = useState(false);
-  const [isEmailExists, setisEmailExists] = useState(false);
+  const [isEmailNotValidated, setIsEmailNotValidated] = useState(false);
+  const [isEmailExists, setIsEmailExists] = useState(false);
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-  const [isPasswordNotValidated, setisPasswordNotValidated] = useState(false);
-  const [isRePasswordValid, setisRePasswordNotValidated] = useState(false);
+  const [isPasswordNotValidated, setIsPasswordNotValidated] = useState(false);
+  const [isRePasswordValid, setIsRePasswordNotValidated] = useState(false);
 
   const checkEmailInvalid = () => {
-    setisEmailNotValidated(!regexEmail.test(email));
+    setIsEmailNotValidated(!regexEmail.test(email));
     return !regexEmail.test(email);
   };
 
-  const checkPasswordlInvalid = () => {
-    setisPasswordNotValidated(!(password.length >= 8));
-    return !(password.length >= 8);
+  const checkPasswordInvalid = () => {
+    setIsPasswordNotValidated(password.length < 8);
+    return password.length < 8;
   };
 
-  const checkRePasswordlInvalid = () => {
-    setisRePasswordNotValidated(password !== rePassword);
+  const checkRePasswordInvalid = () => {
+    setIsRePasswordNotValidated(password !== rePassword);
     return password !== rePassword;
   };
 
@@ -55,7 +52,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         password,
       });
       if (response?.message?.includes('E11000')) {
-        setisEmailExists(true);
+        setIsEmailExists(true);
         return false;
       }
       // await setItemAsync("secure_token", response?.data?.token);
@@ -186,8 +183,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           <TouchableOpacity
             onPress={async () => {
               const emailInvalid = checkEmailInvalid();
-              const passwordInvalid = checkPasswordlInvalid();
-              const rePasswordInvalid = checkRePasswordlInvalid();
+              const passwordInvalid = checkPasswordInvalid();
+              const rePasswordInvalid = checkRePasswordInvalid();
               if (emailInvalid || passwordInvalid || rePasswordInvalid) {
                 // console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
               } else register();

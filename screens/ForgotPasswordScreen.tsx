@@ -13,8 +13,8 @@ import FontSize from "../constants/FontSize";
 import Colors from "../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AppTextInput from "../components/AppTextInput";
-import { RootStackParamList } from "../navigation";
 import { ThemeFonts } from "../constants";
+import { RootStackParamList } from "../types";
 const { height } = Dimensions.get("window");
 
 type Props = NativeStackScreenProps<RootStackParamList, "ForgotPassword">;

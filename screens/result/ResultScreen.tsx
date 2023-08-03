@@ -14,12 +14,12 @@ import Spacing from "../../constants/Spacing";
 import Colors from "../../constants/Colors";
 import FeatherIcon from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import { fromSecondToDateTime } from "../../utils";
 import { IMiniTestHistory } from "../../interfaces";
 import { updateMiniTestHistory } from "../../api";
 import { ThemeFonts } from "../../constants";
 import FontSize from "../../constants/FontSize";
+import { RootStackParamList } from "../../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Result">;
 

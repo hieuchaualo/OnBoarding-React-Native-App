@@ -4,17 +4,40 @@ import {
   Image,
   ScrollView
 } from "react-native";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation";
 import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { Button, Column, Row } from "../../components";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
+import { getAccount } from "../../api";
+import { AxiosResponse } from "axios";
+import { RootStackParamList } from "../../types";
 
 const welcomeHeadingImage = require("../../assets/images/login.png")
 
 type WelcomeScreenProps = NativeStackScreenProps<RootStackParamList, "Welcome">;
 
 const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { navigate } }) => {
+  useEffect(() => {
+    const fetchAccount = async () => {
+      try {
+        const token = await getItemAsync("secure_token")
+        if (token) {
+          const response: AxiosResponse<any, any> = await getAccount();
+          if (response?.status === 200) {
+            const responseData = response.data.data
+            const account = JSON.stringify(responseData);
+            await setItemAsync("account", account);
+            navigate("Home")
+          }
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchAccount()
+  }, [])
+
   return (
     <ScrollView style={{ padding: ThemeDimensions.positive2 }}>
       <Image

@@ -17,7 +17,7 @@ import Colors from "../constants/Colors";
 import { ThemeFonts } from "../constants/theme-fonts";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import FeatherIcon from "react-native-vector-icons/Feather";
-import { RootStackParamList } from "../navigation";
+import { RootStackParamList } from "../types";
 const { height } = Dimensions.get("window");
 
 
