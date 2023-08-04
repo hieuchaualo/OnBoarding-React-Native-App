@@ -58,4 +58,34 @@ export const ThemeStyles = StyleSheet.create({
     fontSize: ThemeDimensions.fontSize.md,
     fontFamily: ThemeFonts.bold,
   },
+  c1: {
+    textAlign: "center",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xxxl,
+    fontFamily: ThemeFonts.regular,
+  },
+  c2: {
+    textAlign: "center",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xxl,
+    fontFamily: ThemeFonts.regular,
+  },
+  c3: {
+    textAlign: "center",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xl,
+    fontFamily: ThemeFonts.regular,
+  },
+  c4: {
+    textAlign: "center",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.lg,
+    fontFamily: ThemeFonts.regular,
+  },
+  c5: {
+    textAlign: "center",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.md,
+    fontFamily: ThemeFonts.regular,
+  },
 });

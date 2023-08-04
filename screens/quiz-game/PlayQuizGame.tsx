@@ -1,195 +1,169 @@
 import {
-  SafeAreaView,
-  StyleSheet,
   View,
-  Dimensions,
   ScrollView,
-  StatusBar,
-  TouchableOpacity,
   Text,
 } from "react-native";
-import React from "react";
-import Spacing from "../../constants/Spacing";
-import FontSize from "../../constants/FontSize";
-import Colors from "../../constants/Colors";
-import { RootStackName, ThemeFonts } from "../../constants";
+import React, { useEffect, useState } from "react";
+import {
+  RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles, LibWords, LibWordsType
+} from "../../constants";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import FeatherIcon from "react-native-vector-icons/Feather";
 import { RootStackParamList } from "../../types";
-const { height } = Dimensions.get("window");
+import { Button, Row } from "../../components";
 
+const TOTAL_TEXT_BOX = 8
+const TOTAL_ANSWER_BOX = 6
+const SPEED_STEP = 50
+const textBoxes = Array(TOTAL_TEXT_BOX).fill('')
+
+const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min;
+
+const getRandomWordsList = (min: number, max: number): string[] => {
+  const wordsLibWordsKeys: string[] = Object.keys(LibWords)
+  const randomLibWordsKey: string = wordsLibWordsKeys[Math.round(getRandomArbitrary(0, wordsLibWordsKeys.length - 1))]
+  const randomLibWords = LibWords[randomLibWordsKey as keyof LibWordsType]
+  const randomLibWordsMax = randomLibWords.length - 1
+
+  const randomWordsList: string[] = []
+  const randomWordListLength = Math.round(getRandomArbitrary(min, max))
+  for (let index = 0; index < randomWordListLength; index++) {
+    const randomWord = randomLibWords[Math.round(getRandomArbitrary(0, randomLibWordsMax))]
+    randomWordsList.push(randomWord)
+  }
+
+  return randomWordsList;
+}
+
+const generateRandomAnswerList = (randomWordsList: string[]) => {
+  const randomAnswerList: string[] = []
+  const randomWordsListMax = randomWordsList.length - 1
+  for (let index = 0; index < TOTAL_ANSWER_BOX; index++) {
+    const randomWord = randomWordsList[Math.round(getRandomArbitrary(0, randomWordsListMax))]
+    randomAnswerList.push(randomWord)
+  }
+  randomAnswerList[Math.round(getRandomArbitrary(0, randomAnswerList.length - 1))] = randomWordsList[randomWordsListMax]
+
+  return randomAnswerList
+}
 
 type PlayQuizGameProps = NativeStackScreenProps<RootStackParamList, RootStackName.PlayQuizGame>;
 
 export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { navigate }, }) => {
+  const [speed, setSpeed] = useState<number>(150)
+  const [isShowRandomAnswer, setIsShowRandomAnswer] = useState<boolean>(false)
+  const [randomWordsList, setRandomWordsList] = useState<string[]>([])
+  const [randomAnswerList, setRandomAnswerList] = useState<string[]>([])
+
+  const [randomWordsListRenderIndex, setRandomWordsListRenderIndex] = useState<number>(Number.MAX_SAFE_INTEGER)
+
+  useEffect(() => {
+    let interval: (string | number | NodeJS.Timeout | undefined) = 0
+    if (randomWordsListRenderIndex < randomWordsList?.length) {
+      interval = setInterval(() => setRandomWordsListRenderIndex(randomWordsListRenderIndex + 1), 60 * 1000 / speed);
+    }
+    if (randomWordsListRenderIndex === randomWordsList?.length) setIsShowRandomAnswer(true)
+    return () => clearInterval(interval);
+  }, [randomWordsListRenderIndex])
+
+  useEffect(() => {
+    const _randomWordsList = getRandomWordsList(10, 20)
+    const _randomAnswerList = generateRandomAnswerList(_randomWordsList)
+
+    setRandomWordsList(_randomWordsList)
+    setRandomAnswerList(_randomAnswerList)
+
+    setRandomWordsListRenderIndex(-1)
+  }, [])
+
+  const handleOnAnswer = (answer: string) => {
+    if (answer === randomWordsList[randomWordsList.length - 1]) setSpeed(speed + SPEED_STEP)
+    else if (speed > SPEED_STEP) setSpeed(speed - SPEED_STEP)
+
+    setIsShowRandomAnswer(false)
+
+    const _randomWordsList = getRandomWordsList(10, 20)
+    const _randomAnswerList = generateRandomAnswerList(_randomWordsList)
+
+    setRandomWordsList(_randomWordsList)
+    setRandomAnswerList(_randomAnswerList)
+
+    setRandomWordsListRenderIndex(-1)
+  }
+
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <View style={styles.headerAction}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
+    <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
+      <View style={{ marginVertical: ThemeDimensions.positive2 }}>
+        <Text style={ThemeStyles.c4}> Speed: </Text>
+        <Text style={ThemeStyles.h1}>
+          {speed}
+        </Text>
+      </View>
+      <ScrollView>
+        <Row style={{
+          flex: 1,
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
+          padding: ThemeDimensions.positive1,
+        }}>
+          {textBoxes?.map((_word, textColumnsIndex) => (
+            <View key={textColumnsIndex} style={{
+              width: ThemeDimensions.percentage50,
+              padding: ThemeDimensions.positive2,
+            }}>
+              <View style={{
+                padding: ThemeDimensions.positive1,
+                borderBottomWidth: 2,
+                borderColor: ThemeColors.dark,
+                borderStyle: "dashed",
+              }}>
+                <Text style={{ ...ThemeStyles.c3, fontFamily: ThemeFonts.semiBold }}>
+                  {(randomWordsListRenderIndex % TOTAL_TEXT_BOX === textColumnsIndex) && (randomWordsListRenderIndex < randomWordsList.length)
+                    ? randomWordsList[randomWordsListRenderIndex]
+                    : ' '
+                  }
+                </Text>
+              </View>
+            </View>
+          ))}
+        </Row>
+
+        <Row style={{
+          flex: 1,
+          flexWrap: 'wrap',
+          alignItems: 'flex-start',
+          padding: ThemeDimensions.positive1,
+        }}>
+          {isShowRandomAnswer && randomAnswerList?.map((randomAnswer, randomAnswerIndex) => (
+            <View key={randomAnswerIndex} style={{
+              width: ThemeDimensions.percentage50,
+              padding: ThemeDimensions.positive2,
+            }}>
+              <Button title={randomAnswer} onPress={() => handleOnAnswer(randomAnswer)} style={{
+                paddingVertical: ThemeDimensions.positive2,
+                paddingHorizontal: ThemeDimensions.positive1,
+              }} />
+            </View>
+          ))}
+
+          {isShowRandomAnswer && (
+            <View style={{
+              width: ThemeDimensions.percentage100,
+              padding: ThemeDimensions.positive2,
+            }}>
+              <Button
+                title={`I don't know`}
+                onPress={() => handleOnAnswer('')}
+                background={ThemeColors.secondary}
+                backgroundHover={ThemeColors.third}
+                style={{
+                  paddingVertical: ThemeDimensions.positive2,
+                  paddingHorizontal: ThemeDimensions.positive1,
                 }}
-              >
-                <FeatherIcon name="arrow-left" size={24} />
-              </TouchableOpacity>
+              />
             </View>
-
-            <Text style={styles.headerTitle}>Quiz Game</Text>
-
-            <View style={[styles.headerAction, { alignItems: "flex-end" }]}>
-              <TouchableOpacity
-                onPress={() => {
-                  // handle onPress
-                }}
-              >
-                <FeatherIcon name="more-vertical" size={24} />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <ScrollView>
-            <Text style={{ textAlign: "center" }}> Speed</Text>
-            <Text
-              style={{
-                fontSize: FontSize.xLarge,
-                color: Colors.primary,
-                fontFamily: ThemeFonts.bold,
-                textAlign: "center",
-              }}
-            >
-              200
-            </Text>
-            <View style={styles.row}>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  Tuan
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  Luc
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  bi
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  dien
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  roi
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => navigate("Login")}
-                style={styles.button}>
-                <Text style={styles.text}>
-                  ne
-                </Text>
-              </TouchableOpacity>
-
-            </View>
-          </ScrollView>
-        </View>
-      </SafeAreaView>
+          )}
+        </Row>
+      </ScrollView>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 0,
-    paddingHorizontal: 16,
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-  },
-  overlay: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    paddingBottom: 48,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  headerTitle: {
-    fontSize: 19,
-    fontWeight: "600",
-    color: "#000",
-  },
-  headerAction: {
-    width: 40,
-    height: 40,
-    alignItems: "flex-start",
-    justifyContent: "center",
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    // paddingHorizontal: Spacing * 2,
-    paddingTop: Spacing * 2,
-  },
-  tab: {
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
-    marginBottom: 6,
-    width: "48%",
-    minWidth: '48%',
-    borderColor: '#6D7176',
-    borderLeftWidth: 4,
-    borderLeftStyle: 'solid',
-  },
-  text: {
-    fontFamily: ThemeFonts.regular,
-    color: Colors.onPrimary,
-    fontSize: FontSize.large,
-    textAlign: "center",
-  },
-  button: {
-    backgroundColor: Colors.primary,
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
-    padding: 16,
-    marginBottom: 8,
-    width: "48%",
-    minWidth: '48%',
-    borderRadius: Spacing,
-  },
-});

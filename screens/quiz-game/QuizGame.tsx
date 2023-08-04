@@ -51,6 +51,7 @@ export const QuizGame: FC<QuizGameProps> = ({ navigation: { navigate }, }) => {
                 fontSize: ThemeDimensions.fontSize.xl,
                 color: ThemeColors.dark,
                 paddingLeft: ThemeDimensions.positive1,
+                marginVertical: ThemeDimensions.positive1,
               }}
             >
               New Best
