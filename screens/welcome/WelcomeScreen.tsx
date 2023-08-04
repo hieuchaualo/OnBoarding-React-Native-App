@@ -69,7 +69,7 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
           <Button
             title="Login"
             style={{
-              width: ThemeDimensions.percentage75,
+              width: ThemeDimensions.percentage90,
               height: ThemeDimensions.positive10,
             }}
             onPress={() => navigate("Login")}
@@ -84,9 +84,8 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
             backgroundHover={ThemeColors.light}
             onPress={() => navigate("Login")}
             style={{
-              width: ThemeDimensions.percentage75,
+              width: ThemeDimensions.percentage90,
               height: ThemeDimensions.positive10,
-              shadowColor: ThemeColors.white,
             }}
           />
         </Column>

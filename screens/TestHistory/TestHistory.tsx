@@ -125,7 +125,7 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
                     color: ThemeColors.dark,
                     width: ThemeDimensions.percentage100,
                   }}>
-                    {typeof miniTestHistoryList[0]?.miniTest === 'object' && miniTestHistoryList[0]?.miniTest.title}
+                    {typeof miniTestHistory.miniTest === 'object' && miniTestHistory.miniTest.title}
                   </Text>
 
                   <Row style={{ justifyContent: 'space-between', width: ThemeDimensions.percentage100 }}>

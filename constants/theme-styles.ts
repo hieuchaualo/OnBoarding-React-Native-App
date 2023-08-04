@@ -9,14 +9,6 @@ export const ThemeStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: ThemeColors.primary,
     borderRadius: ThemeDimensions.positive2,
-
-    shadowColor: ThemeColors.primaryDark,
-    //android specific
-    elevation: ThemeDimensions.positive1,
-    //ios specific
-    shadowOffset: { width: 4, height: 4 },
-    shadowRadius: ThemeDimensions.positive1,
-    shadowOpacity: 0.5,
   },
   buttonPrimaryLgText: {
     color: ThemeColors.light,
@@ -29,14 +21,6 @@ export const ThemeStyles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: ThemeColors.white,
     borderRadius: ThemeDimensions.positive2,
-
-    shadowColor: ThemeColors.light,
-    //android specific
-    elevation: ThemeDimensions.positive1,
-    //ios specific
-    shadowOffset: { width: 4, height: 4 },
-    shadowRadius: ThemeDimensions.positive1,
-    shadowOpacity: 0.5,
   },
   buttonLightLgText: {
     color: ThemeColors.dark,

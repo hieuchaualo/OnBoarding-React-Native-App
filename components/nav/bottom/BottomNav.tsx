@@ -24,7 +24,6 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
                 onPress={() => (activeKey !== RootStackName.Home) && navigate(RootStackName.Home)}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
-                style={{ shadowColor: ThemeColors.white }}
             >
                 <FeatherIcon
                     name="home"
@@ -45,7 +44,6 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
                 onPress={() => (activeKey !== RootStackName.TestHistory) && navigate(RootStackName.TestHistory)}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
-                style={{ shadowColor: ThemeColors.white }}
             >
                 <FeatherIcon
                     name="file-text"
@@ -66,7 +64,6 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
                 onPress={() => (activeKey !== RootStackName.HowPlay) && {}}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
-                style={{ shadowColor: ThemeColors.white }}
             >
                 <FeatherIcon
                     name="file-text"
@@ -87,7 +84,6 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
                 onPress={() => (activeKey !== RootStackName.Nhap) && navigate(RootStackName.Nhap)}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
-                style={{ shadowColor: ThemeColors.white }}
             >
                 <FeatherIcon
                     name="user"

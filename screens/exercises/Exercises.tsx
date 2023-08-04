@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
   description: {
-    fontFamily: ThemeFonts.bold,
+    fontFamily: ThemeFonts.regular,
     color: Colors.text,
     letterSpacing: 0.5,
     lineHeight: 28,

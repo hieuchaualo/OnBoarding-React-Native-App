@@ -26,14 +26,6 @@ const Button: FunctionComponent<ButtonProps> = ({
                 alignItems: 'center',
                 justifyContent: 'center',
                 borderRadius: ThemeDimensions.positive2,
-
-                shadowColor: ThemeColors.primaryDark,
-                //android specific
-                elevation: ThemeDimensions.positive1,
-                //ios specific
-                shadowOffset: { width: 4, height: 4 },
-                shadowRadius: ThemeDimensions.positive1,
-                shadowOpacity: 0.5,
                 ...style
             }}
             onPress={onPress}

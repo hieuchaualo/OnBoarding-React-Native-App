@@ -98,6 +98,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
               fontSize: ThemeDimensions.fontSize.xxxl,
               fontFamily: ThemeFonts.bold,
               color: ThemeColors.dark,
+              width: ThemeDimensions.percentage100
             }}>
               Ready to practice
               <Text style={{
@@ -153,7 +154,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: 'flex-start',
-              shadowColor: ThemeColors.warning,
             }}
           >
             <Image
@@ -185,7 +185,6 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: 'flex-start',
-              shadowColor: ThemeColors.blueDark,
             }}
           >
             <Image
