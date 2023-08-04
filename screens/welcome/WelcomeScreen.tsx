@@ -6,9 +6,9 @@ import {
 } from "react-native";
 import { FunctionComponent, useEffect } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { Button, Column, Row } from "../../components";
-import { getItemAsync, setItemAsync } from "expo-secure-store";
+import { getItemAsync } from "expo-secure-store";
 import { getAccount } from "../../api";
 import { AxiosResponse } from "axios";
 import { RootStackParamList } from "../../types";
@@ -25,9 +25,6 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
         if (token) {
           const response: AxiosResponse<any, any> = await getAccount();
           if (response?.status === 200) {
-            const responseData = response.data.data
-            const account = JSON.stringify(responseData);
-            await setItemAsync("account", account);
             navigate("Home")
           }
         }
@@ -82,7 +79,7 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
             titleStyle={{ color: ThemeColors.dark, }}
             background={ThemeColors.white}
             backgroundHover={ThemeColors.light}
-            onPress={() => navigate("Login")}
+            onPress={() => navigate(RootStackName.Register)}
             style={{
               width: ThemeDimensions.percentage90,
               height: ThemeDimensions.positive10,
