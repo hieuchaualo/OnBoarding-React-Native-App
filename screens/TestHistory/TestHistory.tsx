@@ -30,7 +30,7 @@ function getIconByScore(score: number, timing: number) {
         padding: ThemeDimensions.positive2,
         borderRadius: ThemeDimensions.positive2
       }}>
-        <FeatherIcon name="smile" size={ThemeDimensions.positive8} color={ThemeColors.success} />
+        <FeatherIcon name="smile" size={ThemeDimensions.positive8} color={'#a2db9c'} />
       </View>
     )
     if (timing < 1.0) return (
@@ -118,7 +118,7 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
                   )}
                 </Column>
 
-                <Column style={{ paddingHorizontal: ThemeDimensions.positive2 }}>
+                <Column style={{ paddingHorizontal: ThemeDimensions.positive2,}}>
                   <Text style={{
                     fontFamily: ThemeFonts.semiBold,
                     fontSize: ThemeDimensions.fontSize.md,

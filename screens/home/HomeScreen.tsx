@@ -114,8 +114,8 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
           {/* Button */}
           <Button
             onPress={() => navigate(RootStackName.MiniTest)}
-            background={ThemeColors.pinkLight}
-            backgroundHover={ThemeColors.pinkDark}
+            background={ThemeColors.pinkDark}
+            backgroundHover={ThemeColors.pinkLight}
             style={{
               marginBottom: ThemeDimensions.positive2,
               padding: ThemeDimensions.positive4,
@@ -145,8 +145,8 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
 
           <Button
             onPress={() => navigate(RootStackName.QuizGame)}
-            background={ThemeColors.yellowLight}
-            backgroundHover={ThemeColors.yellowDark}
+            background={ThemeColors.yellowDark}
+            backgroundHover={ThemeColors.yellowLight}
             style={{
               marginBottom: ThemeDimensions.positive2,
               padding: ThemeDimensions.positive4,
@@ -176,8 +176,8 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
 
           <Button
             onPress={() => navigate(RootStackName.Blog)}
-            background={ThemeColors.blueLight}
-            backgroundHover={ThemeColors.blueDark}
+            background={ThemeColors.blueDark}
+            backgroundHover={ThemeColors.blueLight}
             style={{
               marginBottom: ThemeDimensions.positive2,
               padding: ThemeDimensions.positive4,

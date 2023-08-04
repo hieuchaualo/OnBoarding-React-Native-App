@@ -10,6 +10,9 @@ import {
   ResultScreen,
   TestHistory,
   WelcomeScreen,
+  QuizGame,
+  HowToPlayQuizGame,
+  PlayQuizGame,
 } from "../screens";
 
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
@@ -18,9 +21,6 @@ import SettingScreen from "../screens/SettingScreen";
 import NhapScreen from "../screens/NhapScreen";
 import BlogScreen from "../screens/BlogScreen";
 import DetailBlogScreen from "../screens/DetailBlogScreen";
-import QuizGameScreen from "../screens/QuizGameScreen";
-import HowPlayScreen from "../screens/HowPlayScreen";
-import Game2Screen from "../screens/Game2Screen";
 import { RootStackName, ThemeColors } from "../constants";
 import { RootStackParamList } from "../types";
 
@@ -58,9 +58,9 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.MiniTest} component={MinitestScreen} />
           <RootStack.Screen name={RootStackName.Result} component={ResultScreen} />
           <RootStack.Screen name={RootStackName.DetailBlog} component={DetailBlogScreen} />
-          <RootStack.Screen name={RootStackName.QuizGame} component={QuizGameScreen} />
-          <RootStack.Screen name={RootStackName.HowPlay} component={HowPlayScreen} />
-          <RootStack.Screen name={RootStackName.Game2} component={Game2Screen} options={{ gestureEnabled: false }} />
+          <RootStack.Screen name={RootStackName.QuizGame} component={QuizGame} />
+          <RootStack.Screen name={RootStackName.HowToPlayQuizGame} component={HowToPlayQuizGame} />
+          <RootStack.Screen name={RootStackName.PlayQuizGame} component={PlayQuizGame} options={{ gestureEnabled: false }} />
           <RootStack.Screen
             name={RootStackName.TestHistory}
             component={TestHistory}
