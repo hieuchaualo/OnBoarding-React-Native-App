@@ -5,11 +5,12 @@ import { fromSecondToDateTime } from '../../../utils'
 type TimeCountdownProps = {
     timeRemainingInSecond?: number,
     style: object,
+    prefix?: string,
     handleOnTimeout: Function,
     isReverse?: boolean, // able to count increment after timeout
 }
 
-function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isReverse }: TimeCountdownProps) {
+function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isReverse, prefix }: TimeCountdownProps) {
     const [timeCountdown, setTimeCountdown] = useState(Number.MAX_SAFE_INTEGER)
 
     useEffect(() => {
@@ -29,7 +30,7 @@ function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isRevers
 
     return (
         <Text style={style}>
-            {fromSecondToDateTime(timeCountdown)}
+            {prefix} {fromSecondToDateTime(timeCountdown)}
         </Text>
     )
 }

@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   Text,
-  ImageBackground,
   Image,
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -59,13 +58,13 @@ export const QuizGame: FC<QuizGameProps> = ({ navigation: { navigate }, }) => {
           </Row>
 
           <Row style={{ justifyContent: 'flex-start' }}>
-            <Text>
+            <Text style={ThemeStyles.c4}>
               Max Speed: 500
             </Text>
           </Row>
 
           <Row style={{ justifyContent: 'flex-start' }}>
-            <Text>
+            <Text style={ThemeStyles.c4}>
               Average Speed: 500
             </Text>
           </Row>

@@ -25,7 +25,7 @@ const Button: FunctionComponent<ButtonProps> = ({
                 backgroundColor,
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderRadius: ThemeDimensions.positive2,
+                borderRadius: ThemeDimensions.positive1,
                 ...style
             }}
             onPress={onPress}

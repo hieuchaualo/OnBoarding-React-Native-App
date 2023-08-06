@@ -1,16 +1,14 @@
 import React from "react";
 import { Text, TouchableWithoutFeedback, View } from "react-native";
-import Colors from "../../../constants/Colors";
+import { ThemeColors, ThemeDimensions, ThemeFonts } from "../../../constants";
 
-const TRUE_FALSE_OPTIONS = ["TRUE", "FALSE", "NOT GIVEN"];
+const TRUE_FALSE_OPTIONS = ["True", "False", "Not given"];
 
 type AnswerByOptionsProps = {
   quizIndex: number;
   options: string[];
   answersForm: string[];
   handleOnAnswer: Function;
-  optionStyle?: object;
-  optionTextStyle?: object;
 }
 
 const AnswerByOptions = (props: AnswerByOptionsProps) => {
@@ -19,8 +17,6 @@ const AnswerByOptions = (props: AnswerByOptionsProps) => {
     options,
     answersForm,
     handleOnAnswer,
-    optionStyle,
-    optionTextStyle,
   } = props;
 
   const internalOptions = options.length ? options : TRUE_FALSE_OPTIONS;
@@ -33,20 +29,20 @@ const AnswerByOptions = (props: AnswerByOptionsProps) => {
             onPress={() => handleOnAnswer(quizIndex, option)}
           >
             <View
-              style={[
-                optionStyle,
-                answersForm[quizIndex] === option
-                  ? { backgroundColor: Colors.primary }
-                  : { backgroundColor: Colors.gray, },
-              ]}
+              style={{
+                backgroundColor: answersForm[quizIndex] === option ? ThemeColors.primary : ThemeColors.light,
+                paddingVertical: ThemeDimensions.positive1,
+                paddingHorizontal: ThemeDimensions.positive2,
+                borderRadius: ThemeDimensions.positive1,
+                marginVertical: ThemeDimensions.positive1 / 2,
+              }}
             >
               <Text
-                style={[
-                  optionTextStyle,
-                  answersForm[quizIndex] === option
-                    ? { color: '#FFF' }
-                    : { borderBottomColor: Colors.gray },
-                ]}
+                style={{
+                  color: answersForm[quizIndex] === option ? ThemeColors.light : ThemeColors.third,
+                  fontFamily: ThemeFonts.semiBold,
+                  fontSize: ThemeDimensions.fontSize.lg,
+                }}
               >
                 {option}
               </Text>

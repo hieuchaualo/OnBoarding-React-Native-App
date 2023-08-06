@@ -18,7 +18,8 @@ function getIconByScore(score: number, timing: number) {
     <View style={{
       backgroundColor: ThemeColors.pinkLight,
       padding: ThemeDimensions.positive2,
-      borderRadius: ThemeDimensions.positive2
+      borderTopLeftRadius: ThemeDimensions.positive1,
+      borderBottomLeftRadius: ThemeDimensions.positive1,
     }}>
       <FeatherIcon name="frown" size={ThemeDimensions.positive8} color={ThemeColors.danger} />
     </View>
@@ -26,18 +27,20 @@ function getIconByScore(score: number, timing: number) {
   if (score >= 0.8) {
     if (timing < 0.8) return (
       <View style={{
-        backgroundColor: ThemeColors.teal,
+        backgroundColor: '#ceecce',
         padding: ThemeDimensions.positive2,
-        borderRadius: ThemeDimensions.positive2
+        borderTopLeftRadius: ThemeDimensions.positive1,
+        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
-        <FeatherIcon name="smile" size={ThemeDimensions.positive8} color={'#a2db9c'} />
+        <FeatherIcon name="smile" size={ThemeDimensions.positive8} color={ThemeColors.teal} />
       </View>
     )
     if (timing < 1.0) return (
       <View style={{
         backgroundColor: ThemeColors.yellowLight,
         padding: ThemeDimensions.positive2,
-        borderRadius: ThemeDimensions.positive2
+        borderTopLeftRadius: ThemeDimensions.positive1,
+        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
         <FeatherIcon name="meh" size={ThemeDimensions.positive8} color={ThemeColors.warning} />
       </View>
@@ -49,7 +52,8 @@ function getIconByScore(score: number, timing: number) {
       <View style={{
         backgroundColor: ThemeColors.yellowLight,
         padding: ThemeDimensions.positive2,
-        borderRadius: ThemeDimensions.positive2
+        borderTopLeftRadius: ThemeDimensions.positive1,
+        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
         <FeatherIcon name="meh" size={ThemeDimensions.positive8} color={ThemeColors.warning} />
       </View>
@@ -60,7 +64,8 @@ function getIconByScore(score: number, timing: number) {
     <View style={{
       backgroundColor: ThemeColors.pinkLight,
       padding: ThemeDimensions.positive2,
-      borderRadius: ThemeDimensions.positive2
+      borderTopLeftRadius: ThemeDimensions.positive1,
+      borderBottomLeftRadius: ThemeDimensions.positive1,
     }}>
       <FeatherIcon name="frown" size={ThemeDimensions.positive8} color={ThemeColors.danger} />
     </View>
@@ -98,17 +103,16 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
             Mini test history
           </Text>
         </View>
-        <View style={{ padding: ThemeDimensions.positive2, paddingTop: 0, }}>
+        <View style={{ padding: ThemeDimensions.positive1, paddingTop: 0, }}>
           {isLoading
             ? <LoadingView />
             : miniTestHistoryList?.map((miniTestHistory, miniTestHistoryIndex) => (
               <Row
                 key={miniTestHistory._id ?? miniTestHistoryIndex}
                 style={{
-                  marginVertical: ThemeDimensions.positive1,
+                  margin: ThemeDimensions.positive1,
                   backgroundColor: ThemeColors.white,
-                  padding: ThemeDimensions.positive1,
-                  borderRadius: ThemeDimensions.positive2,
+                  borderRadius: ThemeDimensions.positive1,
                 }}
               >
                 <Column style={{ flex: undefined }}>
@@ -118,7 +122,7 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
                   )}
                 </Column>
 
-                <Column style={{ paddingHorizontal: ThemeDimensions.positive2,}}>
+                <Column style={{ paddingHorizontal: ThemeDimensions.positive2, }}>
                   <Text style={{
                     fontFamily: ThemeFonts.semiBold,
                     fontSize: ThemeDimensions.fontSize.md,

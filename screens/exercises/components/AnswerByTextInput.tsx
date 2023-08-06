@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput } from "react-native";
 import Spacing from "../../../constants/Spacing";
 import Colors from "../../../constants/Colors";
-import FontSize from "../../../constants/FontSize";
+import { ThemeColors } from "../../../constants";
 
 type AnswerByTextInputProps = {
   quizIndex: number;
@@ -14,7 +14,7 @@ type AnswerByTextInputProps = {
 
 const focusedStyle = {
   borderWidth: 2,
-  borderColor: Colors.primary,
+  borderColor: ThemeColors.primary,
   borderRadius: Spacing,
   paddingHorizontal: 16,
   paddingVertical: 8,
@@ -23,7 +23,7 @@ const focusedStyle = {
 
 const blurredStyle = {
   borderWidth: 2,
-  borderColor: Colors.primary,
+  borderColor: ThemeColors.primary,
   borderRadius: Spacing,
   paddingHorizontal: 16,
   paddingVertical: 8,

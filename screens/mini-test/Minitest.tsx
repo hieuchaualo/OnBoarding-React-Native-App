@@ -1,29 +1,22 @@
 import React, { useEffect } from 'react';
 import {
-  StyleSheet,
   View,
   TouchableWithoutFeedback,
   Text,
-  SafeAreaView,
-  TouchableOpacity,
   ScrollView,
   Image,
-  Dimensions,
+  TouchableOpacity,
 } from 'react-native';
-import FontSize from "../../constants/FontSize";
-import Colors from "../../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { IMiniTest, MiniTestTypes } from '../../interfaces';
 import { AxiosResponse } from 'axios';
 import { getMiniTestsList } from '../../api';
 import { fromSecondToDateTime, toImgUrl } from '../../utils';
-import { LoadingView } from '../../components';
-import { ThemeColors, ThemeFonts } from '../../constants';
+import { Column, LoadingView, Row } from '../../components';
+import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
 import { RootStackParamList } from '../../types';
-const { height } = Dimensions.get("window");
 
-
-const tabs = ['TRUE-FALSE-NOT GIVEN', 'Sentence Completion', 'Multiple Choice'];
+const tabs = ['True - False - Not given', 'Sentence Completion', 'Multiple Choice'];
 
 type Props = NativeStackScreenProps<RootStackParamList, "MiniTest">;
 
@@ -59,174 +52,100 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
   }, [currentTab])
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#f3f5f9' }}>
+    <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
       {/* <View style={styles.container}> */}
-      <View style={styles.header}>
-        <ScrollView horizontal={true}>
-          <View style={styles.container}>
-            {tabs.map((tab) => {
-              const isActive = tab === currentTab;
+      <Row>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <Row>
+            {tabs.map((tabName) => {
+              const isActive = tabName === currentTab;
               return (
-                <View style={{ flex: 1 }} key={tab}>
+                <View style={{ flex: 1 }} key={tabName}>
                   <TouchableWithoutFeedback
                     onPress={() => {
-                      setCurrentTab(tab);
+                      setCurrentTab(tabName);
                     }}>
                     <View
-                      style={[
-                        styles.item,
-                        isActive && { borderBottomColor: Colors.primary, },
-                      ]}>
-                      <Text style={[styles.text, isActive && { color: Colors.primary, }]}>
-                        {tab}
+                      style={{
+                        padding: ThemeDimensions.positive2,
+                        paddingBottom: ThemeDimensions.positive1,
+                        borderBottomWidth: 2,
+                        borderBottomEndRadius: ThemeDimensions.positive1,
+                        borderBottomColor: isActive ? ThemeColors.primary : ThemeColors.grey,
+                      }}>
+                      <Text style={{
+                        ...ThemeStyles.c5,
+                        fontFamily: ThemeFonts.semiBold,
+                        color: isActive ? ThemeColors.primary : ThemeColors.secondary,
+                      }}>
+                        {tabName}
                       </Text>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
               );
             })}
-          </View>
+          </Row>
         </ScrollView>
-      </View>
+      </Row>
 
-      <View style={styles.placeholder}>
-        <ScrollView style={{ paddingHorizontal: 16, paddingBottom: 16 }} >
+      <ScrollView>
+        <View style={{ padding: ThemeDimensions.positive1 }}>
           {isShowLoading
-            ? <View style={{ marginTop: height / 2.5 }}>
+            ? <View style={{ marginTop: ThemeDimensions.windowHeight30 }}>
               <LoadingView />
             </View>
-            : miniTestsList.map((miniTest) => {
-              return (
+            : (miniTestsList.map((miniTest) =>
+              <View
+                key={miniTest._id}
+                style={{
+                  backgroundColor: ThemeColors.white,
+                  borderRadius: ThemeDimensions.positive1,
+                  margin: ThemeDimensions.positive1,
+                }}>
                 <TouchableOpacity
-                  key={miniTest._id}
-                  onPress={() => {
-                    navigate('Exercises', { miniTestId: miniTest._id })
-                    // handle onPress
-                  }}>
-                  <View style={styles.card}>
+                  onPress={() => navigate('Exercises', { miniTestId: miniTest._id })}
+                // background={TouchableNativeFeedback.Ripple(ThemeColors.grey, true)}
+                >
+                  <Row>
                     <Image
                       resizeMode="cover"
                       source={{ uri: toImgUrl(miniTest.thumbnail) }}
-                      style={styles.cardImg}
+                      style={{
+                        borderTopLeftRadius: ThemeDimensions.positive1,
+                        borderBottomLeftRadius: ThemeDimensions.positive1,
+                        height: ThemeDimensions.positive15,
+                        width: ThemeDimensions.positive15,
+                      }}
                     />
 
-                    <View style={styles.cardBody}>
-                      <Text style={styles.cardTitle}>{miniTest.title}</Text>
+                    <Column style={{ alignItems: 'flex-start', padding: ThemeDimensions.positive2 }}>
+                      <Text numberOfLines={2} style={{
+                        ...ThemeStyles.c4,
+                        fontFamily: ThemeFonts.semiBold,
+                        textAlign: 'left',
+                        paddingBottom: ThemeDimensions.positive1,
+                      }}>
+                        {miniTest.title}
+                      </Text>
 
                       {miniTest.timeLimit &&
-                        <Text style={{ ...styles.cardTitle, color: ThemeColors.secondary }}>
-                          Target: {fromSecondToDateTime(miniTest.timeLimit)}
+                        <Text style={{ ...ThemeStyles.c5, color: ThemeColors.secondary }}>
+                          Time limit: {fromSecondToDateTime(miniTest.timeLimit)}
                         </Text>
                       }
-
-                      <TouchableOpacity
-                        onPress={() => {
-                          // handle onPress
-                        }}>
-                        <View style={styles.btn}>
-                          <Text style={styles.btnText}>Take test</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
+                    </Column>
+                  </Row>
                 </TouchableOpacity>
-              );
-            },
-            )}
-        </ScrollView>
-      </View>
+              </View>
+            ))
+          }
+        </View>
+      </ScrollView>
 
-    </SafeAreaView>
+    </View >
 
   );
 }
 
 export { MinitestScreen };
-
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 24,
-    paddingHorizontal: 12,
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-    flexDirection: 'row',
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  item: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    borderColor: '#e5e7eb',
-    borderBottomWidth: 2,
-    position: 'relative',
-    overflow: 'hidden',
-    flexDirection: 'row',
-    paddingHorizontal: 12,
-  },
-  text: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#6b7280',
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: Colors.primary,
-    marginBottom: 12,
-  },
-  card: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    borderRadius: 12,
-    marginVertical: 8,
-    backgroundColor: '#fff',
-  },
-  cardImg: {
-    width: 180,
-    height: 120,
-    borderRadius: 12,
-    margin: 8,
-  },
-  cardBody: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
-  },
-  cardTitle: {
-    fontFamily: ThemeFonts.semiBold,
-    fontSize: FontSize.medium,
-    maxWidth: "80%",
-    marginRight: 8,
-  },
-  btn: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 8,
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    backgroundColor: Colors.primary,
-  },
-  btnText: {
-    fontSize: 14,
-    lineHeight: 18,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  placeholder: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-  },
-});
