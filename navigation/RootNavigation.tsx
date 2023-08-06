@@ -60,7 +60,7 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.DetailBlog} component={DetailBlogScreen} />
           <RootStack.Screen name={RootStackName.QuizGame} component={QuizGame} />
           <RootStack.Screen name={RootStackName.HowToPlayQuizGame} component={HowToPlayQuizGame} />
-          <RootStack.Screen name={RootStackName.PlayQuizGame} component={PlayQuizGame} options={{ gestureEnabled: false }} />
+          <RootStack.Screen name={RootStackName.PlayQuizGame} component={PlayQuizGame} />
           <RootStack.Screen
             name={RootStackName.TestHistory}
             component={TestHistory}

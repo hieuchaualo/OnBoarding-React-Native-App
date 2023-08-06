@@ -113,8 +113,7 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
               <View style={{
                 padding: ThemeDimensions.positive1,
                 borderBottomWidth: 2,
-                borderColor: ThemeColors.dark,
-                borderStyle: "dashed",
+                borderColor: ThemeColors.grey,
               }}>
                 <Text style={{ ...ThemeStyles.c3, fontFamily: ThemeFonts.semiBold }}>
                   {(randomWordsListRenderIndex % TOTAL_TEXT_BOX === textColumnsIndex) && (randomWordsListRenderIndex < randomWordsList.length)
