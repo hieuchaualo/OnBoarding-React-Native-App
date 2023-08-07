@@ -12,5 +12,3 @@ export interface IMiniTest {
   thumbnail?: string;
   creator?: string | IAccount;
 }
-
-export default IMiniTest;

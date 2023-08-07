@@ -175,7 +175,7 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
           </Button>
 
           <Button
-            onPress={() => navigate(RootStackName.Blog)}
+            onPress={() => navigate(RootStackName.ReadingTip)}
             background={ThemeColors.blueDark}
             backgroundHover={ThemeColors.blueLight}
             style={{

@@ -13,13 +13,17 @@ import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } 
 import { BottomNav, Column, LoadingView, Row } from '../../components';
 import { RootStackParamList } from '../../types';
 
+const iconStyle = {
+  padding: ThemeDimensions.positive2,
+  borderTopLeftRadius: ThemeDimensions.positive1,
+  borderBottomLeftRadius: ThemeDimensions.positive1,
+}
+
 function getIconByScore(score: number, timing: number) {
   if (score > 1.0) return (
     <View style={{
+      ...iconStyle,
       backgroundColor: ThemeColors.pinkLight,
-      padding: ThemeDimensions.positive2,
-      borderTopLeftRadius: ThemeDimensions.positive1,
-      borderBottomLeftRadius: ThemeDimensions.positive1,
     }}>
       <FeatherIcon name="frown" size={ThemeDimensions.positive8} color={ThemeColors.danger} />
     </View>
@@ -27,20 +31,16 @@ function getIconByScore(score: number, timing: number) {
   if (score >= 0.8) {
     if (timing < 0.8) return (
       <View style={{
+        ...iconStyle,
         backgroundColor: '#ceecce',
-        padding: ThemeDimensions.positive2,
-        borderTopLeftRadius: ThemeDimensions.positive1,
-        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
         <FeatherIcon name="smile" size={ThemeDimensions.positive8} color={ThemeColors.teal} />
       </View>
     )
     if (timing < 1.0) return (
       <View style={{
+        ...iconStyle,
         backgroundColor: ThemeColors.yellowLight,
-        padding: ThemeDimensions.positive2,
-        borderTopLeftRadius: ThemeDimensions.positive1,
-        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
         <FeatherIcon name="meh" size={ThemeDimensions.positive8} color={ThemeColors.warning} />
       </View>
@@ -50,10 +50,8 @@ function getIconByScore(score: number, timing: number) {
   if (score >= 0.65) {
     if (timing < 1.0) return (
       <View style={{
+        ...iconStyle,
         backgroundColor: ThemeColors.yellowLight,
-        padding: ThemeDimensions.positive2,
-        borderTopLeftRadius: ThemeDimensions.positive1,
-        borderBottomLeftRadius: ThemeDimensions.positive1,
       }}>
         <FeatherIcon name="meh" size={ThemeDimensions.positive8} color={ThemeColors.warning} />
       </View>
@@ -123,7 +121,7 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
                 </Column>
 
                 <Column style={{ paddingHorizontal: ThemeDimensions.positive2, }}>
-                  <Text style={{
+                  <Text numberOfLines={2} style={{
                     fontFamily: ThemeFonts.semiBold,
                     fontSize: ThemeDimensions.fontSize.md,
                     color: ThemeColors.dark,

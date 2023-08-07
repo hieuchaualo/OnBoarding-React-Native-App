@@ -48,7 +48,7 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
 
     fetchMiniTestsList(option)
 
-    return setMiniTestsList([])
+    return () => setMiniTestsList([])
   }, [currentTab])
 
   return (
@@ -114,7 +114,7 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
                       style={{
                         borderTopLeftRadius: ThemeDimensions.positive1,
                         borderBottomLeftRadius: ThemeDimensions.positive1,
-                        height: ThemeDimensions.positive15,
+                        height: ThemeDimensions.percentage100,
                         width: ThemeDimensions.positive15,
                       }}
                     />

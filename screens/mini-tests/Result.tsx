@@ -10,10 +10,11 @@ import FeatherIcon from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { fromSecondToDateTime } from "../../utils";
 import { IMiniTestHistory } from "../../interfaces";
-import { updateMiniTestHistory } from "../../api";
+import { updateMiniTestHistory, getNextMiniTestIdById } from "../../api";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { RootStackParamList } from "../../types";
-import { Column, Row } from "../../components";
+import { Button, Column, Row } from "../../components";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const iconFacesResources = {
   "smell": require("../../assets/images/icon_good.png"),
@@ -51,6 +52,7 @@ type ResultProps = NativeStackScreenProps<RootStackParamList, RootStackName.Resu
 const Result: FC<ResultProps> = ({ route, navigation }) => {
   const { finalAnswersForm, finalAnswers, totalTime, miniTestId, timeLimit } = route.params
   const [score, setScore] = useState(0);
+  const [nextMiniTestId, setNextMiniTestId] = useState<string>('');
 
   useEffect(() => {
     let _score = 0;
@@ -73,8 +75,30 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
       }
     }
 
+    const getNextMiniTestId = async () => {
+      try {
+        const response = await getNextMiniTestIdById(miniTestId)
+        if (response.status === 200) {
+          setNextMiniTestId(response.data.data[0]._id)
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    const backDisable = navigation.addListener('beforeRemove', event => {
+      if (event.data.action.type === "NAVIGATE") {
+        navigation.dispatch(event.data.action)
+        navigation.removeListener('beforeRemove', backDisable)
+      }
+      event.preventDefault()
+    })
+
     pushMiniTestHistory()
+    getNextMiniTestId()
     setScore(_score);
+
+    return () => navigation.removeListener('beforeRemove', backDisable);
   }, []);
 
   return (
@@ -114,7 +138,7 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
               <Text style={{ ...ThemeStyles.c4 }}>
                 Marks: { }
                 <Text style={styles.cellTextHighlight}>
-                  {score / finalAnswers.length * 100}/100
+                  {Math.round(score / finalAnswers.length * 100)}/100
                 </Text>
               </Text>
             </View>
@@ -147,7 +171,7 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
 
           {/* Answer key */}
           <View style={{
-            paddingVertical: ThemeDimensions.positive1,
+            paddingTop: ThemeDimensions.positive2,
             backgroundColor: ThemeColors.white,
             borderRadius: ThemeDimensions.positive1,
           }}>
@@ -220,6 +244,51 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView >
+
+      <Row style={{
+        paddingHorizontal: ThemeDimensions.positive2,
+        paddingVertical: ThemeDimensions.positive1,
+        backgroundColor: ThemeColors.white,
+        borderTopColor: ThemeColors.grey,
+        borderTopWidth: 1,
+      }}>
+        <Column style={{ alignItems: 'flex-start' }}>
+          <Button
+            onPress={() => navigation.navigate(RootStackName.Home)}
+            style={{
+              paddingHorizontal: ThemeDimensions.positive2,
+              paddingVertical: 2,
+            }}
+            background={ThemeColors.white}
+            backgroundHover={ThemeColors.grey}
+          >
+            <Row>
+              <FontAwesome5 name="chevron-left" color={ThemeColors.third} size={ThemeDimensions.positive2} />
+              <Text style={{ ...ThemeStyles.c4, paddingTop: 2 }}>
+                { } Back to home
+              </Text>
+            </Row>
+          </Button>
+        </Column>
+
+        <Column style={{ alignItems: 'flex-end' }}>
+          {(nextMiniTestId !== '') && <Button
+            onPress={() => navigation.navigate('Exercises', { miniTestId: nextMiniTestId })}
+            style={{
+              paddingHorizontal: ThemeDimensions.positive2,
+              paddingVertical: 2,
+            }}
+          >
+            <Row>
+              <Text style={{ ...ThemeStyles.c4, paddingTop: 2, color: ThemeColors.white }}>
+                Next exercise { }
+              </Text>
+              <FontAwesome5 name="chevron-right" color={ThemeColors.white} size={ThemeDimensions.positive2} />
+            </Row>
+          </Button>
+          }
+        </Column>
+      </Row>
     </View >
   );
 };
