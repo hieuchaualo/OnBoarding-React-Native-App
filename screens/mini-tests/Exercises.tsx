@@ -1,13 +1,10 @@
 import {
-  SafeAreaView,
   View,
-  Dimensions,
   ScrollView,
   Text,
   Image,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Colors from "../../constants/Colors";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { getMiniTestById } from "../../api";
 import { IMiniTest, MiniTestTypes } from "../../interfaces";
@@ -16,11 +13,10 @@ import { toImgUrl } from "../../utils";
 import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
 import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { RootStackParamList } from "../../types";
-const { height } = Dimensions.get("window");
 
 type ExercisesProps = NativeStackScreenProps<RootStackParamList, "Exercises">;
 
-const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
+const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
   const { miniTestId } = route.params;
   const { navigate } = navigation;
 
@@ -60,11 +56,13 @@ const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
   }
 
   if (!miniTest) return (
-    <SafeAreaView style={{ backgroundColor: '#f3f5f9', height }} >
-      <View style={{ marginTop: height / 2.2 }}>
-        <LoadingView />
-      </View>
-    </SafeAreaView>
+    <View style={{
+      marginTop: ThemeDimensions.windowHeight40,
+      backgroundColor: ThemeColors.light,
+      height: ThemeDimensions.windowHeight,
+    }}>
+      <LoadingView />
+    </View>
   )
 
   return (
@@ -78,16 +76,25 @@ const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
           }}
           source={{ uri: toImgUrl(miniTest.thumbnail) }}
         />
-        <View style={{ padding: ThemeDimensions.positive2 }}>
-          <Text style={{ ...ThemeStyles.h1, textAlign: 'left', color: ThemeColors.third }}>
+        <View style={{ paddingHorizontal: ThemeDimensions.positive2, paddingTop: ThemeDimensions.positive3 }}>
+          <Text style={{ ...ThemeStyles.h2, textAlign: 'left', color: ThemeColors.third }} selectable={true}>
             {miniTest.title}
           </Text>
-          <Text style={{ ...ThemeStyles.c4, textAlign: 'justify' }}>
+
+          <Text style={{
+            ...ThemeStyles.c4,
+            color: ThemeColors.secondary,
+            marginBottom: ThemeDimensions.positive2,
+          }}>
+            {(typeof miniTest.creator === "object") && '# ' + miniTest.creator.name}
+          </Text>
+
+          <Text style={{ ...ThemeStyles.c4, textAlign: 'justify' }} selectable={true}>
             {miniTest.content}
           </Text>
         </View>
 
-        <View style={{ padding: ThemeDimensions.positive2 }}>
+        <View style={{ paddingHorizontal: ThemeDimensions.positive2 }}>
           {miniTest.quizzes?.map((quiz, quizIndex) => (
             <View key={quiz._id} style={{
               padding: ThemeDimensions.positive2,
@@ -95,9 +102,15 @@ const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
               backgroundColor: ThemeColors.white,
               marginVertical: ThemeDimensions.positive1,
             }}>
-              <Text style={{ ...ThemeStyles.c4, fontFamily: ThemeFonts.semiBold, textAlign: 'left' }} >
+              <Text style={{
+                ...ThemeStyles.c4,
+                fontFamily: ThemeFonts.semiBold,
+                color: ThemeColors.third,
+                paddingHorizontal: ThemeDimensions.positive1
+              }} >
                 {quizIndex + 1}. {quiz.question}
               </Text>
+
               {miniTest.typeOfQuiz === MiniTestTypes.FillTheBlank
                 ? <AnswerByTextInput
                   quizIndex={quizIndex}
@@ -124,27 +137,22 @@ const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
         borderTopWidth: 1,
       }}>
         <Column>
-          {isTimeout
+          {miniTest.timeLimit
             ? <TimeCountdown
-              style={{ ...ThemeStyles.c4, color: Colors.danger,}}
-              timeRemainingInSecond={0}
-              handleOnTimeout={() => { }}
-              isReverse={true}
-              prefix='Time out:'
-            />
-            : <TimeCountdown
               style={{ ...ThemeStyles.c4, }}
               timeRemainingInSecond={miniTest.timeLimit}
               handleOnTimeout={handleOnTimeout}
               isReverse={false}
-              prefix='Time left:'
             />
+            : <Text style={{ ...ThemeStyles.c4, }}>
+              Unlimited time
+            </Text>
           }
         </Column>
+
         <Button
           title={isTimeout ? "Timeout!" : "Submit"}
           onPress={() => {
-            if (isTimeout) { }
             navigate(
               "Result",
               {
@@ -166,4 +174,4 @@ const ExercisesScreen: React.FC<ExercisesProps> = ({ route, navigation }) => {
   );
 };
 
-export { ExercisesScreen };
+export { Exercises };

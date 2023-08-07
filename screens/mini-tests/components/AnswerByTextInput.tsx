@@ -1,8 +1,6 @@
 import React from "react";
 import { View, TextInput } from "react-native";
-import Spacing from "../../../constants/Spacing";
-import Colors from "../../../constants/Colors";
-import { ThemeColors } from "../../../constants";
+import { ThemeColors, ThemeDimensions, ThemeFonts } from "../../../constants";
 
 type AnswerByTextInputProps = {
   quizIndex: number;
@@ -13,21 +11,15 @@ type AnswerByTextInputProps = {
 }
 
 const focusedStyle = {
-  borderWidth: 2,
-  borderColor: ThemeColors.primary,
-  borderRadius: Spacing,
-  paddingHorizontal: 16,
-  paddingVertical: 8,
-  fontSize: 20,
+  backgroundColor: ThemeColors.white,
+  borderColor: ThemeColors.primaryDark,
+  color: ThemeColors.primary,
 }
 
 const blurredStyle = {
-  borderWidth: 2,
-  borderColor: ThemeColors.primary,
-  borderRadius: Spacing,
-  paddingHorizontal: 16,
-  paddingVertical: 8,
-  fontSize: 20,
+  backgroundColor: ThemeColors.light,
+  borderColor: ThemeColors.white,
+  color: ThemeColors.secondary,
 }
 
 const AnswerByTextInput = (props: AnswerByTextInputProps) => {
@@ -42,11 +34,21 @@ const AnswerByTextInput = (props: AnswerByTextInputProps) => {
   return (
     <View>
       <TextInput
+        cursorColor={ThemeColors.primaryDark}
+        selectionColor={ThemeColors.pinkLight}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         onChangeText={text => handleOnAnswer(quizIndex, text)}
         value={answer}
-        style={focused ? focusedStyle : blurredStyle}
+        style={{
+          borderWidth: 2,
+          borderRadius: ThemeDimensions.positive1,
+          paddingHorizontal: ThemeDimensions.positive2,
+          paddingVertical: ThemeDimensions.positive1,
+          fontSize: ThemeDimensions.fontSize.lg,
+          fontFamily: ThemeFonts.semiBold,
+          ...(focused ? focusedStyle : blurredStyle),
+        }}
       />
     </View>
   )

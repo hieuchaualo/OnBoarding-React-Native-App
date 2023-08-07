@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Text } from 'react-native'
 import { fromSecondToDateTime } from '../../../utils'
+import { Column, Row } from '../../../components'
+import { MaterialIcons } from '@expo/vector-icons'
+import { ThemeColors, ThemeDimensions } from '../../../constants'
 
 type TimeCountdownProps = {
     timeRemainingInSecond?: number,
     style: object,
-    prefix?: string,
     handleOnTimeout: Function,
     isReverse?: boolean, // able to count increment after timeout
 }
 
-function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isReverse, prefix }: TimeCountdownProps) {
+function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isReverse }: TimeCountdownProps) {
     const [timeCountdown, setTimeCountdown] = useState(Number.MAX_SAFE_INTEGER)
 
     useEffect(() => {
@@ -29,9 +31,20 @@ function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isRevers
     }, [timeCountdown])
 
     return (
-        <Text style={style}>
-            {prefix} {fromSecondToDateTime(timeCountdown)}
-        </Text>
+        <Row>
+            <Column style={{ flex: 0.6, alignItems: 'flex-end', paddingEnd: ThemeDimensions.positive1 }}>
+                <MaterialIcons
+                    name={timeCountdown === 0 ? 'timer-off' : 'timer'}
+                    size={ThemeDimensions.positive4}
+                    color={ThemeColors.third}
+                />
+            </Column>
+            <Column style={{ alignItems: 'flex-start' }}>
+                <Text style={style}>
+                    {timeCountdown === 0 ? "Time out!" : fromSecondToDateTime(timeCountdown)}
+                </Text>
+            </Column>
+        </Row>
     )
 }
 

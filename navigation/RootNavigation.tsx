@@ -2,12 +2,12 @@ import { SafeAreaView, StatusBar } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
-  ExercisesScreen,
+  Exercises,
   HomeScreen,
   LoginScreen,
   MinitestScreen,
   RegisterScreen,
-  ResultScreen,
+  Result,
   TestHistory,
   WelcomeScreen,
   QuizGame,
@@ -52,11 +52,11 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.Register} component={RegisterScreen} />
           <RootStack.Screen name={RootStackName.Home} component={HomeScreen} options={{ gestureEnabled: false }} />
           <RootStack.Screen name={RootStackName.ForgotPassword} component={ForgotPasswordScreen} />
-          <RootStack.Screen name={RootStackName.Exercises} component={ExercisesScreen} options={{ gestureEnabled: false, freezeOnBlur: true }} />
+          <RootStack.Screen name={RootStackName.Exercises} component={Exercises} options={{ freezeOnBlur: true }} />
           <RootStack.Screen name={RootStackName.Setting} component={SettingScreen} />
           <RootStack.Screen name={RootStackName.Blog} component={BlogScreen} />
           <RootStack.Screen name={RootStackName.MiniTest} component={MinitestScreen} />
-          <RootStack.Screen name={RootStackName.Result} component={ResultScreen} />
+          <RootStack.Screen name={RootStackName.Result} component={Result} />
           <RootStack.Screen name={RootStackName.DetailBlog} component={DetailBlogScreen} />
           <RootStack.Screen name={RootStackName.QuizGame} component={QuizGame} />
           <RootStack.Screen name={RootStackName.HowToPlayQuizGame} component={HowToPlayQuizGame} />

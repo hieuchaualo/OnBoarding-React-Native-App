@@ -16,7 +16,11 @@ export const ThemeDimensions = {
     positive15: 90,
     positive20: 120,
 
+    percentage5: '5%',
+    percentage10: '10%',
     percentage25: '25%',
+    percentage40: '40%',
+    percentage45: '45%',
     percentage50: '50%',
     percentage75: '75%',
     percentage80: '80%',

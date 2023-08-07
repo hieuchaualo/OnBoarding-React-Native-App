@@ -123,17 +123,15 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
                       <Text numberOfLines={2} style={{
                         ...ThemeStyles.c4,
                         fontFamily: ThemeFonts.semiBold,
-                        textAlign: 'left',
                         paddingBottom: ThemeDimensions.positive1,
                       }}>
                         {miniTest.title}
                       </Text>
 
-                      {miniTest.timeLimit &&
-                        <Text style={{ ...ThemeStyles.c5, color: ThemeColors.secondary }}>
-                          Time limit: {fromSecondToDateTime(miniTest.timeLimit)}
-                        </Text>
-                      }
+                      <Text style={{ ...ThemeStyles.c5, color: ThemeColors.secondary }}>
+                        Time limit: {miniTest.timeLimit ? fromSecondToDateTime(miniTest.timeLimit) : 'None'}
+                      </Text>
+
                     </Column>
                   </Row>
                 </TouchableOpacity>

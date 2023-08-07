@@ -30,7 +30,8 @@ const AnswerByOptions = (props: AnswerByOptionsProps) => {
           >
             <View
               style={{
-                backgroundColor: answersForm[quizIndex] === option ? ThemeColors.primary : ThemeColors.light,
+                borderWidth: 2,
+                borderColor: answersForm[quizIndex] === option ? ThemeColors.primary : ThemeColors.light,
                 paddingVertical: ThemeDimensions.positive1,
                 paddingHorizontal: ThemeDimensions.positive2,
                 borderRadius: ThemeDimensions.positive1,
@@ -39,8 +40,8 @@ const AnswerByOptions = (props: AnswerByOptionsProps) => {
             >
               <Text
                 style={{
-                  color: answersForm[quizIndex] === option ? ThemeColors.light : ThemeColors.third,
-                  fontFamily: ThemeFonts.semiBold,
+                  color: answersForm[quizIndex] === option ? ThemeColors.primary : ThemeColors.secondary,
+                  fontFamily: answersForm[quizIndex] === option ? ThemeFonts.semiBold : ThemeFonts.regular,
                   fontSize: ThemeDimensions.fontSize.lg,
                 }}
               >
