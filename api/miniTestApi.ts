@@ -1,4 +1,4 @@
-import { MiniTestTypes } from "../interfaces";
+import { IMiniTestHistory, MiniTestTypes } from "../interfaces";
 import { axiosInstance } from "./apiInstance"
 
 function getMiniTestsList(option: MiniTestTypes) {
@@ -14,8 +14,20 @@ function getNextMiniTestIdById(id: string) {
 }
 
 
+function updateMiniTestHistory(formBody: IMiniTestHistory) {
+  return axiosInstance.patch('/mini-tests/history', formBody)
+}
+
+function getMiniTestHistory() {
+  return axiosInstance.get('/mini-tests/history')
+}
+
+
+
 export {
   getMiniTestById,
   getMiniTestsList,
   getNextMiniTestIdById,
+  updateMiniTestHistory,
+  getMiniTestHistory,
 };

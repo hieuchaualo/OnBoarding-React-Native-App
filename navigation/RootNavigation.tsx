@@ -17,12 +17,11 @@ import {
   PlayQuizGame,
   ReadingTip,
   ReadingTipDetail,
+  Profile,
 } from "../screens";
 
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
-import ProfileScreen from "../screens/ProfileScreen";
 import SettingScreen from "../screens/SettingScreen";
-import NhapScreen from "../screens/NhapScreen";
 
 
 
@@ -62,9 +61,8 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.ReadingTip} component={ReadingTip} />
           <RootStack.Screen name={RootStackName.ReadingTipDetail} component={ReadingTipDetail} />
           <RootStack.Screen name={RootStackName.TestHistory} component={TestHistory} options={{ animation: 'none' }} />
-          <RootStack.Screen name={RootStackName.Profile} component={ProfileScreen} options={{ animation: 'none' }} />
+          <RootStack.Screen name={RootStackName.Profile} component={Profile} options={{ animation: 'none' }} />
           <RootStack.Screen name={RootStackName.Setting} component={SettingScreen} />
-          <RootStack.Screen name={RootStackName.Nhap} component={NhapScreen} options={{ animation: 'none' }} />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaView >

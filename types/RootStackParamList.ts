@@ -19,9 +19,7 @@ export type RootStackParamList = {
   QuizGame: undefined;
   PlayQuizGame: undefined;
   HowToPlayQuizGame: undefined;
-  DetailBlog: undefined;
   MiniTest: undefined;
-  Game2: undefined;
   TestHistory: undefined;
   Result: {
     miniTestId: string,

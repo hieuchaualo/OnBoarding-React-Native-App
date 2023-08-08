@@ -81,18 +81,18 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
             </Button>
 
             <Button
-                onPress={() => (activeKey !== RootStackName.Nhap) && navigate(RootStackName.Nhap)}
+                onPress={() => (activeKey !== RootStackName.Profile) && navigate(RootStackName.Profile)}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
             >
                 <FeatherIcon
                     name="user"
                     size={ThemeDimensions.fontSize.xxl}
-                    color={(activeKey === RootStackName.Nhap) ? ThemeColors.primary : ThemeColors.secondary}
+                    color={(activeKey === RootStackName.Profile) ? ThemeColors.primary : ThemeColors.secondary}
                 />
                 <Text style={{
                     marginTop: 4,
-                    color: (activeKey === RootStackName.Nhap) ? ThemeColors.primary : ThemeColors.secondary,
+                    color: (activeKey === RootStackName.Profile) ? ThemeColors.primary : ThemeColors.secondary,
                     fontFamily: ThemeFonts.regular,
                     fontSize: ThemeDimensions.fontSize.sm
                 }}>

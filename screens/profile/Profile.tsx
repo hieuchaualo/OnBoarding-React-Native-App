@@ -7,17 +7,18 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import Spacing from "../constants/Spacing";
-import Colors from "../constants/Colors";
+import Spacing from "../../constants/Spacing";
+import Colors from "../../constants/Colors";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../constants';
-import { IAccount } from '../interfaces';
-import { deleteItemAsync, getItemAsync } from 'expo-secure-store';
-import { BottomNav, Button } from '../components';
-import { RootStackParamList } from '../types';
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
+import { IAccount } from '../../interfaces';
+import { deleteItemAsync } from 'expo-secure-store';
+import { BottomNav, Button } from '../../components';
+import { RootStackParamList } from '../../types';
 import { AxiosResponse } from 'axios';
-import { getAccount } from '../api';
+import { getAccount } from '../../api';
+import { toImgUrl } from '../../utils';
 
 const items = [
   { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
@@ -26,22 +27,19 @@ const items = [
 ];
 
 
-type Props = NativeStackScreenProps<RootStackParamList, "Nhap">;
+type ProfileProps = NativeStackScreenProps<RootStackParamList, "Profile">;
 
-const NhapScreen: FC<Props> = ({ navigation }) => {
+const Profile: FC<ProfileProps> = ({ navigation }) => {
   const { navigate } = navigation;
   const [account, setAccount] = useState<IAccount>();
 
   useEffect(() => {
     const fetchAccount = async () => {
       try {
-        const token = await getItemAsync("secure_token")
-        if (token) {
-          const response: AxiosResponse<any, any> = await getAccount();
-          if (response?.status === 200) {
-            const responseData = response.data.data
-            setAccount(responseData)
-          }
+        const response: AxiosResponse<any, any> = await getAccount();
+        if (response?.status === 200) {
+          const responseData = response.data.data
+          setAccount(responseData)
         }
       } catch (error) {
         console.error(error)
@@ -67,7 +65,7 @@ const NhapScreen: FC<Props> = ({ navigation }) => {
 
         <View style={styles.profile}>
           <Image
-            source={require("../assets/images/avatar.jpg")}
+            source={{ uri: toImgUrl(account?.avatar)}}
             style={styles.profileAvatar}
           />
 
@@ -150,12 +148,12 @@ const NhapScreen: FC<Props> = ({ navigation }) => {
         </View>
       </ScrollView >
 
-      <BottomNav navigate={navigate} activeKey={RootStackName.Nhap} />
+      <BottomNav navigate={navigate} activeKey={RootStackName.Profile} />
     </View >
   );
 }
 
-export default NhapScreen;
+export { Profile };
 
 const styles = StyleSheet.create({
   container: {
