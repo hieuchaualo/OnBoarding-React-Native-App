@@ -1,4 +1,4 @@
-export * from './TestHistory'
+export * from './test-history'
 export * from './home'
 export * from './login'
 export * from './mini-tests'

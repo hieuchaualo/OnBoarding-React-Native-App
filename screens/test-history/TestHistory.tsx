@@ -95,12 +95,12 @@ const TestHistory: FC<TestHistoryProps> = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
+      <View style={{ padding: ThemeDimensions.positive2, paddingBottom: 0, }}>
+        <Text style={ThemeStyles.h2}>
+          Mini test history
+        </Text>
+      </View>
       <ScrollView>
-        <View style={{ padding: ThemeDimensions.positive2, paddingBottom: 0, }}>
-          <Text style={ThemeStyles.h2}>
-            Mini test history
-          </Text>
-        </View>
         <View style={{ padding: ThemeDimensions.positive1, paddingTop: 0, }}>
           {isLoading
             ? <LoadingView />

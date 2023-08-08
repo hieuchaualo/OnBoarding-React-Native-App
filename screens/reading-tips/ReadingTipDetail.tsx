@@ -33,7 +33,7 @@ const ReadingTipDetail: FC<ReadingTipDetailProps> = ({ route }) => {
 
   if (!readingTip) return (
     <View style={{
-      marginTop: ThemeDimensions.windowHeight40,
+      paddingTop: ThemeDimensions.windowHeight40,
       backgroundColor: ThemeColors.light,
       height: ThemeDimensions.windowHeight,
     }}>
@@ -52,7 +52,10 @@ const ReadingTipDetail: FC<ReadingTipDetailProps> = ({ route }) => {
           }}
           source={{ uri: toImgUrl(readingTip?.thumbnail) }}
         />
-        <View style={{ paddingHorizontal: ThemeDimensions.positive2, paddingTop: ThemeDimensions.positive3 }}>
+        <View style={{
+          paddingHorizontal: ThemeDimensions.positive3,
+          paddingTop: ThemeDimensions.positive3,
+        }}>
           <Text style={{ ...ThemeStyles.h2, textAlign: 'left', color: ThemeColors.third }} selectable={true}>
             {readingTip?.title}
           </Text>

@@ -4,14 +4,14 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { RootStackName, ThemeColors } from "../constants";
 import { RootStackParamList } from "../types";
 import {
-  Exercises,
-  HomeScreen,
-  LoginScreen,
-  MinitestScreen,
-  RegisterScreen,
-  Result,
-  TestHistory,
   WelcomeScreen,
+  LoginScreen,
+  RegisterScreen,
+  HomeScreen,
+  TestHistory,
+  MinitestScreen,
+  Exercises,
+  Result,
   QuizGame,
   HowToPlayQuizGame,
   PlayQuizGame,

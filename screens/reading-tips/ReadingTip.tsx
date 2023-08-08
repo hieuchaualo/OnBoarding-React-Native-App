@@ -73,8 +73,8 @@ export const ReadingTip: FC<ReadingTipProps> = ({ navigation }) => {
                       style={{
                         borderTopLeftRadius: ThemeDimensions.positive1,
                         borderBottomLeftRadius: ThemeDimensions.positive1,
-                        height: ThemeDimensions.percentage100,
-                        width: ThemeDimensions.positive15,
+                        height: ThemeDimensions.positive16,
+                        width: ThemeDimensions.positive16,
                       }}
                     />
 

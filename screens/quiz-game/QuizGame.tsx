@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import {
   View,
   ScrollView,
@@ -9,11 +9,22 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants"
 import { RootStackParamList } from "../../types"
 import { Button, Column, Row } from "../../components"
+import { getItemAsync } from "expo-secure-store";
 
 
 type QuizGameProps = NativeStackScreenProps<RootStackParamList, RootStackName.QuizGame>;
 
 export const QuizGame: FC<QuizGameProps> = ({ navigation: { navigate }, }) => {
+  const [lastScore, setLastScore] = useState<{ max: number; average: number; }>()
+
+  const getLastScore = async () => {
+    const lastScoreString = await getItemAsync("quiz_game_score")
+    if (lastScoreString) setLastScore(JSON.parse(lastScoreString))
+  }
+  useEffect(() => {
+    getLastScore()
+    return () => setLastScore(undefined)
+  }, [])
   return (
     <View style={{ flex: 1, backgroundColor: ThemeColors.light, padding: ThemeDimensions.positive3 }}>
       <ScrollView>
@@ -59,13 +70,13 @@ export const QuizGame: FC<QuizGameProps> = ({ navigation: { navigate }, }) => {
 
           <Row style={{ justifyContent: 'flex-start' }}>
             <Text style={ThemeStyles.c4}>
-              Max Speed: 500
+              Max Speed: {lastScore?.max}
             </Text>
           </Row>
 
           <Row style={{ justifyContent: 'flex-start' }}>
             <Text style={ThemeStyles.c4}>
-              Average Speed: 500
+              Average Speed: {lastScore?.average}
             </Text>
           </Row>
         </View>
