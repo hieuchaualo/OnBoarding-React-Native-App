@@ -16,7 +16,7 @@ import { getItemAsync, setItemAsync } from "expo-secure-store";
 const TOTAL_TEXT_BOX = 8
 const TOTAL_ANSWER_BOX = 6
 const SPEED_STEP = 50
-const ROUND_LIMIT = 5
+const ROUND_LIMIT = 12
 const textBoxes = Array(TOTAL_TEXT_BOX).fill('')
 
 const getRandomArbitrary = (min: number, max: number) => Math.random() * (max - min) + min;
@@ -93,7 +93,7 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
     if (lastScore.max < speedLog.current.max) {
       const score: string = JSON.stringify({
         max: speedLog.current.max,
-        average: speedLog.current.log.reduce((previousValue, currentValue) => previousValue + currentValue) / (ROUND_LIMIT - 1),
+        average: speedLog.current.log.reduce((previousValue, currentValue) => previousValue + currentValue) / ROUND_LIMIT,
       })
       await setItemAsync("quiz_game_score", score);
     }
@@ -136,7 +136,7 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
     setRound(1)
   }
 
-  if (round === ROUND_LIMIT) {
+  if (round === (ROUND_LIMIT + 1)) {
     storeScore()
     return (
       <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
@@ -172,7 +172,7 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
               <Text style={{ ...ThemeStyles.c4, textAlign: 'center' }}>
                 Max speed: {speedLog.current.max}
                 {`\n`}
-                Average speed: {speedLog.current.log.reduce((previousValue, currentValue) => previousValue + currentValue) / (ROUND_LIMIT - 1)}
+                Average speed: {speedLog.current.log.reduce((previousValue, currentValue) => previousValue + currentValue) / ROUND_LIMIT}
               </Text>
             </View>
           </View>
@@ -233,7 +233,7 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
                 borderBottomWidth: 2,
                 borderColor: ThemeColors.grey,
               }}>
-                <Text style={{ ...ThemeStyles.c3, fontFamily: ThemeFonts.semiBold }}>
+                <Text style={{ ...ThemeStyles.c3, fontFamily: ThemeFonts.semiBold, textAlign: 'center' }}>
                   {(randomWordsListRenderIndex % TOTAL_TEXT_BOX === textColumnsIndex) && (randomWordsListRenderIndex < randomWordsList.length)
                     ? randomWordsList[randomWordsListRenderIndex]
                     : ' '

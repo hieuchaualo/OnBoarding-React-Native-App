@@ -79,7 +79,7 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
       try {
         const response = await getNextMiniTestIdById(miniTestId)
         if (response.status === 200) {
-          setNextMiniTestId(response.data.data[0]._id)
+          setNextMiniTestId(response.data.data[0]?._id ?? '')
         }
       } catch (error) {
         console.error(error)
@@ -138,7 +138,7 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
               <Text style={{ ...ThemeStyles.c4 }}>
                 Marks: { }
                 <Text style={styles.cellTextHighlight}>
-                  {Math.round(score / finalAnswers.length * 100)}/100
+                  {score}/{finalAnswers.length}
                 </Text>
               </Text>
             </View>

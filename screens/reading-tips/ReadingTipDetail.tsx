@@ -68,7 +68,7 @@ const ReadingTipDetail: FC<ReadingTipDetailProps> = ({ route }) => {
             {(typeof readingTip?.creator === "object") && '# ' + readingTip.creator.name}
           </Text>
 
-          <Text style={{ ...ThemeStyles.c4, textAlign: 'justify' }} selectable={true}>
+          <Text style={{ ...ThemeStyles.c4 }} selectable={true}>
             {readingTip?.content}
           </Text>
         </View>

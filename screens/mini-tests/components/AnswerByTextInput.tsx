@@ -11,14 +11,14 @@ type AnswerByTextInputProps = {
 }
 
 const focusedStyle = {
-  backgroundColor: ThemeColors.white,
+  backgroundColor: ThemeColors.light,
   borderColor: ThemeColors.primaryDark,
   color: ThemeColors.primary,
 }
 
 const blurredStyle = {
   backgroundColor: ThemeColors.light,
-  borderColor: ThemeColors.white,
+  borderColor: ThemeColors.grey,
   color: ThemeColors.secondary,
 }
 
@@ -34,6 +34,7 @@ const AnswerByTextInput = (props: AnswerByTextInputProps) => {
   return (
     <View>
       <TextInput
+        placeholder="Type your answer..."
         cursorColor={ThemeColors.primaryDark}
         selectionColor={ThemeColors.pinkLight}
         onFocus={() => setFocused(true)}
@@ -45,8 +46,9 @@ const AnswerByTextInput = (props: AnswerByTextInputProps) => {
           borderRadius: ThemeDimensions.positive1,
           paddingHorizontal: ThemeDimensions.positive2,
           paddingVertical: ThemeDimensions.positive1,
-          fontSize: ThemeDimensions.fontSize.lg,
+          marginTop: ThemeDimensions.positive1,
           fontFamily: ThemeFonts.semiBold,
+          fontSize: ThemeDimensions.fontSize.lg,
           ...(focused ? focusedStyle : blurredStyle),
         }}
       />

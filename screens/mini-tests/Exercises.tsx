@@ -89,7 +89,7 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
             {(typeof miniTest.creator === "object") && '# ' + miniTest.creator.name}
           </Text>
 
-          <Text style={{ ...ThemeStyles.c4, textAlign: 'justify' }} selectable={true}>
+          <Text style={{ ...ThemeStyles.c4 }} selectable={true}>
             {miniTest.content}
           </Text>
         </View>
