@@ -19,7 +19,6 @@ import { toImgUrl } from '../../utils';
 const items = [
   { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
   { id: 'help-circle', icon: 'help-circle', label: 'Helps', type: 'link' },
-  { id: 'log-out', icon: 'log-out', label: 'Logout', type: 'link' },
 ];
 
 
@@ -158,7 +157,7 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
               fontFamily: ThemeFonts.semiBold,
               paddingStart: ThemeDimensions.positive2
             }}>
-              Logout real
+              Logout
             </Text>
           </Button>
         </View>
