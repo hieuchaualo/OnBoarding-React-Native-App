@@ -6,21 +6,21 @@ export type RootStackParamList = {
   Home: undefined;
   ForgotPassword: undefined;
   NewPassword: undefined;
-  Exercises: {
-    miniTestId: string,
-  };
   Profile: undefined;
+  ProfileUpdate: undefined;
   Setting: undefined;
-  Nhap: undefined;
+  QuizGame: undefined;
+  PlayQuizGame: undefined;
+  HowToPlayQuizGame: undefined;
   ReadingTip: undefined;
   ReadingTipDetail: {
     readingTipId: string,
   };
-  QuizGame: undefined;
-  PlayQuizGame: undefined;
-  HowToPlayQuizGame: undefined;
   MiniTest: undefined;
   TestHistory: undefined;
+  Exercises: {
+    miniTestId: string,
+  };
   Result: {
     miniTestId: string,
     finalAnswers: string[],

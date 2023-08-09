@@ -58,6 +58,36 @@ export const ThemeStyles = StyleSheet.create({
     fontSize: ThemeDimensions.fontSize.md,
     fontFamily: ThemeFonts.bold,
   },
+  b1: {
+    textAlign: "left",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xxxl,
+    fontFamily: ThemeFonts.semiBold,
+  },
+  b2: {
+    textAlign: "left",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xxl,
+    fontFamily: ThemeFonts.semiBold,
+  },
+  b3: {
+    textAlign: "left",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.xl,
+    fontFamily: ThemeFonts.semiBold,
+  },
+  b4: {
+    textAlign: "left",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.lg,
+    fontFamily: ThemeFonts.semiBold,
+  },
+  b5: {
+    textAlign: "left",
+    color: ThemeColors.dark,
+    fontSize: ThemeDimensions.fontSize.md,
+    fontFamily: ThemeFonts.semiBold,
+  },
   c1: {
     textAlign: "left",
     color: ThemeColors.dark,

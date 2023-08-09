@@ -18,10 +18,10 @@ import {
   ReadingTip,
   ReadingTipDetail,
   Profile,
+  ProfileUpdate,
 } from "../screens";
 
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
-import SettingScreen from "../screens/SettingScreen";
 
 
 
@@ -62,7 +62,7 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.ReadingTipDetail} component={ReadingTipDetail} />
           <RootStack.Screen name={RootStackName.TestHistory} component={TestHistory} options={{ animation: 'none' }} />
           <RootStack.Screen name={RootStackName.Profile} component={Profile} options={{ animation: 'none' }} />
-          <RootStack.Screen name={RootStackName.Setting} component={SettingScreen} />
+          <RootStack.Screen name={RootStackName.ProfileUpdate} component={ProfileUpdate} options={{ animation: 'slide_from_bottom' }} />
         </RootStack.Navigator>
       </NavigationContainer>
     </SafeAreaView >

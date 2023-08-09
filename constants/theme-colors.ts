@@ -6,6 +6,7 @@ export enum ThemeColors {
   pinkLight = "#F6C9C6",
   pinkDark = "#F5ABA6",
   
+  yellowLemon = '#fff2e8',
   yellowLight = "#fbe6A5",
   yellowDark = "#F7D672",
 

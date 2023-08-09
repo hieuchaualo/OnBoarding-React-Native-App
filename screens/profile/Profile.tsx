@@ -1,20 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
-  StyleSheet,
   ScrollView,
   View,
   Text,
   Image,
-  TouchableOpacity,
 } from 'react-native';
-import Spacing from "../../constants/Spacing";
-import Colors from "../../constants/Colors";
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
 import { IAccount } from '../../interfaces';
 import { deleteItemAsync } from 'expo-secure-store';
-import { BottomNav, Button } from '../../components';
+import { BottomNav, Button, Column, Row } from '../../components';
 import { RootStackParamList } from '../../types';
 import { AxiosResponse } from 'axios';
 import { getAccount } from '../../api';
@@ -33,20 +29,24 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
   const { navigate } = navigation;
   const [account, setAccount] = useState<IAccount>();
 
-  useEffect(() => {
-    const fetchAccount = async () => {
-      try {
-        const response: AxiosResponse<any, any> = await getAccount();
-        if (response?.status === 200) {
-          const responseData = response.data.data
-          setAccount(responseData)
-        }
-      } catch (error) {
-        console.error(error)
+  const fetchAccount = async () => {
+    try {
+      const response: AxiosResponse<any, any> = await getAccount();
+      if (response?.status === 200) {
+        const responseData = response.data.data
+        setAccount(responseData)
       }
+    } catch (error) {
+      console.error(error)
     }
-    fetchAccount()
-  }, [])
+  }
+
+  useEffect(() => {
+    const autoFetchAccountOnFocus = navigation.addListener('focus', () => {
+      fetchAccount()
+    });
+    return () => navigation.removeListener('focus', autoFetchAccountOnFocus)
+  }, [navigation])
 
   const logout = () => {
     deleteItemAsync('secure_token')
@@ -57,37 +57,53 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
   return (
     <View style={{ backgroundColor: ThemeColors.light, flex: 1 }}>
       <ScrollView>
-        <View style={{ padding: ThemeDimensions.positive2, paddingBottom: 0, }}>
-          <Text style={ThemeStyles.h2}>
-            Profile
-          </Text>
-        </View>
-
-        <View style={styles.profile}>
+        <Column style={{
+          padding: ThemeDimensions.positive3,
+          backgroundColor: ThemeColors.white,
+          borderBottomRightRadius: ThemeDimensions.positive3,
+          borderBottomLeftRadius: ThemeDimensions.positive3,
+        }}>
           <Image
-            source={{ uri: toImgUrl(account?.avatar)}}
-            style={styles.profileAvatar}
+            source={account?.avatar
+              ? { uri: toImgUrl(account?.avatar) }
+              : require("../../assets/images/avatar.jpg")
+            }
+            style={{
+              height: ThemeDimensions.positive20,
+              width: ThemeDimensions.positive20,
+              borderRadius: ThemeDimensions.positive10,
+            }}
           />
 
-          <Text style={styles.profileName}>
-            {account?.name}
+          <Text style={{ ...ThemeStyles.h1, marginTop: ThemeDimensions.positive2 }}>
+            {account?.name ?? 'Unnamed'}
           </Text>
 
-          <Text style={styles.profileEmail}>
-            {account?.email}
+          <Text style={{ ...ThemeStyles.c4, color: ThemeColors.secondary, marginBottom: ThemeDimensions.positive1 }}>
+            {account?.email ?? 'default@free.dom'}
           </Text>
 
-          <TouchableOpacity
-            onPress={() => {
-              // handle onPress
-            }}>
-            <View style={styles.profileAction}>
-              <Text style={styles.profileActionText}>Edit Profile</Text>
-
-              <FeatherIcon color="#fff" name="edit" size={16} />
-            </View>
-          </TouchableOpacity>
-        </View>
+          <Button onPress={() => navigate(RootStackName.ProfileUpdate)} style={{
+            paddingVertical: ThemeDimensions.positive1,
+            paddingHorizontal: ThemeDimensions.positive2,
+          }}>
+            <Row>
+              <Text style={{
+                fontSize: ThemeDimensions.fontSize.lg,
+                fontFamily: ThemeFonts.semiBold,
+                color: ThemeColors.light,
+              }}>
+                Edit Profile
+                { }
+              </Text>
+              <FeatherIcon name="edit" style={{
+                color: ThemeColors.light,
+                paddingBottom: 4,
+                paddingLeft: 4,
+              }} />
+            </Row>
+          </Button>
+        </Column>
 
 
         <View style={{
@@ -154,128 +170,3 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
 }
 
 export { Profile };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 24,
-  },
-  section: {
-    paddingTop: 12,
-  },
-  sectionHeader: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-  },
-  sectionHeaderText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#a7a7a7',
-    textTransform: 'uppercase',
-    letterSpacing: 1.2,
-  },
-  sectionBody: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#fff',
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  header: {
-    paddingLeft: 24,
-    paddingRight: 24,
-    marginBottom: 12,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#1d1d1d',
-    marginBottom: 6,
-  },
-  subtitle: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#929292',
-  },
-  profile: {
-    padding: 16,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#e3e3e3',
-  },
-  profileAvatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 9999,
-  },
-  profileName: {
-    marginTop: 12,
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#090909',
-  },
-  profileEmail: {
-    marginTop: 6,
-    fontSize: 16,
-    fontWeight: '400',
-    color: '#848484',
-  },
-  profileAction: {
-    marginTop: 12,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.primary,
-    borderRadius: 12,
-  },
-  profileActionText: {
-    marginRight: 8,
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  buttoncontainer: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: "space-between",
-    // paddingRight: 24,
-    // height: 50,
-    padding: Spacing * 1.5,
-    backgroundColor: Colors.lightPrimary,
-    borderRadius: Spacing,
-    marginVertical: Spacing * 1,
-    marginRight: Spacing * 2,
-  },
-  rowWrapper: {
-    paddingLeft: 24,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderColor: '#ffffff',
-  },
-  rowIcon: {
-    marginRight: 12,
-  },
-  rowLabel: {
-    fontSize: 17,
-    fontWeight: '500',
-    color: '#000',
-  },
-  rowValue: {
-    fontSize: 17,
-    color: '#ffffff',
-    marginRight: 4,
-  },
-  rowSpacer: {
-    flexGrow: 1,
-    flexShrink: 1,
-    flexBasis: 0,
-  },
-});

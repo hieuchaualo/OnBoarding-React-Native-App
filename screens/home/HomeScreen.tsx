@@ -24,23 +24,27 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
   const navigate = navigation.navigate;
   const [account, setAccount] = useState<IAccount>();
 
-  useEffect(() => {
-    const fetchAccount = async () => {
-      try {
-        const token = await getItemAsync("secure_token")
-        if (token) {
-          const response: AxiosResponse<any, any> = await getAccount();
-          if (response?.status === 200) {
-            const responseData = response.data.data
-            setAccount(responseData)
-          }
+  const fetchAccount = async () => {
+    try {
+      const token = await getItemAsync("secure_token")
+      if (token) {
+        const response: AxiosResponse<any, any> = await getAccount();
+        if (response?.status === 200) {
+          const responseData = response.data.data
+          setAccount(responseData)
         }
-      } catch (error) {
-        console.error(error)
       }
+    } catch (error) {
+      console.error(error)
     }
-    fetchAccount()
-  }, [])
+  }
+
+  useEffect(() => {
+    const autoFetchAccountOnFocus = navigation.addListener('focus', () => {
+      fetchAccount()
+    });
+    return () => navigation.removeListener('focus', autoFetchAccountOnFocus)
+  }, [navigation])
 
   // prevent going back
   useEffect(() => {
@@ -48,8 +52,10 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
       if (event.data.action.type === "NAVIGATE") {
         navigation.dispatch(event.data.action)
         navigation.removeListener('beforeRemove', backDisable)
+      } else {
+        event.preventDefault()
+        
       }
-      event.preventDefault()
     })
     return () => navigation.removeListener('beforeRemove', backDisable);
   }, []);
@@ -61,29 +67,31 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
 
           {/* Header */}
           <Row style={{ justifyContent: "space-between" }}>
-            <Row>
-              <Image
-                source={
-                  account?.avatar
-                    ? { uri: toImgUrl(account?.avatar) }
-                    : require("../../assets/images/avatar.jpg")
-                }
-                style={{
-                  width: ThemeDimensions.positive6,
-                  height: ThemeDimensions.positive6,
-                  borderRadius: ThemeDimensions.positive3,
-                }}
-              />
-              <Text style={{
-                fontFamily: ThemeFonts.semiBold,
-                fontSize: ThemeDimensions.fontSize.lg,
-                color: ThemeColors.second,
-                paddingLeft: ThemeDimensions.positive2,
-              }}>
-                {account?.name ?? "unnamed"}
-              </Text>
-            </Row>
-            <TouchableOpacity onPress={() => navigate("TestHistory")}>
+            <TouchableOpacity onPress={() => navigate(RootStackName.Profile)}>
+              <Row>
+                <Image
+                  source={
+                    account?.avatar
+                      ? { uri: toImgUrl(account?.avatar) }
+                      : require("../../assets/images/avatar.jpg")
+                  }
+                  style={{
+                    width: ThemeDimensions.positive6,
+                    height: ThemeDimensions.positive6,
+                    borderRadius: ThemeDimensions.positive3,
+                  }}
+                />
+                <Text style={{
+                  fontFamily: ThemeFonts.semiBold,
+                  fontSize: ThemeDimensions.fontSize.lg,
+                  color: ThemeColors.second,
+                  paddingLeft: ThemeDimensions.positive2,
+                }}>
+                  {account?.name ?? "unnamed"}
+                </Text>
+              </Row>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigate(RootStackName.TestHistory)}>
               <Ionicons
                 name="notifications-outline"
                 size={ThemeDimensions.positive4}

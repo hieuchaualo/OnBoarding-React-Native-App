@@ -5,18 +5,20 @@ export enum RootStackName {
   Home = "Home",
   ForgotPassword = "ForgotPassword",
   NewPassword = "NewPassword",
-  Exercises = "Exercises",
-  Profile = "Profile",
   Setting = "Setting",
-  Nhap = "Nhap",
+  Profile = "Profile",
+  ProfileUpdate = "ProfileUpdate",
+
+
   ReadingTip = "ReadingTip",
   ReadingTipDetail="ReadingTipDetail",
+
   QuizGame = "QuizGame",
   PlayQuizGame = "PlayQuizGame",
   HowToPlayQuizGame = "HowToPlayQuizGame",
-  DetailBlog = "DetailBlog",
+
   MiniTest = "MiniTest",
-  Game2 = "Game2",
-  TestHistory = "TestHistory",
+  Exercises = "Exercises",
   Result = "Result",
+  TestHistory = "TestHistory",
 }
