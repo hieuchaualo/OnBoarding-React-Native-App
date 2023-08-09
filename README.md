@@ -1,14 +1,10 @@
-# OnBoarding-React-Native-App
-
-![Image](https://cdn.dribbble.com/users/4230508/screenshots/20214736/media/054c4a7b94b2e40931ed3143ab575864.png?compress=1&resize=1600x1200&vertical=top)
-
-**Starter Project** [Link](https://github.com/tugane/OnBoarding-React-Native-App-Starter)
+# Reading Master
 
 ## Get Started
 
 install dev dependencies
 
-### `npm install` or `yarn install`
+### `npm install` or `yarn`
 
 ## Then
 
@@ -26,4 +22,16 @@ Like `npm start` / `yarn start`, but also attempts to open your app in the iOS S
 
 #### `npm run android` or `yarn run android`
 
-Like `npm start` / `yarn start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup).
+Like `npm start` / `yarn start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs]
+
+## Build
+
+
+```bash
+
+eas build -p android --profile development
+
+```
+
+
+(https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup).

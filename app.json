@@ -4,8 +4,8 @@
     "slug": "Reading-Master",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "icon": "./assets/logos/logo.png",
+    "scheme": "reading-master-app",
     "userInterfaceStyle": "automatic",
     "splash": {
       "resizeMode": "contain",
@@ -18,16 +18,21 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fluc.ReadingMaster"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/logos/logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.fluc.ReadingMaster"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/logos/favicon.ico"
     },
     "plugins": [
       [
@@ -36,6 +41,11 @@
           "photosPermission": "Allow $(PRODUCT_NAME) to access your photos"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "70504bf5-17fc-43e8-bf33-a100cd9005ae"
+      }
+    }
   }
 }
