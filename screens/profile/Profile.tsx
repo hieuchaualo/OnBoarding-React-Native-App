@@ -10,7 +10,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
 import { IAccount } from '../../interfaces';
 import { deleteItemAsync } from 'expo-secure-store';
-import { BottomNav, Button, Column, Row } from '../../components';
+import { BottomNav, Button, Column, LoadingView, Row } from '../../components';
 import { RootStackParamList } from '../../types';
 import { AxiosResponse } from 'axios';
 import { getAccount } from '../../api';
@@ -52,6 +52,15 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
       .then(() => deleteItemAsync('account'))
       .then(() => navigate(RootStackName.Welcome))
   }
+
+  if (!account) return (
+    <View style={{ backgroundColor: ThemeColors.light, flex: 1 }}>
+      <Column>
+        <LoadingView />
+      </Column>
+      <BottomNav navigate={navigate} activeKey={RootStackName.Profile} />
+    </View>
+  )
 
   return (
     <View style={{ backgroundColor: ThemeColors.light, flex: 1 }}>
