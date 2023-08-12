@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Reading Master",
-    "slug": "Reading-Master",
+    "slug": "reading-master",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/logos/logo.png",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fluc.ReadingMaster"
+      "bundleIdentifier": "com.chau.ReadingMaster"
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +29,7 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.fluc.ReadingMaster"
+      "package": "com.chau.ReadingMaster"
     },
     "web": {
       "favicon": "./assets/logos/favicon.ico"
