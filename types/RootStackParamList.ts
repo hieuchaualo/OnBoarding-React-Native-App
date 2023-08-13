@@ -4,20 +4,22 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Home: undefined;
-  ForgotPassword: undefined;
-  NewPassword: undefined;
+
   Profile: undefined;
   ProfileUpdate: undefined;
-  Setting: undefined;
+
   QuizGame: undefined;
   PlayQuizGame: undefined;
   HowToPlayQuizGame: undefined;
+
   ReadingTip: undefined;
   ReadingTipDetail: {
     readingTipId: string,
   };
-  MiniTest: undefined;
+
   TestHistory: undefined;
+
+  MiniTest: undefined;
   Exercises: {
     miniTestId: string,
   };

@@ -88,7 +88,15 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
 
   const storeScore = async () => {
     const lastScoreString = await getItemAsync("quiz_game_score")
-    if (!lastScoreString) return;
+    if (!lastScoreString) {
+      const score: string = JSON.stringify({
+        max: speedLog.current.max,
+        average: speedLog.current.log.reduce((previousValue, currentValue) => previousValue + currentValue) / ROUND_LIMIT,
+      })
+      await setItemAsync("quiz_game_score", score);
+      return;
+    }
+
     const lastScore = JSON.parse(lastScoreString)
     if (lastScore.max < speedLog.current.max) {
       const score: string = JSON.stringify({
@@ -166,7 +174,8 @@ export const PlayQuizGame: React.FC<PlayQuizGameProps> = ({ navigation: { naviga
                   labelColor: () => ThemeColors.primary,
                   backgroundGradientFrom: ThemeColors.white,
                   backgroundGradientTo: ThemeColors.white,
-                  propsForDots: { r: ThemeDimensions.positive1 },
+                  propsForBackgroundLines: { stroke: ThemeColors.grey },
+                  propsForDots: { r: ThemeDimensions.positive1, stroke: "#ffa726" },
                 }}
               />
               <Text style={{ ...ThemeStyles.c4, textAlign: 'center' }}>

@@ -3,12 +3,9 @@ export enum RootStackName {
   Login = "Login",
   Register = "Register",
   Home = "Home",
-  ForgotPassword = "ForgotPassword",
-  NewPassword = "NewPassword",
-  Setting = "Setting",
+
   Profile = "Profile",
   ProfileUpdate = "ProfileUpdate",
-
 
   ReadingTip = "ReadingTip",
   ReadingTipDetail="ReadingTipDetail",

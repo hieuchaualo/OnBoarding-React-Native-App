@@ -32,18 +32,15 @@ function TimeCountdown({ timeRemainingInSecond, style, handleOnTimeout, isRevers
 
     return (
         <Row>
-            <Column style={{ flex: 0.6, alignItems: 'flex-end', paddingEnd: ThemeDimensions.positive1 }}>
-                <MaterialIcons
-                    name={timeCountdown === 0 ? 'timer-off' : 'timer'}
-                    size={ThemeDimensions.positive4}
-                    color={ThemeColors.third}
-                />
-            </Column>
-            <Column style={{ alignItems: 'flex-start' }}>
-                <Text style={style}>
-                    {timeCountdown === 0 ? "Time out!" : fromSecondToDateTime(timeCountdown)}
-                </Text>
-            </Column>
+            <MaterialIcons
+                name={timeCountdown === 0 ? 'timer-off' : 'timer'}
+                size={ThemeDimensions.positive4}
+                color={ThemeColors.third}
+                style={{ paddingEnd: ThemeDimensions.positive1 }}
+            />
+            <Text style={style}>
+                {timeCountdown === 0 ? "Time out!" : fromSecondToDateTime(timeCountdown)}
+            </Text>
         </Row>
     )
 }

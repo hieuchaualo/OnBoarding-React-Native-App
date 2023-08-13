@@ -21,9 +21,6 @@ import {
   ProfileUpdate,
 } from "../screens";
 
-import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
-
-
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -50,7 +47,6 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.Welcome} component={WelcomeScreen} />
           <RootStack.Screen name={RootStackName.Login} component={LoginScreen} options={{ gestureEnabled: false }} />
           <RootStack.Screen name={RootStackName.Register} component={RegisterScreen} />
-          <RootStack.Screen name={RootStackName.ForgotPassword} component={ForgotPasswordScreen} />
           <RootStack.Screen name={RootStackName.Home} component={HomeScreen} options={{ gestureEnabled: false }} />
           <RootStack.Screen name={RootStackName.MiniTest} component={MinitestScreen} />
           <RootStack.Screen name={RootStackName.Exercises} component={Exercises} options={{ freezeOnBlur: true }} />

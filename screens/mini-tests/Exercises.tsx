@@ -3,6 +3,8 @@ import {
   ScrollView,
   Text,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -67,109 +69,114 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
-      <ScrollView>
-        <Image
-          style={{
-            aspectRatio: 16 / 9,
-            width: ThemeDimensions.percentage100,
-            resizeMode: 'cover',
-          }}
-          source={{ uri: toImgUrl(miniTest.thumbnail) }}
-        />
-        <View style={{ paddingHorizontal: ThemeDimensions.positive3, paddingTop: ThemeDimensions.positive3 }}>
-          <Text style={{ ...ThemeStyles.h2, textAlign: 'left', color: ThemeColors.third }} selectable={true}>
-            {miniTest.title}
-          </Text>
-
-          <Text style={{
-            ...ThemeStyles.c4,
-            color: ThemeColors.secondary,
-            marginBottom: ThemeDimensions.positive2,
-          }}>
-            {(typeof miniTest.creator === "object") && '# ' + miniTest.creator.name}
-          </Text>
-
-          <Text style={{ ...ThemeStyles.c4 }} selectable={true}>
-            {miniTest.content}
-          </Text>
-        </View>
-
-        <View style={{ paddingHorizontal: ThemeDimensions.positive2 }}>
-          {miniTest.quizzes?.map((quiz, quizIndex) => (
-            <View key={quiz._id} style={{
-              padding: ThemeDimensions.positive2,
-              borderRadius: ThemeDimensions.positive1,
-              backgroundColor: ThemeColors.white,
-              marginVertical: ThemeDimensions.positive1,
-            }}>
-              <Text style={{
-                ...ThemeStyles.c4,
-                fontFamily: ThemeFonts.semiBold,
-                color: ThemeColors.third,
-                paddingHorizontal: ThemeDimensions.positive1
-              }} >
-                {quizIndex + 1}. {quiz.question}
-              </Text>
-
-              {miniTest.typeOfQuiz === MiniTestTypes.FillTheBlank
-                ? <AnswerByTextInput
-                  quizIndex={quizIndex}
-                  answer={answersForm[quizIndex]}
-                  handleOnAnswer={handleOnAnswer}
-                />
-                : <AnswerByOptions
-                  quizIndex={quizIndex}
-                  options={quiz.options}
-                  answersForm={answersForm}
-                  handleOnAnswer={handleOnAnswer}
-                />
-              }
-            </View>
-          ))}
-        </View>
-      </ScrollView>
-
-      <Row style={{
-        paddingHorizontal: ThemeDimensions.positive4,
-        paddingVertical: ThemeDimensions.positive1,
-        backgroundColor: ThemeColors.white,
-        borderTopColor: ThemeColors.grey,
-        borderTopWidth: 1,
-      }}>
-        <Column>
-          {miniTest.timeLimit
-            ? <TimeCountdown
-              style={{ ...ThemeStyles.c4, }}
-              timeRemainingInSecond={miniTest.timeLimit}
-              handleOnTimeout={handleOnTimeout}
-              isReverse={false}
-            />
-            : <Text style={{ ...ThemeStyles.c4, }}>
-              Unlimited time
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={{flex: 1}}
+      >
+        <ScrollView>
+          <Image
+            style={{
+              aspectRatio: 16 / 9,
+              width: ThemeDimensions.percentage100,
+              resizeMode: 'cover',
+            }}
+            source={{ uri: toImgUrl(miniTest.thumbnail) }}
+          />
+          <View style={{ paddingHorizontal: ThemeDimensions.positive3, paddingTop: ThemeDimensions.positive3 }}>
+            <Text style={{ ...ThemeStyles.h2, textAlign: 'left', color: ThemeColors.third }} selectable={true}>
+              {miniTest.title}
             </Text>
-          }
-        </Column>
 
-        <Button
-          title={isTimeout ? "Timeout!" : "Submit"}
-          onPress={() => {
-            navigate(
-              "Result",
-              {
-                finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
-                finalAnswersForm: answersForm,
-                totalTime,
-                miniTestId: miniTest._id,
-                timeLimit: miniTest.timeLimit ?? 0,
-              }
-            );
-          }}
-          style={{
-            paddingHorizontal: ThemeDimensions.positive4,
-            paddingVertical: ThemeDimensions.positive1,
-          }}
-        />
-      </Row>
+            <Text style={{
+              ...ThemeStyles.c4,
+              color: ThemeColors.secondary,
+              marginBottom: ThemeDimensions.positive2,
+            }}>
+              {(typeof miniTest.creator === "object") && '# ' + miniTest.creator.name}
+            </Text>
+
+            <Text style={{ ...ThemeStyles.c4 }} selectable={true}>
+              {miniTest.content}
+            </Text>
+          </View>
+
+          <View style={{ paddingHorizontal: ThemeDimensions.positive2 }}>
+            {miniTest.quizzes?.map((quiz, quizIndex) => (
+              <View key={quiz._id} style={{
+                padding: ThemeDimensions.positive2,
+                borderRadius: ThemeDimensions.positive1,
+                backgroundColor: ThemeColors.white,
+                marginVertical: ThemeDimensions.positive1,
+              }}>
+                <Text style={{
+                  ...ThemeStyles.c4,
+                  fontFamily: ThemeFonts.semiBold,
+                  color: ThemeColors.third,
+                  paddingHorizontal: ThemeDimensions.positive1
+                }} >
+                  {quizIndex + 1}. {quiz.question}
+                </Text>
+
+                {miniTest.typeOfQuiz === MiniTestTypes.FillTheBlank
+                  ? <AnswerByTextInput
+                    quizIndex={quizIndex}
+                    answer={answersForm[quizIndex]}
+                    handleOnAnswer={handleOnAnswer}
+                  />
+                  : <AnswerByOptions
+                    quizIndex={quizIndex}
+                    options={quiz.options}
+                    answersForm={answersForm}
+                    handleOnAnswer={handleOnAnswer}
+                  />
+                }
+              </View>
+            ))}
+          </View>
+        </ScrollView>
+
+        <Row style={{
+          paddingHorizontal: ThemeDimensions.positive3,
+          paddingVertical: ThemeDimensions.positive1,
+          backgroundColor: ThemeColors.white,
+          borderTopColor: ThemeColors.grey,
+          borderTopWidth: 1,
+        }}>
+          <Column style={{ alignItems: 'flex-start' }}>
+            {miniTest.timeLimit
+              ? <TimeCountdown
+                style={{ ...ThemeStyles.c4, }}
+                timeRemainingInSecond={miniTest.timeLimit}
+                handleOnTimeout={handleOnTimeout}
+                isReverse={false}
+              />
+              : <Text style={{ ...ThemeStyles.c4, }}>
+                Unlimited time
+              </Text>
+            }
+          </Column>
+
+          <Button
+            title={isTimeout ? "Timeout!" : "Submit"}
+            onPress={() => {
+              navigate(
+                "Result",
+                {
+                  finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
+                  finalAnswersForm: answersForm,
+                  totalTime,
+                  miniTestId: miniTest._id,
+                  timeLimit: miniTest.timeLimit ?? 0,
+                }
+              );
+            }}
+            style={{
+              paddingHorizontal: ThemeDimensions.positive4,
+              paddingVertical: ThemeDimensions.positive1,
+            }}
+          />
+        </Row>
+      </KeyboardAvoidingView>
     </View>
   );
 };

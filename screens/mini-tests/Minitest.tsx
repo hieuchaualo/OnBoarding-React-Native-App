@@ -108,16 +108,17 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
                 // background={TouchableNativeFeedback.Ripple(ThemeColors.grey, true)}
                 >
                   <Row>
+                    <View style={{ padding: ThemeDimensions.positive1 }}>
                     <Image
                       resizeMode="cover"
                       source={{ uri: toImgUrl(miniTest.thumbnail) }}
                       style={{
-                        borderTopLeftRadius: ThemeDimensions.positive1,
-                        borderBottomLeftRadius: ThemeDimensions.positive1,
+                        borderRadius: ThemeDimensions.positive1,
                         height: ThemeDimensions.positive16,
                         width: ThemeDimensions.positive16,
                       }}
                     />
+                    </View>
 
                     <Column style={{ alignItems: 'flex-start', padding: ThemeDimensions.positive2 }}>
                       <Text numberOfLines={2} style={{

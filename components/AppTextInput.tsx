@@ -4,10 +4,7 @@ import {
   TextInputProps,
 } from "react-native";
 import React, { useState } from "react";
-import Colors from "../constants/Colors";
-import FontSize from "../constants/FontSize";
-import Spacing from "../constants/Spacing";
-import { ThemeFonts } from "../constants";
+import { ThemeColors, ThemeDimensions, ThemeFonts } from "../constants";
 
 const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
   const [focused, setFocused] = useState<boolean>(false);
@@ -15,19 +12,19 @@ const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
     <TextInput
       onFocus={() => setFocused(true)}
       onBlur={() => setFocused(false)}
-      placeholderTextColor={Colors.darkText}
+      placeholderTextColor={ThemeColors.secondary}
       style={[
         {
           fontFamily: ThemeFonts.regular,
-          fontSize: FontSize.small,
-          padding: Spacing * 2,
-          backgroundColor: Colors.lightPrimary,
-          borderRadius: Spacing,
-          marginVertical: Spacing,
+          fontSize: ThemeDimensions.fontSize.md,
+          padding: ThemeDimensions.positive3,
+          backgroundColor: ThemeColors.grey,
+          borderRadius: ThemeDimensions.positive1,
+          marginVertical: ThemeDimensions.positive2,
         },
         focused && {
-          borderWidth: 3,
-          borderColor: Colors.primary,
+          borderWidth: 2,
+          borderColor: ThemeColors.primary,
         },
       ]}
       {...otherProps}

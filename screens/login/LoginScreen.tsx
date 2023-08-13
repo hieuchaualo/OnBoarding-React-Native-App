@@ -16,7 +16,7 @@ import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";
 import { AxiosResponse } from "axios";
 import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
-import { Button } from "../../components";
+import { Button, Column, Row } from "../../components";
 import { RootStackParamList } from "../../types";
 
 type LoginScreenProps = NativeStackScreenProps<RootStackParamList, "Login">;
@@ -81,160 +81,99 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   }
 
   return (
-    <ScrollView style={{ padding: ThemeDimensions.positive3 }}>
-      <View style={{ alignItems: "center" }}>
-        <Text style={ThemeStyles.h1}>
-          Login here
-        </Text>
-        <Text
-          style={{
-            ...ThemeStyles.h2,
-            fontFamily: ThemeFonts.semiBold,
-            color: ThemeColors.dark,
-          }}
-        >
-          Welcome back you've been missed!
-        </Text>
-      </View>
+    <ScrollView>
+      <View style={{ padding: ThemeDimensions.positive2 }}>
+        <Column style={{ paddingVertical: ThemeDimensions.positive2 }}>
+          <Text style={ThemeStyles.h1}>
+            Login here
+          </Text>
+          <Text style={{ ...ThemeStyles.b3, textAlign: 'center', marginVertical: ThemeDimensions.positive3 }}>
+            Welcome back you've {'\n'} been missed!
+          </Text>
+        </Column>
 
-      <AppTextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="Email"
-      />
-      {isEmailNotValidated && (
-        <Text style={{
-          fontFamily: ThemeFonts.regular,
-          fontSize: ThemeDimensions.fontSize.sm,
-          color: ThemeColors.danger,
-          alignSelf: "flex-start",
-        }}>
-          Your Email is invalid. Please enter again.
-        </Text>
-      )}
+        <View>
+          <AppTextInput
+            value={email}
+            onChangeText={value => setEmail(value.trim())}
+            placeholder="Email"
+          />
+          {isEmailNotValidated && (
+            <Text style={{ ...ThemeStyles.c5, color: ThemeColors.danger, }}>
+              Your Email is invalid. Please enter again.
+            </Text>
+          )}
 
-      <AppTextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Password"
-        secureTextEntry
-      />
-      {isPasswordNotValidated && (
-        <Text style={{
-          fontFamily: ThemeFonts.regular,
-          fontSize: ThemeDimensions.fontSize.sm,
-          color: ThemeColors.danger,
-          alignSelf: "flex-start",
-        }}>
-          Your Password is invalid. Please enter again.
-        </Text>
-      )}
+          <AppTextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder="Password"
+            secureTextEntry
+          />
+          {isPasswordNotValidated && (
+            <Text style={{ ...ThemeStyles.c5, color: ThemeColors.danger, }}>
+              Your Password is invalid. Please enter again.
+            </Text>
+          )}
 
-      <TouchableOpacity
-        onPress={() => navigate("ForgotPassword")}
-        style={{ marginTop: ThemeDimensions.positive2 }}
-      >
-        <Text
-          style={{
-            fontFamily: ThemeFonts.semiBold,
-            fontSize: ThemeDimensions.fontSize.sm,
-            color: ThemeColors.primary,
-            alignSelf: "flex-end",
-          }}
-        >
-          Forgot your password ?
-        </Text>
-      </TouchableOpacity>
-
-      <Button
-        title="Login"
-        style={{
-          height: ThemeDimensions.positive10,
-          marginVertical: ThemeDimensions.positive5
-        }}
-        onPress={handleLoginPress}
-      />
-
-      <Text
-        style={{
-          fontFamily: ThemeFonts.regular,
-          color: ThemeColors.dark,
-          textAlign: "center",
-          fontSize: ThemeDimensions.fontSize.sm,
-        }}
-      >
-        Don't have an account?
-      </Text>
-      <TouchableOpacity
-        onPress={() => navigate("Register")}
-        style={{
-          padding: Spacing,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: ThemeFonts.semiBold,
-            color: Colors.primary,
-            textAlign: "center",
-            fontSize: FontSize.small,
-          }}
-        >
-          Sign up
-        </Text>
-      </TouchableOpacity>
-
-      <View
-        style={{
-          marginVertical: Spacing * 3,
-        }}
-      >
-        <Text
-          style={{
-            fontFamily: ThemeFonts.semiBold,
-            color: Colors.text,
-            textAlign: "center",
-            fontSize: FontSize.small,
-          }}
-        >
-          Or continue with
-        </Text>
-
-        <View
-          style={{
-            marginTop: Spacing,
-            flexDirection: "row",
-            justifyContent: "center",
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              padding: Spacing,
-              backgroundColor: Colors.gray,
-              borderRadius: Spacing / 2,
-              marginHorizontal: Spacing,
-            }}
-          >
-            <Ionicons
-              name="logo-google"
-              color={Colors.text}
-              size={Spacing * 2}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              padding: Spacing,
-              backgroundColor: Colors.gray,
-              borderRadius: Spacing / 2,
-              marginHorizontal: Spacing,
-            }}
-          >
-            <Ionicons
-              name="logo-facebook"
-              color={Colors.text}
-              size={Spacing * 2}
-            />
-          </TouchableOpacity>
+          <Button
+            title="Login"
+            style={{ padding: ThemeDimensions.positive3, marginTop: ThemeDimensions.positive2 }}
+            onPress={handleLoginPress}
+          />
         </View>
+
+        <Column style={{ marginTop: ThemeDimensions.positive6 }}>
+          <TouchableOpacity
+            onPress={() => navigate("Register")}
+            style={{ padding: ThemeDimensions.positive2, }}
+          >
+            <Text style={ThemeStyles.b5}>
+              Don't have an account? { }
+              <Text style={{ color: Colors.primary, }}>
+                Create here
+              </Text>
+            </Text>
+          </TouchableOpacity>
+        </Column>
+
+        <Column style={{ paddingVertical: ThemeDimensions.positive4 }}>
+          <Text style={ThemeStyles.b5}>
+            Or continue with
+          </Text>
+
+          <Row style={{ marginTop: ThemeDimensions.positive1 }}>
+            <TouchableOpacity
+              style={{
+                padding: ThemeDimensions.positive1,
+                backgroundColor: ThemeColors.grey,
+                borderRadius: ThemeDimensions.positive1,
+                marginHorizontal: ThemeDimensions.positive1,
+              }}
+            >
+              <Ionicons
+                name="logo-google"
+                color={ThemeColors.dark}
+                size={ThemeDimensions.positive4}
+              />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={{
+                padding: ThemeDimensions.positive1,
+                backgroundColor: ThemeColors.grey,
+                borderRadius: ThemeDimensions.positive1,
+                marginHorizontal: ThemeDimensions.positive1,
+              }}
+            >
+              <Ionicons
+                name="logo-facebook"
+                color={ThemeColors.dark}
+                size={ThemeDimensions.positive4}
+              />
+            </TouchableOpacity>
+          </Row>
+        </Column>
       </View>
     </ScrollView>
   );
