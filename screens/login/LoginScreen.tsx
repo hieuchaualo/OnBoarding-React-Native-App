@@ -5,9 +5,6 @@ import {
   View,
 } from "react-native";
 import { FC, useEffect, useState } from "react";
-import Spacing from "../../constants/Spacing";
-import FontSize from "../../constants/FontSize";
-import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import AppTextInput from "../../components/AppTextInput";
@@ -15,7 +12,7 @@ import { getAccount, loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";
 import { AxiosResponse } from "axios";
-import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
+import { ThemeColors, ThemeDimensions, ThemeStyles } from "../../constants";
 import { Button, Column, Row } from "../../components";
 import { RootStackParamList } from "../../types";
 
@@ -130,7 +127,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
           >
             <Text style={ThemeStyles.b5}>
               Don't have an account? { }
-              <Text style={{ color: Colors.primary, }}>
+              <Text style={{ color: ThemeColors.primary, }}>
                 Create here
               </Text>
             </Text>
