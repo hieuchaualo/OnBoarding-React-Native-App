@@ -1,7 +1,7 @@
 import { axiosInstance } from "./apiInstance"
 
-function getReadingTipsList() {
-  return axiosInstance.get('/reading-tips')
+function getReadingTipsList(page?: number) {
+  return axiosInstance.get('/reading-tips', { params: { page } })
 }
 
 function getReadingTipById(id: string) {

@@ -1,8 +1,8 @@
 import { IMiniTestHistory, MiniTestTypes } from "../interfaces";
 import { axiosInstance } from "./apiInstance"
 
-function getMiniTestsList(option: MiniTestTypes) {
-  return axiosInstance.get('/mini-tests', { params: { option } })
+function getMiniTestsList(option: MiniTestTypes, page?: number) {
+  return axiosInstance.get('/mini-tests', { params: { option, page } })
 }
 
 function getMiniTestById(id: string) {
