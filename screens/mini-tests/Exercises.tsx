@@ -53,8 +53,22 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
     setAnswersForm(newAnswerForm);
   }
 
+  const handleOnSubmit = () => {
+    navigate(
+      "Result",
+      {
+        finalAnswers: miniTest?.quizzes?.map(quiz => quiz.answers[0]) ?? [],
+        finalAnswersForm: answersForm,
+        totalTime,
+        miniTestId: miniTest?._id ?? '',
+        timeLimit: miniTest?.timeLimit ?? 0,
+      }
+    );
+  }
+
   const handleOnTimeout = () => {
     setIsTimeout(true)
+    handleOnSubmit()
   }
 
   if (!miniTest) return (
@@ -71,7 +85,7 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
     <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
       >
         <ScrollView>
           <Image
@@ -158,18 +172,7 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
 
           <Button
             title={isTimeout ? "Timeout!" : "Submit"}
-            onPress={() => {
-              navigate(
-                "Result",
-                {
-                  finalAnswers: miniTest.quizzes?.map(quiz => quiz.answers[0]) ?? [],
-                  finalAnswersForm: answersForm,
-                  totalTime,
-                  miniTestId: miniTest._id,
-                  timeLimit: miniTest.timeLimit ?? 0,
-                }
-              );
-            }}
+            onPress={handleOnSubmit}
             style={{
               paddingHorizontal: ThemeDimensions.positive4,
               paddingVertical: ThemeDimensions.positive1,
