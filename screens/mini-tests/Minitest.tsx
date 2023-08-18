@@ -85,9 +85,6 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
     return () => setMiniTestsList([])
   }, [currentTab])
 
-  console.log(isShowLoadMore)
-
-
   return (
     <View style={{ flex: 1, backgroundColor: ThemeColors.light }}>
       {/* <View style={styles.container}> */}
