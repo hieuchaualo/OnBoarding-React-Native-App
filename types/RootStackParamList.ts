@@ -8,6 +8,8 @@ export type RootStackParamList = {
   Profile: undefined;
   ProfileUpdate: undefined;
 
+  Notification: undefined;
+
   QuizGame: undefined;
   PlayQuizGame: undefined;
   HowToPlayQuizGame: undefined;

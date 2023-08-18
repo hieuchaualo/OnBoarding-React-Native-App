@@ -7,6 +7,8 @@ export enum RootStackName {
   Profile = "Profile",
   ProfileUpdate = "ProfileUpdate",
 
+  Notification = "Notification",
+
   ReadingTip = "ReadingTip",
   ReadingTipDetail="ReadingTipDetail",
 

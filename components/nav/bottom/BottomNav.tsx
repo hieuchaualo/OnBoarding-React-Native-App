@@ -61,18 +61,18 @@ const BottomNav: FunctionComponent<BottomNavProps> = ({ navigate, activeKey }) =
             </Button>
 
             <Button
-                onPress={() => (activeKey !== RootStackName.QuizGame) && {}}
+                onPress={() => (activeKey !== RootStackName.Notification) && navigate(RootStackName.Notification)}
                 background={ThemeColors.white}
                 backgroundHover={ThemeColors.white}
             >
                 <FeatherIcon
                     name="bell"
                     size={ThemeDimensions.fontSize.xxl}
-                    color={(activeKey === RootStackName.QuizGame) ? ThemeColors.primary : ThemeColors.secondary}
+                    color={(activeKey === RootStackName.Notification) ? ThemeColors.primary : ThemeColors.secondary}
                 />
                 <Text style={{
                     marginTop: 4,
-                    color: (activeKey === RootStackName.QuizGame) ? ThemeColors.primary : ThemeColors.secondary,
+                    color: (activeKey === RootStackName.Notification) ? ThemeColors.primary : ThemeColors.secondary,
                     fontFamily: ThemeFonts.regular,
                     fontSize: ThemeDimensions.fontSize.sm
                 }}>

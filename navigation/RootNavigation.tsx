@@ -1,7 +1,8 @@
-import { SafeAreaView, StatusBar } from "react-native";
+import * as Notifications from 'expo-notifications';
+import { Linking, SafeAreaView, StatusBar } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { RootStackName, ThemeColors } from "../constants";
+import { APP_BASE_URI, RootStackName, ThemeColors } from "../constants";
 import { RootStackParamList } from "../types";
 import {
   WelcomeScreen,
@@ -19,14 +20,13 @@ import {
   ReadingTipDetail,
   Profile,
   ProfileUpdate,
+  Notification,
 } from "../screens";
-
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
-
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export function RootNavigator() {
@@ -36,13 +36,52 @@ export function RootNavigator() {
         backgroundColor={ThemeColors.light}
         barStyle={'dark-content'}
       />
-      <NavigationContainer theme={{
-        ...DefaultTheme, colors: {
-          ...DefaultTheme.colors,
-          background: ThemeColors.white,
-          primary: ThemeColors.primary,
-        }
-      }}>
+      <NavigationContainer
+        theme={{
+          ...DefaultTheme, colors: {
+            ...DefaultTheme.colors,
+            background: ThemeColors.white,
+            primary: ThemeColors.primary,
+          }
+        }}
+        linking={{
+          prefixes: [APP_BASE_URI],
+          async getInitialURL() {
+            // First, you may want to do the default deep link handling
+            // Check if app was opened from a deep link
+            const url = await Linking.getInitialURL();
+            if (url != null) return url;
+
+            // Handle URL from expo push notifications
+            const response: any = await Notifications.getLastNotificationResponseAsync();
+
+            return response?.notification.request.content.data.url;
+          },
+          subscribe(listener) {
+            const onReceiveURL = ({ url }: { url: string }) => listener(url);
+
+            // Listen to incoming links from deep linking
+            const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
+
+            // Listen to expo push notifications
+            const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+              const url: any = response.notification.request.content.data.url;
+
+              // Any custom logic to see whether the URL needs to be handled
+              //...
+
+              // Let React Navigation handle the URL
+              listener(url);
+            });
+
+            return () => {
+              // Clean up the event listeners
+              eventListenerSubscription.remove();
+              subscription.remove();
+            };
+          },
+        }}
+      >
         <RootStack.Navigator screenOptions={{ headerShown: false }}>
           <RootStack.Screen name={RootStackName.Welcome} component={WelcomeScreen} />
           <RootStack.Screen name={RootStackName.Login} component={LoginScreen} options={{ gestureEnabled: false }} />
@@ -57,6 +96,7 @@ export function RootNavigator() {
           <RootStack.Screen name={RootStackName.ReadingTip} component={ReadingTip} />
           <RootStack.Screen name={RootStackName.ReadingTipDetail} component={ReadingTipDetail} />
           <RootStack.Screen name={RootStackName.TestHistory} component={TestHistory} options={{ animation: 'none' }} />
+          <RootStack.Screen name={RootStackName.Notification} component={Notification} options={{ animation: 'none' }} />
           <RootStack.Screen name={RootStackName.Profile} component={Profile} options={{ animation: 'none' }} />
           <RootStack.Screen name={RootStackName.ProfileUpdate} component={ProfileUpdate} options={{ animation: 'slide_from_bottom' }} />
         </RootStack.Navigator>

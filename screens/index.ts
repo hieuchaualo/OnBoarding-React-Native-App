@@ -1,4 +1,5 @@
 export * from './test-history'
+export * from './notification'
 export * from './home'
 export * from './login'
 export * from './mini-tests'
