@@ -13,8 +13,9 @@ import { deleteItemAsync } from 'expo-secure-store';
 import { BottomNav, Button, Column, LoadingView, Row } from '../../components';
 import { RootStackParamList } from '../../types';
 import { AxiosResponse } from 'axios';
-import { getAccount } from '../../api';
+import { deleteMiniTestHistory, getAccount } from '../../api';
 import { toImgUrl } from '../../utils';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const items = [
   { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
@@ -27,6 +28,7 @@ type ProfileProps = NativeStackScreenProps<RootStackParamList, "Profile">;
 const Profile: FC<ProfileProps> = ({ navigation }) => {
   const { navigate } = navigation;
   const [account, setAccount] = useState<IAccount>();
+  const [isDisableButton, setIsDisableButton] = useState(false);
 
   const fetchAccount = async () => {
     try {
@@ -51,6 +53,18 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
     deleteItemAsync('secure_token')
       .then(() => deleteItemAsync('account'))
       .then(() => navigate(RootStackName.Welcome))
+  }
+
+  const clearHistory = async () => {
+    try {
+      await deleteItemAsync("quiz_game_score")
+      const response: AxiosResponse<any, any> = await deleteMiniTestHistory();
+      if (response?.status === 200) {
+        setIsDisableButton(true)
+      }
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   if (!account) return (
@@ -117,6 +131,28 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
         <View style={{
           padding: ThemeDimensions.positive3,
         }}>
+
+          <Button
+            onPress={clearHistory}
+            style={{
+              flexDirection: 'row',
+              padding: ThemeDimensions.positive2,
+              marginVertical: ThemeDimensions.positive1,
+            }}
+            background={ThemeColors.grey}
+            backgroundHover={isDisableButton ? ThemeColors.grey : ThemeColors.primaryLight}
+          >
+            <MaterialCommunityIcons name="archive-remove-outline" size={24} color={isDisableButton ? ThemeColors.secondary: ThemeColors.dark} />
+            <Text style={{
+              fontSize: ThemeDimensions.fontSize.lg,
+              fontFamily: ThemeFonts.semiBold,
+              paddingStart: ThemeDimensions.positive2,
+              color: isDisableButton ? ThemeColors.secondary: ThemeColors.dark,
+            }}>
+              Clear history
+            </Text>
+          </Button>
+
           {items.map(({ id, label, icon, type }, index) => <Button
             key={id}
             onPress={() => {
@@ -126,7 +162,6 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
               flexDirection: 'row',
               padding: ThemeDimensions.positive2,
               marginVertical: ThemeDimensions.positive1,
-              shadowColor: ThemeColors.dark
             }}
             background={ThemeColors.grey}
             backgroundHover={ThemeColors.primaryLight}
@@ -151,7 +186,6 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
               flexDirection: 'row',
               padding: ThemeDimensions.positive2,
               marginVertical: ThemeDimensions.positive1,
-              shadowColor: ThemeColors.dark
             }}
             background={ThemeColors.grey}
             backgroundHover={ThemeColors.primaryLight}

@@ -22,6 +22,10 @@ function getMiniTestHistory() {
   return axiosInstance.get('/mini-tests/history')
 }
 
+function deleteMiniTestHistory() {
+  return axiosInstance.delete('/mini-tests/history')
+}
+
 
 
 export {
@@ -30,4 +34,5 @@ export {
   getNextMiniTestIdById,
   updateMiniTestHistory,
   getMiniTestHistory,
+  deleteMiniTestHistory,
 };
