@@ -33,7 +33,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
         if (token) {
           const response: AxiosResponse<any, any> = await getAccount();
           if (response?.status === 200) {
-            navigate("Home")
+            navigate(RootStackName.Home)
           }
         }
       } catch (error) {
@@ -130,7 +130,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
 
         <Column style={{ marginTop: ThemeDimensions.positive6 }}>
           <TouchableOpacity
-            onPress={() => navigate("Register")}
+            onPress={() => navigate(RootStackName.Register)}
             style={{ padding: ThemeDimensions.positive2, }}
           >
             <Text style={ThemeStyles.b5}>

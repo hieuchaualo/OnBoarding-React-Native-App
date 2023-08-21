@@ -273,7 +273,7 @@ const Result: FC<ResultProps> = ({ route, navigation }) => {
 
         <Column style={{ alignItems: 'flex-end' }}>
           {(nextMiniTestId !== '') && <Button
-            onPress={() => navigation.navigate('Exercises', { miniTestId: nextMiniTestId })}
+            onPress={() => navigation.navigate(RootStackName.Exercises, { miniTestId: nextMiniTestId })}
             style={{
               paddingHorizontal: ThemeDimensions.positive2,
               paddingVertical: 2,

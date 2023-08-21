@@ -25,7 +25,7 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
         if (token) {
           const response: AxiosResponse<any, any> = await getAccount();
           if (response?.status === 200) {
-            navigate("Home")
+            navigate(RootStackName.Home)
           }
         }
       } catch (error) {
@@ -69,7 +69,7 @@ const WelcomeScreen: FunctionComponent<WelcomeScreenProps> = ({ navigation: { na
               width: ThemeDimensions.percentage90,
               height: ThemeDimensions.positive10,
             }}
-            onPress={() => navigate("Login")}
+            onPress={() => navigate(RootStackName.Login)}
           />
         </Column>
 

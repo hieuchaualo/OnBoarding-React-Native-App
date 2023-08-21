@@ -144,7 +144,7 @@ const MinitestScreen: React.FC<Props> = ({ navigation }) => {
               marginBottom: 0,
             }}>
             <TouchableOpacity
-              onPress={() => navigate('Exercises', { miniTestId: item._id })}
+              onPress={() => navigate(RootStackName.Exercises, { miniTestId: item._id })}
             // background={TouchableNativeFeedback.Ripple(ThemeColors.grey, true)}
             >
               <Row>

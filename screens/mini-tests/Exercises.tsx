@@ -13,7 +13,7 @@ import { IMiniTest, MiniTestTypes } from "../../interfaces";
 import { Button, Column, LoadingView, Row } from "../../components";
 import { toImgUrl } from "../../utils";
 import { AnswerByOptions, AnswerByTextInput, TimeCountdown } from "./components";
-import { ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from "../../constants";
 import { RootStackParamList } from "../../types";
 
 type ExercisesProps = NativeStackScreenProps<RootStackParamList, "Exercises">;
@@ -55,7 +55,7 @@ const Exercises: React.FC<ExercisesProps> = ({ route, navigation }) => {
 
   const handleOnSubmit = () => {
     navigate(
-      "Result",
+      RootStackName.Result,
       {
         finalAnswers: miniTest?.quizzes?.map(quiz => quiz.answers[0]) ?? [],
         finalAnswersForm: answersForm,

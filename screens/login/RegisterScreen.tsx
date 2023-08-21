@@ -143,7 +143,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           </Button>
 
           <Column style={{ paddingTop: ThemeDimensions.positive6 }}>
-            <TouchableOpacity onPress={() => navigate("Login")}>
+            <TouchableOpacity onPress={() => navigate(RootStackName.Login)}>
               <Text style={ThemeStyles.b5}>
                 Already have an account? { }
                 <Text style={{ color: ThemeColors.primary }}>
