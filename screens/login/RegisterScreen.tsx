@@ -13,6 +13,7 @@ import { createAccount } from "../../api";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeStyles } from "../../constants";
 import { RootStackParamList } from "../../types";
 import { Button, Column, Row } from "../../components";
+import { setItemAsync } from "expo-secure-store";
 
 type Props = NativeStackScreenProps<RootStackParamList, RootStackName.Register>;
 
@@ -48,17 +49,15 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
         email,
         password,
       });
-      if (response?.message?.includes('E11000')) {
+
+      if (response?.response?.data?.message?.includes('E11000')) {
         setIsEmailExists(true);
         return false;
       }
-      // await setItemAsync("secure_token", response?.data?.token);
-      // const account = JSON.stringify({
-      //   username: response.data.account.name,
-      //   email: response.data.account.email,
-      //   id: response.data.account._id,
-      // });
-      // await setItemAsync("account", account);
+
+      const responseData = response.data.data
+      console.log(responseData?.token)
+      await setItemAsync("secure_token", responseData.token);
       return true;
     } catch (error) {
       console.error(error);
@@ -80,7 +79,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
             <AppTextInput
               value={userName}
               onChangeText={setUserName}
-              placeholder="Username"
+              placeholder="Name"
             />
 
             <AppTextInput
@@ -130,8 +129,11 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               const passwordInvalid = checkPasswordInvalid();
               const rePasswordInvalid = checkRePasswordInvalid();
               if (emailInvalid || passwordInvalid || rePasswordInvalid) {
-                // console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
-              } else register();
+                console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
+              } else {
+                const isRegisterSuccess = await register();
+                if (isRegisterSuccess) navigate(RootStackName.Home);
+              }
             }}
             title="Register"
             style={{
@@ -152,7 +154,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
           </Column>
 
           <Column style={{ paddingVertical: ThemeDimensions.positive4 }}>
-            <Text style={{...ThemeStyles.b5, padding: ThemeDimensions.positive1 }}>
+            <Text style={{ ...ThemeStyles.b5, padding: ThemeDimensions.positive1 }}>
               Or continue with
             </Text>
 

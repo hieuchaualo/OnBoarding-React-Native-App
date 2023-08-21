@@ -12,7 +12,7 @@ import { getAccount, loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";
 import { AxiosResponse } from "axios";
-import { ThemeColors, ThemeDimensions, ThemeStyles } from "../../constants";
+import { RootStackName, ThemeColors, ThemeDimensions, ThemeStyles } from "../../constants";
 import { Button, Column, Row } from "../../components";
 import { RootStackParamList } from "../../types";
 
@@ -24,6 +24,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   const [isEmailNotValidated, setIsEmailNotValidated] = useState(false);
   const [password, setPassword] = useState("");
   const [isPasswordNotValidated, setIsPasswordNotValidated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const fetchAccount = async () => {
@@ -60,6 +61,7 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
         await setItemAsync("secure_token", responseData.token);
         return true;
       }
+      setErrorMessage(response?.response?.data?.message)
       return false;
     } catch (error) {
       console.error(error);
@@ -68,12 +70,13 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
   };
 
   const handleLoginPress = async () => {
+    setErrorMessage('')
     const emailInvalid = checkEmailInvalid();
     const passwordInvalid = checkPasswordInvalid();
     if (emailInvalid || passwordInvalid) { }
     else {
       const isLoginSuccess = await login();
-      if (isLoginSuccess) navigate("Home");
+      if (isLoginSuccess) navigate(RootStackName.Home);
     }
   }
 
@@ -118,6 +121,11 @@ const LoginScreen: FC<LoginScreenProps> = ({ navigation }) => {
             style={{ padding: ThemeDimensions.positive3, marginTop: ThemeDimensions.positive2 }}
             onPress={handleLoginPress}
           />
+          {errorMessage !== '' && (
+            <Text style={{ ...ThemeStyles.c5, color: ThemeColors.danger, }}>
+              {errorMessage}
+            </Text>
+          )}
         </View>
 
         <Column style={{ marginTop: ThemeDimensions.positive6 }}>

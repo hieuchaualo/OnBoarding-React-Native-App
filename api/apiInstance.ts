@@ -34,7 +34,7 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.data?.statusCode === 401) {
       await deleteItemAsync('secure_token');
     }
-    return error?.response?.data;
+    return error;
   }
 );
 

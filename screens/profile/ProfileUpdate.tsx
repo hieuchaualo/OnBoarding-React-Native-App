@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { MediaTypeOptions, launchImageLibraryAsync } from 'expo-image-picker';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeFonts, ThemeStyles } from '../../constants';
 import { IAccount } from '../../interfaces';
@@ -124,14 +124,36 @@ const ProfileUpdate: FC<ProfileUpdateProps> = ({ navigation }) => {
             />
           </View>
           <Pressable onPress={() => pickNewAvatar()}>
-            <Image
-              source={{ uri: avatar || toImgUrl(account?.avatar) }}
-              style={{
+            <View style={{
+              backgroundColor: ThemeColors.secondary,
+              borderRadius: ThemeDimensions.positive10,
+              position: 'absolute',
+              left: 0,
+              top: 0,
+            }}>
+              <Image
+                source={{ uri: avatar || toImgUrl(account?.avatar) }}
+                style={{
+                  height: ThemeDimensions.positive20,
+                  width: ThemeDimensions.positive20,
+                  borderRadius: ThemeDimensions.positive10,
+                }}
+              />
+            </View>
+
+            <View style={{ backgroundColor: '#0005', borderRadius: ThemeDimensions.positive10, }}>
+              <Row style={{
                 height: ThemeDimensions.positive20,
                 width: ThemeDimensions.positive20,
-                borderRadius: ThemeDimensions.positive10,
-              }}
-            />
+                alignItems: 'center',
+              }}>
+                <MaterialCommunityIcons
+                  name="image-edit-outline"
+                  color={ThemeColors.light}
+                  size={ThemeDimensions.positive8}
+                />
+              </Row>
+            </View>
           </Pressable>
         </Column>
 
