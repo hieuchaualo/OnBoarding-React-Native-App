@@ -16,6 +16,7 @@ import { AxiosResponse } from 'axios';
 import { deleteMiniTestHistory, getAccount } from '../../api';
 import { toImgUrl } from '../../utils';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const items = [
   { id: 'settings', icon: 'settings', label: 'Settings', type: 'link' },
@@ -49,10 +50,15 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
     return () => navigation.removeListener('focus', autoFetchAccountOnFocus)
   }, [navigation])
 
-  const logout = () => {
-    deleteItemAsync('secure_token')
-      .then(() => deleteItemAsync('account'))
-      .then(() => navigate(RootStackName.Welcome))
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('notifications');
+      await deleteItemAsync('secure_token')
+      await deleteItemAsync('account')
+      navigate(RootStackName.Welcome)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const clearHistory = async () => {
@@ -142,12 +148,12 @@ const Profile: FC<ProfileProps> = ({ navigation }) => {
             background={ThemeColors.grey}
             backgroundHover={isDisableButton ? ThemeColors.grey : ThemeColors.primaryLight}
           >
-            <MaterialCommunityIcons name="archive-remove-outline" size={24} color={isDisableButton ? ThemeColors.secondary: ThemeColors.dark} />
+            <MaterialCommunityIcons name="archive-remove-outline" size={24} color={isDisableButton ? ThemeColors.secondary : ThemeColors.dark} />
             <Text style={{
               fontSize: ThemeDimensions.fontSize.lg,
               fontFamily: ThemeFonts.semiBold,
               paddingStart: ThemeDimensions.positive2,
-              color: isDisableButton ? ThemeColors.secondary: ThemeColors.dark,
+              color: isDisableButton ? ThemeColors.secondary : ThemeColors.dark,
             }}>
               Clear history
             </Text>

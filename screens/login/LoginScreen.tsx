@@ -7,7 +7,7 @@ import {
 import { FC, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import AppTextInput from "../../components/AppTextInput";
+import AppTextInput from "../../components/input/AppTextInput";
 import { getAccount, loginAccount } from "../../api";
 import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { regexEmail } from "../../constants/regexPattern";

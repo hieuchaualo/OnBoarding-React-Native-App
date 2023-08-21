@@ -4,7 +4,7 @@ import {
   TextInputProps,
 } from "react-native";
 import React, { useState } from "react";
-import { ThemeColors, ThemeDimensions, ThemeFonts } from "../constants";
+import { ThemeColors, ThemeDimensions, ThemeFonts } from "../../constants";
 
 const AppTextInput: React.FC<TextInputProps> = ({ ...otherProps }) => {
   const [focused, setFocused] = useState<boolean>(false);

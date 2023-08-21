@@ -76,8 +76,8 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
                       : require("../../assets/images/avatar.jpg")
                   }
                   style={{
-                    width: ThemeDimensions.positive6,
-                    height: ThemeDimensions.positive6,
+                    width: ThemeDimensions.positive7,
+                    height: ThemeDimensions.positive7,
                     borderRadius: ThemeDimensions.positive3,
                   }}
                 />
@@ -87,11 +87,11 @@ const HomeScreen: FC<HomeScreenProps> = ({ navigation }) => {
                   color: ThemeColors.second,
                   paddingLeft: ThemeDimensions.positive2,
                 }}>
-                  {account?.name ?? "unnamed"}
+                  Hi, {account?.name ?? "unnamed"}
                 </Text>
               </Row>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigate(RootStackName.TestHistory)}>
+            <TouchableOpacity onPress={() => navigate(RootStackName.Notification)}>
               <Ionicons
                 name="notifications-outline"
                 size={ThemeDimensions.positive4}

@@ -7,7 +7,7 @@ import {
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import AppTextInput from "../../components/AppTextInput";
+import AppTextInput from "../../components/input/AppTextInput";
 import { regexEmail } from "../../constants/regexPattern";
 import { createAccount } from "../../api";
 import { RootStackName, ThemeColors, ThemeDimensions, ThemeStyles } from "../../constants";
