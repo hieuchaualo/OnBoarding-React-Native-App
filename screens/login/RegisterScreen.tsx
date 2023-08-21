@@ -56,7 +56,7 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
       }
 
       const responseData = response.data.data
-      console.log(responseData?.token)
+
       await setItemAsync("secure_token", responseData.token);
       return true;
     } catch (error) {
@@ -128,9 +128,8 @@ const RegisterScreen: React.FC<Props> = ({ navigation: { navigate } }) => {
               const emailInvalid = checkEmailInvalid();
               const passwordInvalid = checkPasswordInvalid();
               const rePasswordInvalid = checkRePasswordInvalid();
-              if (emailInvalid || passwordInvalid || rePasswordInvalid) {
-                console.log(emailInvalid, passwordInvalid, rePasswordInvalid);
-              } else {
+              if (emailInvalid || passwordInvalid || rePasswordInvalid) { }
+              else {
                 const isRegisterSuccess = await register();
                 if (isRegisterSuccess) navigate(RootStackName.Home);
               }
